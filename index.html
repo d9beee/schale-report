@@ -2866,6 +2866,9 @@ function drawGrid(FX,cast,el,g){if(!g||!el)return;const r=el.getBoundingClientRe
 // plus the game's Work voice lines (mp3). zones = the wallpaper's HITBOX.headpat (screen 1320-1630 × 615-755 → x -120..190,
 // y 955..1095); cheek sits just under it, above the voice hitbox (y ≤ 740). vo = [files, lines, faces]: tap = talk, shift start = start.
 const AW='Spine/ap_wp/assets/audio/';
+// the voice files on disk are all lower case (arona_work_in_1.mp3) inside the folders "Arona" / "NP0035"; Windows doesn't care,
+// but GitHub Pages and other web hosts match names exactly, so the file part is lowered here (folder names kept as they are)
+const awUrl=f=>{const i=f.lastIndexOf('/');return AW+f.slice(0,i+1)+f.slice(i+1).toLowerCase()+'.mp3';};
 const VO_A={start:[[['Arona/Arona_Default_TTS','Arona/Arona_Work_In_1'],['Sensei! Arona đợi Sensei mãi đó!','Sensei! Arona đợi Sensei mãi đó!'],['12','12']],
   [['Arona/Arona_Work_In_2'],['Mình bắt tay vào làm việc thôi!'],['25']],[['Arona/Arona_Work_In_3'],['Sensei có muốn làm việc gì đặc biệt không ạ?'],['31']],
   [['Arona/Arona_Work_In_4'],['Việc gì Arona cũng giúp Sensei được hết!'],['32']]],
@@ -2914,7 +2917,7 @@ const SCN_P=[
   talk:[[['Arona/Arona_Work_PlanaWatchSky_Talk_1_1','NP0035/NP0035_Work_PlanaWatchSky_Talk_1_2'],['Thế còn đằng kia?','Ưm…'],'ap']]},
  // night scene 1 with Arona peeking at Plana (Idle_11): same room, its own lines
  {in:[[['Arona/Arona_Work_PlanaSitPeek_In_1_1','NP0035/NP0035_Work_PlanaSitPeek_In_1_2'],['Nhìn chằm chằm~','Hừm…'],'ap']],
-  exit:[[['NP0035/NP0035_PlanaSitPeek_Exit_1'],['A.'],'p']],
+  exit:[[['NP0035/NP0035_Work_PlanaSitPeek_Exit_1'],['A.'],'p']],
   talk:[[['NP0035/NP0035_Work_PlanaSitPeek_Talk_1'],['Plana cảm thấy có ánh mắt đang nhìn mình.'],'p'],[['NP0035/NP0035_Work_PlanaSitPeek_Talk_2'],['Plana gặp rắc rối rồi.'],'p']]}];
 (function(){const D='Spine/',WZ={head:[-120,955,190,1095],cheek:[-60,800,130,900]},
   CH={Plana:{dir:D+'ap_wp/assets/',file:'NP0035_spr',zones:WZ,vo:VO_P},Arona:{dir:D+'ap_wp/assets/',file:'arona_spr',zones:WZ,vo:VO_A},
@@ -3088,7 +3091,7 @@ const SCN_P=[
       const [fs,ls,fc]=kind==='talk'?V[vi++%V.length]:V[Math.random()*V.length|0],tok=++VT;let i=0;
       const step=()=>{if(tok!==VT)return;if(i>=fs.length){st.setEmptyAnimation(1,.3);return;}const k=i++;face0(fc[k]);if(ls[k]!==ls[k-1])lobbySay(ls[k]);
        let done=0;const nx=()=>{if(!done){done=1;step();}};
-       try{AU&&AU.pause();AU=new Audio(AW+fs[k]+'.mp3');AU.volume=.6;AU.onended=nx;AU.onerror=()=>setTimeout(nx,1500);AU.play().catch(er=>{if(k===0&&blocked(er)){VT++;UNLOCK.q=()=>{if(home()&&cur===name)voice(kind);};return;}setTimeout(nx,1800);});}catch(_){setTimeout(nx,1800);}};
+       try{AU&&AU.pause();AU=new Audio(awUrl(fs[k]));AU.volume=.6;AU.onended=nx;AU.onerror=()=>setTimeout(nx,1500);AU.play().catch(er=>{if(k===0&&blocked(er)){VT++;UNLOCK.q=()=>{if(home()&&cur===name)voice(kind);};return;}setTimeout(nx,1800);});}catch(_){setTimeout(nx,1800);}};
       step();return true;};
      const H={sways:!!(hb||tp),busy:()=>patting,voice,
       gaze:(x,y)=>{if(!te)return false;
@@ -3142,7 +3145,7 @@ const SCN_P=[
   const seq=(line,done)=>{const g=++gen,[fs,ts,sp]=line;let i=0;
    const step=()=>{if(g!==gen)return;if(i>=fs.length){done&&done();return;}const k=i++;tag(sp[k]||sp[0]);window.lobbySay&&lobbySay(ts[k]);
     let d=0;const nx=()=>{if(!d){d=1;step();}};if(!home()){setTimeout(nx,1500);return;}
-    try{au&&au.pause();au=new Audio(AW+fs[k]+'.mp3');au.volume=.6;au.onended=nx;au.onerror=()=>setTimeout(nx,1500);au.play().catch(()=>setTimeout(nx,2200));}catch(_){setTimeout(nx,2200);}};
+    try{au&&au.pause();au=new Audio(awUrl(fs[k]));au.volume=.6;au.onended=nx;au.onerror=()=>setTimeout(nx,1500);au.play().catch(()=>setTimeout(nx,2200));}catch(_){setTimeout(nx,2200);}};
    step();};
   tok.stop=()=>{gen++;clearInterval(loop);au&&au.pause();o.el.style.opacity='';};
   const reveal=()=>{if(SW===tok)SW=null;o.el.style.opacity='';tag(name==='Plana'?'p':'a');o.H.voice('start');};
