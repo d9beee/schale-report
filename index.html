@@ -2,7 +2,10 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3f8fd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121326" media="(prefers-color-scheme: dark)">
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
@@ -30,24 +33,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font
 a{color:var(--sky)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
 
-/* HERO */
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#ffffff 0%,#e9f5ff 55%,#d6eeff 100%);
-  border-bottom:1px solid var(--line);}
-.hero .wrap{padding-top:54px;padding-bottom:46px}
+/* (old long-page hero + table-of-contents bar removed: the app is screens now; .kicker / .lede / .meta-line are still used
+   by the lobby notice) */
 .halo{position:absolute;right:-60px;top:-70px;width:380px;height:380px;opacity:.9;pointer-events:none}
 .kicker{display:inline-flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--sky);text-transform:uppercase}
 .kicker i{width:28px;height:2px;background:var(--sky);display:inline-block}
-.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.08;margin:14px 0 18px;font-weight:700;letter-spacing:-.02em;max-width:760px}
-.hero h1 em{font-style:normal;color:var(--sky)}
 .lede{max-width:760px;font-size:16.5px;color:#28435f}
 .lede strong{color:var(--ink)}
 .meta-line{margin-top:18px;font-size:12.5px;color:var(--muted)}
-
-/* NAV */
-nav.toc{position:sticky;top:0;z-index:20;background:rgba(243,248,253,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
-nav.toc a{flex:none;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);transition:.2s}
-nav.toc a:hover{border-color:var(--sky);color:var(--sky)}
 
 /* METRICS */
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 10px;position:relative;z-index:5}
@@ -338,13 +331,77 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
   .halo{width:240px;height:240px}
 }
 @media print{
-  nav.toc,.tools,.aro,.aro-btn,.totop{display:none}
+  .tools,.aro,.aro-btn,.totop{display:none}
   body{background-image:none}
   .metrics{margin-top:10px}
   .card,.tier,.armor,.sc{break-inside:avoid;box-shadow:none}
   section.block{break-before:auto}
   .wrap{padding-bottom:20px}
 }
+/* ===== ACCESSIBILITY: contrast (WCAG AA 4.5:1) + keyboard focus =====
+   --sky (#1597f0) stays for borders, icons, decoration; text links and white-text buttons use --sky-strong (#0b6fc0 ≈ 5.2:1 on
+   white). Dark mode: its --sky (#8b7cf6) already passes, so --sky-strong follows it. Light tier / tag colours (SS+, A, B–C,
+   Piercing, the yellow "Fes" tag) keep their fill but get dark text: white on them was 2.1–2.7:1. */
+:root{--sky-strong:#0b6fc0}
+html[data-theme=dark]{--sky-strong:var(--sky)}
+a{color:var(--sky-strong)}
+.filters button.on{background:var(--sky-strong);border-color:var(--sky-strong)}
+.go,.opn,.sec-num{background:var(--sky-strong)}
+.go:hover{background:#095a9c}
+.pill,.opn.x,.bnav button,.kicker{color:var(--sky-strong)}
+.tb-ssp,.tb-a,.tb-bc,.t-pie,.lim.f{color:#1a1a1a}
+.tb-ssp small,.tb-a small,.tb-bc small{opacity:.8}
+/* one visible focus ring for keyboard users everywhere (mouse clicks don't show it): deep blue (yellow in dark mode) with a
+   thin white / black gap so it stands out on any background. Only outline is used: it never moves or resizes anything. */
+:focus-visible{outline:3px solid #0a3f7a;outline-offset:3px}
+html[data-theme=dark] :focus-visible{outline-color:#ffd84a}
+/* a picture inside a clipped card can't show a ring (the card cuts it off): the ring goes around the whole card instead */
+img[role=button]:focus-visible{outline:none}
+:is(.scard,.sc,.chip,.lc,.bs,.tile):has(img[role=button]:focus-visible){outline:3px solid #0a3f7a;outline-offset:3px}
+html[data-theme=dark] :is(.scard,.sc,.chip,.lc,.bs,.tile):has(img[role=button]:focus-visible){outline-color:#ffd84a}
+/* ===== PHONE: 44px touch targets for the top-bar buttons (Apple's minimum) and a 12px floor for reading text.
+   Small decorative badges (UE, tier, tags, status pills) keep their size on purpose. */
+@media (max-width:900px){
+ .tb-ic,.tb-back,.tb-help{min-width:44px;min-height:44px}
+ /* only the reading text that was set below 12px (11–11.5px); everything else already is ≥ 12px */
+ :is(.boss .k,.armor .k,.grw small,.gsrc,.tierb,.slot,.res small){font-size:12px}
+}
+/* reduced motion (system setting): CSS animations and transitions finish at once (screen slide-in, sheet rise, tile hover,
+   hearts, flashes...). Spine / Live2D characters are drawn by their own code and are not changed here. */
+@media (prefers-reduced-motion: reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+/* ===== GAME ICONS for ammo / armor / role (Icons/atk-*, def-*, role-*, cut from the game UI).
+   Keyed on the chip classes the page already prints (.tag.t-exp…, .ar.ar-light…), so every chip (profile, tier cards, banners,
+   boss guide, matrix, filters) gets its icon with no template change. Corrosive has no game icon yet and keeps its old chip. */
+.t-exp{--ic:url(Icons/atk-explosive.png)}.t-pie{--ic:url(Icons/atk-piercing.png)}.t-mys{--ic:url(Icons/atk-mystic.png)}.t-son{--ic:url(Icons/atk-sonic.png)}
+.ar-light{--ic:url(Icons/def-light.png)}.ar-heavy{--ic:url(Icons/def-heavy.png)}.ar-special{--ic:url(Icons/def-special.png)}
+.ar-elastic{--ic:url(Icons/def-elastic.png)}.ar-comp{--ic:url(Icons/def-teal.png)}
+/* no chip frame any more: the game icon itself is the badge (square, Apple-style rounded corners ≈ 27% of its size), the
+   name follows as plain bold text. background-size 116% crops the icon's own small corners so only the rounding here shows. */
+:root{--icr:27%}
+.tag:is(.t-exp,.t-pie,.t-mys,.t-son),.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp){display:inline-flex;align-items:center;gap:5px;
+ vertical-align:middle;line-height:1.2;background:none!important;border:0!important;border-radius:0!important;padding:0!important;color:var(--ink)!important;font-weight:700}
+.tag:is(.t-exp,.t-pie,.t-mys,.t-son)::before,.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp)::before{
+ content:"";flex:none;width:20px;height:20px;border-radius:var(--icr);background:var(--ic) center/116% no-repeat;box-shadow:0 1px 2px rgba(15,40,70,.2)}
+/* role = icon only (name in the tooltip and for screen readers); object-view-box crops the icon's own corners the same way */
+.rlic{width:20px;height:20px;border-radius:var(--icr);object-fit:cover;object-view-box:inset(7%);vertical-align:-5px;flex:none;box-shadow:0 1px 2px rgba(15,40,70,.2)}
+/* position = the game's FRONT / MIDDLE / BACK plate, its own shape (a wide rectangle), corners rounded the same Apple way
+   (≈27% of its height) */
+.psic{height:18px;width:auto;border-radius:5px;object-fit:cover;object-view-box:inset(4%);vertical-align:-4px;flex:none;box-shadow:0 1px 2px rgba(15,40,70,.2)}
+/* filter buttons of the role / position / ammo / armor rows: no button frame either, only the icon (+ name for ammo / armor);
+   the picked one gets a ring around its icon */
+.fb:has(.rlic,.psic,.tag,.ar){background:none!important;border:0!important;box-shadow:none!important;padding:2px!important;line-height:0;border-radius:var(--icr)!important}
+.fb:has(.psic){border-radius:7px!important}
+.fb:has(.tag,.ar){line-height:1.2;padding:2px 6px 2px 2px!important;opacity:.7}
+.fb .rlic{width:34px;height:34px;display:block;opacity:.7}
+.fb .psic{height:28px;border-radius:7px;display:block;opacity:.7}
+.fb:is(:hover,.on) :is(.rlic,.psic),.fb:has(.tag,.ar):is(:hover,.on){opacity:1}
+.fb.on :is(.rlic,.psic),.fb.on :is(.tag,.ar)::before{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--sky-strong)}
+/* student grid card: the ammo corner shows the ammo icon instead of a plain colour square */
+.scard .ph .am.ai{width:22px!important;height:22px!important;border:0!important;border-radius:var(--icr)!important;
+ background:var(--ic) center/116% no-repeat!important;box-shadow:0 1px 3px rgba(0,0,0,.35)!important}
+.scard .ph .am.ai::before,.scard .ph .am.ai::after{content:none!important}
 </style>
 </head>
 <body>
@@ -583,13 +640,14 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
       <input id="q" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit, Kayoko)">
       <div class="legend">
         <span class="tag t-exp">Explosive</span><span class="tag t-pie">Piercing</span><span class="tag t-mys">Mystic</span><span class="tag t-son">Sonic</span>
-        <span>· ô màu góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
+        <span>· icon góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
       </div>
       <div class="sfil" id="sfil">
-        <div class="fr"><b>Vai trò</b><button type="button" class="fb" data-g="r" data-v="T">🛡️ Tank</button><button type="button" class="fb" data-g="r" data-v="A">⚔️ Dealer</button><button type="button" class="fb" data-g="r" data-v="H">💚 Healer</button><button type="button" class="fb" data-g="r" data-v="S">✨ Support</button><button type="button" class="fb" data-g="r" data-v="X">🎯 T.S.</button></div>
+        <div class="fr"><b>Vai trò</b><button type="button" class="fb" data-g="r" data-v="T" title="Tank" aria-label="Tank"><img class="rlic" src="Icons/role-tank.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="A" title="Dealer" aria-label="Dealer"><img class="rlic" src="Icons/role-dealer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="H" title="Healer" aria-label="Healer"><img class="rlic" src="Icons/role-healer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="S" title="Support" aria-label="Support"><img class="rlic" src="Icons/role-support.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="X" title="Tactical Support (T.S.)" aria-label="Tactical Support"><img class="rlic" src="Icons/role-tactical-support.png" alt=""></button></div>
         <div class="fr"><b>Hệ đạn</b><button type="button" class="fb" data-g="a" data-v="E"><span class="tag t-exp">Explosive</span></button><button type="button" class="fb" data-g="a" data-v="P"><span class="tag t-pie">Piercing</span></button><button type="button" class="fb" data-g="a" data-v="M"><span class="tag t-mys">Mystic</span></button><button type="button" class="fb" data-g="a" data-v="S"><span class="tag t-son">Sonic</span></button></div>
         <div class="fr"><b>Giáp</b><button type="button" class="fb" data-g="m" data-v="l"><span class="ar ar-light">Light</span></button><button type="button" class="fb" data-g="m" data-v="h"><span class="ar ar-heavy">Heavy</span></button><button type="button" class="fb" data-g="m" data-v="s"><span class="ar ar-special">Special</span></button><button type="button" class="fb" data-g="m" data-v="e"><span class="ar ar-elastic">Elastic</span></button><button type="button" class="fb" data-g="m" data-v="c"><span class="ar ar-comp">Composite</span></button></div>
-        <div class="fr"><b>Vị trí</b><button type="button" class="fb" data-g="k" data-v="1">STRIKER</button><button type="button" class="fb" data-g="k" data-v="0">SPECIAL</button>
+        <div class="fr"><b>Loại</b><button type="button" class="fb" data-g="k" data-v="1">STRIKER</button><button type="button" class="fb" data-g="k" data-v="0">SPECIAL</button></div>
+        <div class="fr"><b>Vị trí</b><button type="button" class="fb" data-g="p" data-v="F" title="Front" aria-label="Front"><img class="psic" src="Icons/pos-front.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="M" title="Middle" aria-label="Middle"><img class="psic" src="Icons/pos-middle.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="B" title="Back" aria-label="Back"><img class="psic" src="Icons/pos-back.png" alt=""></button>
           <span class="fcnt" id="fcnt"></span><button type="button" class="fclr" id="fclr" hidden>✕ Xóa lọc</button></div>
       </div>
     </div>
@@ -623,13 +681,13 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
     <div class="card">
       <h3>Đạn nào khắc giáp nào</h3>
       <div class="pairs">
-        <div class="pair"><div class="big"><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Light</span></div><small>Đỏ đậm khắc đỏ nhạt</small></div>
-        <div class="pair"><div class="big"><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Heavy</span></div><small>Cam đậm khắc cam nhạt</small></div>
-        <div class="pair"><div class="big"><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Special</span></div><small>Xanh đậm khắc xanh nhạt</small></div>
-        <div class="pair"><div class="big"><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Elastic</span></div><small>Tím đậm khắc tím nhạt</small></div>
+        <div class="pair"><div class="big"><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Light</span></div><small>Kiếm đỏ khắc khiên đỏ</small></div>
+        <div class="pair"><div class="big"><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Heavy</span></div><small>Kiếm vàng khắc khiên vàng</small></div>
+        <div class="pair"><div class="big"><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Special</span></div><small>Kiếm xanh khắc khiên xanh</small></div>
+        <div class="pair"><div class="big"><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Elastic</span></div><small>Kiếm tím khắc khiên tím</small></div>
         <div class="pair" style="border-color:#9fdcbc"><div class="big"><span class="tag t-cor">Corrosive</span><span class="arrow">➜</span><span class="ar ar-comp">Composite</span></div><small>Xanh lá đậm khắc xanh lá nhạt · mới</small></div>
       </div>
-      <div class="note">Cùng màu là khắc nhau: ô đậm là đạn của học sinh, ô nhạt là giáp của boss. Đánh đúng hệ thì damage được nhân lên rất nhiều so với đánh sai hệ.</div>
+      <div class="note">Cùng màu là khắc nhau: icon kiếm là đạn của học sinh, icon khiên là giáp của boss. Đánh đúng hệ thì damage được nhân lên rất nhiều so với đánh sai hệ.</div>
 
       <div class="tbl-wrap" style="margin-top:14px"><table class="mtx">
         <thead><tr><th>Đạn ↓ · Giáp →</th><th><span class="ar ar-light">Light</span></th><th><span class="ar ar-heavy">Heavy</span></th><th><span class="ar ar-special">Special</span></th><th><span class="ar ar-elastic">Elastic</span></th><th><span class="ar ar-comp">Composite</span></th></tr></thead>
@@ -815,23 +873,12 @@ img[data-stu],.chip,.nm,.calc-row,#tier [data-n]{cursor:pointer}
 
 /* ===== SCHALE TABLET STYLE ===== (cut corners removed: every corner is rounded now) */
 .metric{border-top:4px solid var(--sky)}
-nav.toc a,nav.toc button{border-radius:0;border:0;padding:7px 20px;background:var(--paper);box-shadow:inset 0 -2px 0 var(--line)}
-nav.toc a.on{background:var(--sky);color:#fff}
-nav.toc button{font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);flex:none;margin-left:auto}
 .sec-num{border-radius:4px;width:50px}
 .sec-head h2{font-style:italic;letter-spacing:-.015em}
 .sec-head:after{content:"";flex:1;min-width:30px;height:10px;align-self:center;background:repeating-linear-gradient(-55deg,var(--sky) 0 3px,transparent 3px 10px);opacity:.28}
 .go,.rf,.bnav button{border-radius:0!important;padding-left:20px!important;padding-right:20px!important}
-.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.7;
-  background:radial-gradient(60px 26px at 12% 30%,#fff 60%,transparent 62%),radial-gradient(90px 34px at 18% 34%,#fff 60%,transparent 62%),
-  radial-gradient(70px 28px at 62% 80%,#fff 60%,transparent 62%),radial-gradient(110px 38px at 70% 84%,#fff 60%,transparent 62%);
-  animation:drift 40s linear infinite alternate}
-@keyframes drift{to{transform:translateX(60px)}}
-.hero .wrap{position:relative}
 .schale{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.3em;font-size:11px;color:var(--sky);margin-bottom:6px}
 .schale svg{width:26px;height:26px}
-.hero h1{font-style:italic}
-@media (prefers-reduced-motion:reduce){.hero:before{animation:none}}
 
 /* nav extras */
 .totop{position:fixed;left:16px;bottom:16px;z-index:40;width:42px;height:42px;border:0;background:var(--sky);color:#fff;font-size:18px;font-weight:800;cursor:pointer;
@@ -979,7 +1026,7 @@ html{scroll-padding-top:calc(var(--tb) + 12px)}
 .screen{display:none}
 .screen.on{display:grid;grid-template-columns:minmax(240px,30%) minmax(0,1fr);animation:scrIn .35s ease}
 @keyframes scrIn{from{opacity:0;transform:translateX(18px)}}
-.cast{position:sticky;top:var(--tb);height:calc(100vh - var(--tb));overflow:hidden;pointer-events:none}
+.cast{position:sticky;top:var(--tb);height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb));overflow:hidden;pointer-events:none}
 .cast .cpor{position:absolute;left:50%;bottom:-6%;transform:translateX(-50%);height:116%;width:auto;max-width:none;filter:drop-shadow(0 12px 26px rgba(30,52,86,.2));animation:castIn .7s ease both}
 .cast .bubble{position:absolute;left:7%;right:7%;bottom:6%;background:#fff;border-radius:18px;padding:12px 16px;font-size:14.5px;font-weight:600;line-height:1.45;color:var(--navy);box-shadow:0 8px 22px rgba(30,52,86,.2);pointer-events:auto}
 .cast .bubble:before{content:"";position:absolute;top:-10px;left:34px;border:11px solid transparent;border-bottom-color:#fff;border-top:0}
@@ -1166,14 +1213,14 @@ html[data-theme=dark] .hpop{background:var(--paper)}html[data-theme=dark] .hpop 
 body:has(#home.on) .hud-tg{display:grid}
 body.hud-off #home.screen.on{grid-template-columns:minmax(0,1fr)}
 body.hud-off #home .pane{display:none}
-body.hud-off #home .cast.lobby{height:calc(100vh - var(--tb))}
+body.hud-off #home .cast.lobby{height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb))}
 body.hud-off :is(.aro-btn,.totop){display:none}
 @media (max-width:900px){.hud-tg{top:auto;bottom:90px;transform:none}}
 /* ===== NHIỆM VỤ (Tasks screen, replaces MomoTalk) ===== */
 /* lobby = the game's Work / Campaign screen: the animated flooded-classroom scene (Spine) covers the whole home screen,
    the student stands in it on the left, the tiles float on the right. isolation keeps the scene above #home's own sky fallback. */
 #home.screen{position:relative;isolation:isolate}
-#lobbyScene{position:absolute;left:0;right:0;top:0;height:calc(100vh - var(--tb,56px));z-index:-1;pointer-events:none;overflow:hidden}
+#lobbyScene{position:absolute;left:0;right:0;top:0;height:calc(100vh - var(--tb,56px));height:calc(100dvh - var(--tb,56px));z-index:-1;pointer-events:none;overflow:hidden}
 #lobbyScene .spn{position:absolute;inset:0}
 #lobbyCast .l2d .spn{transition:opacity .6s ease}
 @media (min-width:901px){html body #home.screen.on{grid-template-columns:minmax(0,1.6fr) minmax(380px,1fr)}}
@@ -1182,7 +1229,7 @@ body.hud-off :is(.aro-btn,.totop){display:none}
    big 4×3 = TA/GA, Banner, PvP, Kế hoạch UE, Học sinh · medium 2×2 = Cơ chế boss, Nhiệm vụ · small 2×1 = Thẻ EX, JP·KR·Global */
 #home .notice{display:none}
 @media (min-width:901px){
- html body #home.screen.on{display:block;position:relative;height:calc(100vh - var(--tb,56px));min-height:0;overflow:hidden}
+ html body #home.screen.on{display:block;position:relative;height:calc(100vh - var(--tb,56px));height:calc(100dvh - var(--tb,56px));min-height:0;overflow:hidden}
  #home .cast.lobby{position:absolute;inset:0;height:auto;width:auto}
  #home>.pane{position:absolute;left:55%;width:40%;top:calc(100% / 12);height:calc(100% * 9 / 12);padding:0;margin:0;overflow:visible;z-index:3}
  #home .tiles{height:100%;margin:0;display:grid}
@@ -1342,13 +1389,13 @@ html,body{overflow-x:clip}
 .pane :is(img,video,canvas,svg,table){max-width:100%}
 @media (min-width:901px){
  #s-raid .lsched .lsg{max-height:22vh;overflow-y:auto!important;scrollbar-width:thin}
- .screen.on:not(#home)>.pane{min-height:calc(100vh - var(--tb));display:flex;flex-direction:column;padding-bottom:18px}
+ .screen.on:not(#home)>.pane{min-height:calc(100vh - var(--tb));min-height:calc(100dvh - var(--tb));display:flex;flex-direction:column;padding-bottom:18px}
  .screen.on:not(#home)>.pane>.block:last-child{flex:1 0 auto}
 }
 /* desktop TA/GA fits one screen, no page scroll: the panel is exactly the window height, the two boss cards share the free
    height (a card scrolls inside itself only on a very short window), season list = one row, notes smaller */
 @media (min-width:901px){
- #s-raid.screen.on>.pane{height:calc(100vh - var(--tb));min-height:0;padding:14px 22px}
+ #s-raid.screen.on>.pane{height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb));min-height:0;padding:14px 22px}
  #s-raid #live{flex:1 1 auto;min-height:0;margin:0}
  #s-raid #live .live-top{margin:0 0 10px}
  #s-raid #live .live-top h2{font-size:18px}
@@ -1850,7 +1897,28 @@ const STAT={};('Hina (Dress):AEe1|Hanako (Swimsuit):ASh1|Neru (School):APe1|Hosh
  +'|Izuna:AMl1|Shun (Small):AEl1|Aoba:TSl1|Kirino:SEs1|Nonomi:APl1|Mimori:SMl1|Airi (Band):AEs1|Shiroko:AEl1|Asuna:AMl1|Saori (Swimsuit):AMh1|Sena:XMl0|Juri:SEl0|Hare:SEl0|Mashiro:AEh0|Renge:ASh1|Kanna:APh0|Chiaki:ASs1|Reijo:SMh1|Meru:APl1|Mina:SEh1|Rumi:HEh1|Nonomi (Swimsuit):AEs1|Ichika:ASh1|Megu:AEs1|Miyu:SPl1|Kotori (Cheer Squad):AEs1|Haruna (Track):HSh0|Wakamo (Swimsuit):APh1|Miyu (Swimsuit):AEl0|Akane (Bunny):AMh0|Izumi:AEl1|Junko (New Year):AMh1|Kaho:AMh1|Hiyori (Swimsuit):APh1|Hifumi (Swimsuit):XPh0|Toki (Bunny):AEl1|Kotama (Camp):SPh1|Sakurako:AMs1|Nodoka:SEh0|Shigure:AEh1|Serika (New Year):SPs0|Hiyori:SEl0|Yuzu (Maid):AEe0|Saori:AEs1|Umika:AMs1|Yuzu:APs1|Mimori (Swimsuit):SMs0|Saya:AEl0|Karin:APh0|Misaki:AEs1|Momoi (Maid):ASl1|Moe:APl0|Serika (Swimsuit):AMh0|Yukari:ASh1|Tsubaki (Guide):SPh0|Saori (Dress):ASl1|Shiroko (Cycling):AMh1|Aris:AMs1|Chihiro:APh0|Yukari (Swimsuit):APl1|Moe (Swimsuit):ASs1|Kasumi:ASh1|Nagusa:ASe1|Koyuki:AMh1|Utaha (Cheer Squad):AMs1|Izumi (Swimsuit):SEl1|Tsurugi (Swimsuit):AMs1|Tomoe:SPs1|Fubuki:APh1|Michiru:AMl1|Renge (Swimsuit):ASs1|Chiaki (Swimsuit):APh0|Otogi:AEs1')
  .split('|').forEach(p=>{const i=p.lastIndexOf(':'),c=p.slice(i+1);STAT[p.slice(0,i)]={r:c[0],a:c[1],m:c[2],k:c[3]==='1'};});
 STAT['Hoshino (Armed)'].r2='A'; // switches between Tank and Attacker form
+// battle position (Blue Archive Wiki "Characters" table, 11/2026; wiki JP-style names mapped to the Global ones used here)
+{const P={F:'Neru (School)|Hoshino (Armed)|Hoshino (Swimsuit)|Mika (Swimsuit)|Mika|Tsubaki|Kurumi|Niko|Tsukuyo (Dress)|Yuuka (Track)|Mine|Atsuko|Yuuka (Pajamas)|Kanoe|Haruka (Dress)'
+  +'|Yuuka|Eimi|Tsurugi|Mine (Pop Idol)|Konoka|Natsu|Reisa|Neru|Miyako|Miyako (Swimsuit)|Tsukuyo|Natsu (Band)|Juri (Part-Timer)|Rabu|Haruka|Sumire|Hoshino|Izuna|Aoba|Airi (Band)|Rumi|Megu|Utaha (Cheer Squad)|Tsurugi (Swimsuit)|Michiru',
+ M:'Hanako (Swimsuit)|Aris (Armed)|Mari (Pop Idol)|Iroha (Swimsuit)|Shiroko*Terror|Kokona|Hikari|Satsuki (Swimsuit)|Hare (Camp)|Kayoko (New Year)|Seia|Seia (Swimsuit)|Suzumi (Magical)'
+  +'|Nozomi|Rio (Armed)|Cherino|Kanna (Swimsuit)|Sakurako (Pop Idol)|Sena (Casual)|Takane|Momoi|Ibuki|Toki (Armed)|Akane|Noa|Hinata|Asuna (School)|Chinatsu (Hot Spring)|Serina (Christmas)'
+  +'|Hifumi|Kayoko|Junko|Azusa|Chise|Akari|Suzumi|Serika|Asuna (Bunny)|Kirino|Mimori|Shiroko|Asuna|Saori (Swimsuit)|Chiaki|Reijo|Meru|Mina|Ichika|Junko (New Year)|Kaho|Toki (Bunny)'
+  +'|Kotama (Camp)|Sakurako|Shigure|Saori|Umika|Yuzu|Momoi (Maid)|Saori (Dress)|Shiroko (Cycling)|Moe (Swimsuit)|Kasumi',
+ B:'Hina (Dress)|Kei|Kisaki|Rio|Nagisa (Swimsuit)|Himari (Armed)|Shiroko (Swimsuit)|Michiru (Dress)|Ibuki (Swimsuit)|Wakamo|Fuuka (New Year)|Aru (Dress)|Himari|Ako|Reisa (Magical)'
+  +'|Koharu|Iori|Aru|Maki|Shun|Makoto (Swimsuit)|Midori (Maid)|Ui|Aris (Maid)|Haruka (New Year)|Misaki (Swimsuit)|Utaha|Koharu (Swimsuit)|Serina|Hanako|Mari|Hibiki|Iroha|Haruna (New Year)'
+  +'|Kotama|Shigure (Hot Spring)|Kaede|Saki|Miyo|Kazusa|Ui (Swimsuit)|Saki (Swimsuit)|Eimi (Swimsuit)|Nodoka (Hot Spring)|Shizuko (Swimsuit)|Atsuko (Swimsuit)|Ayane (Swimsuit)|Akari (New Year)'
+  +'|Kirino (Swimsuit)|Karin (School)|Akane (School)|Ichika (Swimsuit)|Erika|Tomoe (Qipao)|Saya (Casual)|Hasumi (Track)|Mutsuki|Midori|Airi|Yoshimi|Momiji|Pina|Chinatsu|Hina|Hasumi|Fuuka'
+  +'|Ayane|Hanae|Shizuko|Kotori|Shimiko|Haruna|Shun (Small)|Nonomi|Sena|Juri|Hare|Mashiro|Renge|Kanna|Nonomi (Swimsuit)|Miyu|Kotori (Cheer Squad)|Haruna (Track)|Wakamo (Swimsuit)|Miyu (Swimsuit)'
+  +'|Akane (Bunny)|Izumi|Hiyori (Swimsuit)|Hifumi (Swimsuit)|Nodoka|Serika (New Year)|Hiyori|Yuzu (Maid)|Mimori (Swimsuit)|Saya|Karin|Misaki|Moe|Serika (Swimsuit)|Yukari|Tsubaki (Guide)|Aris'
+  +'|Chihiro|Yukari (Swimsuit)|Nagusa|Koyuki|Izumi (Swimsuit)|Tomoe|Fubuki|Renge (Swimsuit)|Chiaki (Swimsuit)|Otogi'};
+ for(const k in P)P[k].split('|').forEach(n=>{if(STAT[n])STAT[n].p=k;});}
+const PLV={F:'Front',M:'Middle',B:'Back'};
+// position badge = the game's FRONT / MIDDLE / BACK plate (Icons/pos-*.png), text if the file is missing
+const posIc=p=>PLV[p]?`<img class="psic" src="Icons/pos-${PLV[p].toLowerCase()}.png" alt="${PLV[p]}" title="Vị trí: ${PLV[p]}" onerror="this.replaceWith('${PLV[p]}')">`:'';
 const RLV={T:'Tank',A:'Dealer',H:'Healer',S:'Support',X:'T.S.'},ARMK={l:'light',h:'heavy',s:'special',e:'elastic',c:'composite'};
+// role label -> game icon (Icons/role-*.png); icon only, the name stays in the tooltip / for screen readers. Unknown label = text
+const RIC={Tank:'tank',Dealer:'dealer',Attacker:'dealer',Healer:'healer',Support:'support','T.S.':'tactical-support','T.S':'tactical-support','Tactical Support':'tactical-support'};
+const roleIc=l=>RIC[l]?`<img class="rlic" src="Icons/role-${RIC[l]}.png" alt="${l}" title="${l}" onerror="this.replaceWith('${l}')">`:l||'';
 // student profile (Blue Archive Wiki "Characters trivia list", 11/2026) + short Vietnamese intro from the in-game profile.
 // key = base name (costumes share it); [JP name, reading, school, age, birthday d/m, height cm, hobbies, voice, intro]
 const BIO={};
@@ -2037,7 +2105,7 @@ function chips(id,arr){document.getElementById(id).innerHTML=arr.map(([n,u])=>`<
 const TIERROW={};[SSP,SS].forEach(g=>g.forEach(x=>TIERROW[x[0]]=x));
 function gridCards(id,arr){const el=document.getElementById(id);el.className='sgrid';
  el.innerHTML=arr.map(([n,u,slot,t])=>{const st=STAT[n];if(st){t=t||st.a;slot=slot||(st.k?'Striker':'Special');}const T=t?TYPE[t]:null;
-  return `<div class="scard" data-n="${n.toLowerCase()}"${st?` data-r="${st.r}${st.r2||''}" data-a="${st.a}" data-m="${st.m}" data-k="${st.k?1:0}"`:''}${T?` style="--c:${T[2]}"`:''}><div class="ph">${avImg(n,'')}${slot?`<span class="sl${slot==='Special'?' sp':''}">${slot==='Special'?'SPECIAL':'STRIKER'}</span>`:''}<span class="us">${u?'★'.repeat(u):'<span class="no">Chưa UE</span>'}</span>${T?'<span class="am"></span>':''}</div><b>${n}</b></div>`}).join('');}
+  return `<div class="scard" data-n="${n.toLowerCase()}"${st?` data-r="${st.r}${st.r2||''}" data-a="${st.a}" data-m="${st.m}" data-k="${st.k?1:0}" data-p="${st.p||''}"`:''}${T?` style="--c:${T[2]}"`:''}><div class="ph">${avImg(n,'')}${slot?`<span class="sl${slot==='Special'?' sp':''}">${slot==='Special'?'SPECIAL':'STRIKER'}</span>`:''}<span class="us">${u?'★'.repeat(u):'<span class="no">Chưa UE</span>'}</span>${T?`<span class="am ai ${T[0]}" title="${T[1]}"></span>`:''}</div><b>${n}</b></div>`}).join('');}
 gridCards('ssp',SSP);gridCards('ss',SS);gridCards('s',S);gridCards('a',A);gridCards('bc',BC);
 document.querySelector('footer').insertAdjacentHTML('afterbegin',`<div class="fcast">${SSP.map(x=>avImg(x[0],'')).join('')}</div>`);
 
@@ -2681,7 +2749,7 @@ function stuInfo(n){const own=n in OWN,g=TIERG.find(([a])=>a.some(x=>x[0]===n)),
  const bn=BANOF[n]||[],bs=bn[0]&&bn[0][0],st=STAT[n],T=row&&row[3]?TYPE[row[3]]:st?TYPE[st.a]:bs?TYPE[bs[1]]:null;
  const tags=[own?`<span class="tierb">Tier ${g[1]}</span>${ueChip(OWN[n])}`:`<span class="vd ${bs?bs[7]:'skip'}">Bạn chưa có</span>`,
   T?`<span class="tag ${T[0]}">${T[1]}</span>`:'',
-  st?`<span class="slot">${st.k?'Striker':'Special'} · ${RLV[st.r]}${st.r2?' / '+RLV[st.r2]:''}</span>`:row&&row[2]?`<span class="slot">${row[2]}</span>`:bs?`<span class="slot">${bs[3]} · ${ROLE[bs[4]]}</span>`:'',
+  st?`<span class="slot">${st.k?'Striker':'Special'}</span>${posIc(st.p)}${roleIc(RLV[st.r])}${st.r2?roleIc(RLV[st.r2]):''}`:row&&row[2]?`<span class="slot">${row[2]}</span>`:bs?`<span class="slot">${bs[3]}</span>${roleIc(ROLE[bs[4]])}`:'',
   armChip(n)||(bs?`<span class="ar ${AR[bs[2]][0]}">${AR[bs[2]][1]}</span>`:'')].join(' ');
  const d=row&&row[4]?row[4]:bs?bs[8]:'';
  const ban=bn.map(([s,b])=>`🎟 Banner ${dshort(b.S)} → ${dshort(b.E)}${own?'':` · ${VD[s[7]]}`}`).join('<br>');
@@ -2735,7 +2803,8 @@ document.addEventListener('click',e=>{const t=e.target;
  if(t.closest('#gm')){if(t===GM||t.closest('#gmx'))GM.classList.remove('on');return;}
  if(t.closest('a,button,input,textarea,select,#aro'))return;
  const n=stuOf(t);if(n)openStu(n);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')GM.classList.remove('on');});
+// fallback only: the bottom-sheet block below catches Esc first (capture phase) and slides the sheet away
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('on'))GM._animClose?GM._animClose():GM.classList.remove('on');});
 // save a new UE level, then reload so every section recomputes from one roster
 const saveRoster=m=>{if(!LS.set('ba_ue',m)){alert('Trình duyệt đang chặn lưu dữ liệu, nên mốc UE không được lưu.');return;}
  try{sessionStorage.setItem('ba_y',String(scrollY))}catch(e){}location.reload();};
@@ -2743,13 +2812,13 @@ document.getElementById('gmb').addEventListener('click',e=>{const b=e.target.clo
  const n=b.parentElement.dataset.n;saveRoster({...UEX,[n]:+b.dataset.ue});});
 try{const y=sessionStorage.getItem('ba_y');if(y!==null){sessionStorage.removeItem('ba_y');addEventListener('load',()=>scrollTo(0,+y));}}catch(e){}
 
-// search + filters (role, ammo, armor, slot): OR inside one row, AND between rows; empty tiers fold away
-const FSEL={r:new Set(),a:new Set(),m:new Set(),k:new Set()};
+// search + filters (role, ammo, armor, slot, position): OR inside one row, AND between rows; empty tiers fold away
+const FSEL={r:new Set(),a:new Set(),m:new Set(),k:new Set(),p:new Set()};
 document.querySelectorAll('#tier .tier-badge small').forEach(s=>s.dataset.t=s.textContent);
 function applyFilter(){const q=document.getElementById('q').value.trim().toLowerCase(),on=Object.values(FSEL).some(s=>s.size);let tot=0;
  document.querySelectorAll('#tier .tier').forEach(t=>{let n=0;const cs=t.querySelectorAll('[data-n]');
   cs.forEach(el=>{const d=el.dataset,mq=!q||d.n.includes(q),
-   mf=!on||((!FSEL.r.size||[...FSEL.r].some(v=>(d.r||'').includes(v)))&&['a','m','k'].every(g=>!FSEL[g].size||FSEL[g].has(d[g])));
+   mf=!on||((!FSEL.r.size||[...FSEL.r].some(v=>(d.r||'').includes(v)))&&['a','m','k','p'].every(g=>!FSEL[g].size||FSEL[g].has(d[g])));
    el.classList.toggle('hide',!(mq&&mf));el.classList.toggle('hit',!!q&&mq&&mf);if(mq&&mf)n++;});
   tot+=n;t.classList.toggle('fempty',(on||!!q)&&!n);
   const s=t.querySelector('.tier-badge small');if(s)s.textContent=on||q?`${n}/${cs.length} em`:s.dataset.t;});
@@ -2765,13 +2834,18 @@ document.getElementById('sfil').addEventListener('click',e=>{const b=e.target.cl
 const count=(arr,u)=>arr.filter(x=>x[1]===u).length;
 const groups=[SSP,SS,S,A,BC];
 const ds=[[3,'UE 3★','#f5b52e'],[2,'UE 2★','#1597f0'],[1,'UE 1★','#21b37f'],[0,'Chưa mở UE','#f3a3b9']].map(([u,l,c])=>({label:l,data:groups.map(g=>count(g,u)),backgroundColor:c,borderRadius:6,borderSkipped:false}));
-if(window.Chart){Chart.defaults.color='#8a94b8';
+// label colour follows the theme (the fixed #8a94b8 was only 3:1 on the light card): light #5d7088, dark #9aa0c4.
+// It watches <html data-theme>, so the theme button needs no extra code.
+if(window.Chart){const chTx=()=>document.documentElement.dataset.theme==='dark'?'#9aa0c4':'#5d7088';Chart.defaults.color=chTx();
 const chart=new Chart(document.getElementById('dist'),{type:'bar',
  data:{labels:groups.map((g,i)=>['SS+','SS','S','A','B–C'][i]+` (${g.length})`),datasets:ds},
  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
   scales:{x:{stacked:true,grid:{color:'rgba(21,80,140,.08)'}},y:{stacked:true,grid:{display:false},ticks:{font:{weight:'600'}}}},
   plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'rectRounded'}}}}});
 new ResizeObserver(()=>chart.resize()).observe(document.querySelector('.chart-box'));
+new MutationObserver(()=>{const c=chTx();Chart.defaults.color=c;const o=chart.options;
+ o.scales.x.ticks.color=o.scales.y.ticks.color=o.plugins.legend.labels.color=c;chart.update('none');})
+ .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 }
 
 // ===== metrics + stop lanes from the (possibly edited) roster =====
@@ -3140,6 +3214,8 @@ function drawGrid(FX,cast,el,g){if(!g||!el)return;const r=el.getBoundingClientRe
  const bag={},draw=k=>{if(!bag[k]||!bag[k].length)bag[k]=(k==='body'?[...P.body,...remind()]:P[k].slice()).sort(()=>Math.random()-.5);return bag[k].pop();};
  let tmr=0,full='';
  function say(t){clearInterval(tmr);full=t;let i=0;dp.textContent='';dlg.classList.remove('done');HOOK.talk(true);
+  // reduced motion: the whole line at once, no typewriter
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){dp.textContent=full;dlg.classList.add('done');HOOK.talk(false);return;}
   tmr=setInterval(()=>{dp.textContent=full.slice(0,++i);if(i>=full.length){clearInterval(tmr);dlg.classList.add('done');HOOK.talk(false);}},28);}
  dlg.addEventListener('click',e=>{if(e.target.closest('b'))return;
   if(!dlg.classList.contains('done')){clearInterval(tmr);dp.textContent=full;dlg.classList.add('done');HOOK.talk(false);}else say(draw('body'));});
@@ -3545,6 +3621,7 @@ function stageTalk(K){const sc=document.querySelector(K.sc),cast=sc&&sc.querySel
  let q=[];const next=()=>{if(!q.length)q=[...status(),...TIPS];return q.shift();};
  let H=null,P=null,tmr=0,full='';
  function say(t){clearInterval(tmr);full=t;let i=0;dp.textContent='';dlg.classList.remove('done');H&&H.talk(true);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){dp.textContent=full;dlg.classList.add('done');H&&H.talk(false);return;}
   tmr=setInterval(()=>{dp.textContent=full.slice(0,++i);if(i>=full.length){clearInterval(tmr);dlg.classList.add('done');H&&H.talk(false);}},26);}
  dlg.addEventListener('click',()=>{if(!dlg.classList.contains('done')){clearInterval(tmr);dp.textContent=full;dlg.classList.add('done');H&&H.talk(false);}else say(next());});
  const PAT=K.pat,POKE=K.poke,PINCH=K.pinch;
@@ -3858,10 +3935,26 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
    box.classList.remove('full');const half=box.getBoundingClientRect().height;box.classList.add('full');const full=box.getBoundingClientRect().height;
    box.classList.toggle('full',was);void box.offsetHeight;box.style.transition=tr;return {half,full};};
   const settle=(full)=>{box.style.transition='';void box.offsetHeight;box.classList.toggle('full',full);box.style.height='';box.style.transform='';gm.style.backgroundColor='';};
-  const close=from=>{const a=box.animate([{transform:`translateY(${from}px)`},{transform:`translateY(${innerHeight}px)`}],{duration:230,easing:EASE,fill:'forwards'});
-   gm.animate([{backgroundColor:gm.style.backgroundColor||'rgba(15,40,70,.45)'},{backgroundColor:'rgba(15,40,70,0)'}],{duration:230,easing:EASE,fill:'forwards'});
-   a.onfinish=()=>{const b=closeBtn();b?b.click():gm.classList.remove('on');
+  // DISMISS animation, shared by every way of closing (drag down, ✕, tap on the backdrop, Esc): the sheet slides down off the
+  // screen while the backdrop (#gm scrim) fades to clear, then the page's own close handler runs (via the ✕ button, flagged
+  // __pass so it isn't intercepted again). from = how far the sheet is already pulled down (0 for ✕ / backdrop / Esc).
+  const close=from=>{if(gm.__anim)return;gm.__anim=1;
+   // Esc in the middle of a drag: end the drag and slide on from where the finger left the sheet (no jump back to 0)
+   if(d){try{d.el.releasePointerCapture(d.id);}catch(_){}d=null;}
+   from=Math.max(from,parseFloat((box.style.transform.match(/translateY\(([-\d.]+)px/)||[])[1])||0);
+   const ms=matchMedia('(prefers-reduced-motion: reduce)').matches?1:from?230:300,o={duration:ms,easing:EASE,fill:'forwards'};
+   const a=box.animate([{transform:`translateY(${from}px)`},{transform:`translateY(${innerHeight}px)`}],o);
+   gm.animate([{backgroundColor:gm.style.backgroundColor||getComputedStyle(gm).backgroundColor},{backgroundColor:'rgba(15,40,70,0)'}],o);
+   a.onfinish=()=>{const b=closeBtn();gm.__pass=1;try{b?b.click():gm.classList.remove('on');}finally{gm.__pass=0;gm.__anim=0;}
     box.getAnimations().concat(gm.getAnimations()).forEach(x=>x.cancel());box.style.cssText='';gm.style.backgroundColor='';box.classList.remove('full');};};
+  // the same animated close for code outside this block (the page's own Esc handler uses it)
+  gm._animClose=()=>close(0);
+  // ✕ and a tap on the backdrop itself: play the dismiss first (capture phase, so the instant close doesn't run yet)
+  gm.addEventListener('click',e=>{if(gm.__pass||!gm.classList.contains('on'))return;
+   if(e.target===gm||e.target.closest('#gmx')){e.preventDefault();e.stopImmediatePropagation();close(0);}},true);
+  // Esc while the sheet is open
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape'||gm.__pass||!gm.classList.contains('on'))return;
+   e.preventDefault();e.stopImmediatePropagation();close(0);},true);
   let d=null;
   const down=e=>{if(e.pointerType==='mouse'&&e.button!==0)return;if(e.target.closest('button:not(.grab),a,input'))return;
    const S=stops(),full=box.classList.contains('full');
@@ -3891,7 +3984,7 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   // collapsing header: how far the text pane has scrolled (0..1 over the first 140px) drives the portrait band height
   if(gp){let q=0;const sh=()=>{q=0;box.style.setProperty('--sh',Math.min(1,gp.scrollTop/140).toFixed(3));};
    gp.addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(sh);if(!box.classList.contains('full')&&gp.scrollTop>60)settle(true);},{passive:true});
-   new MutationObserver(()=>{if(gm.classList.contains('on')){box.classList.remove('full');box.style.height=box.style.transform='';requestAnimationFrame(sh);}})
+   new MutationObserver(()=>{if(gm.classList.contains('on')){gm.__anim=0;box.classList.remove('full');box.style.height=box.style.transform='';requestAnimationFrame(sh);}})
     .observe(gm,{attributes:true,attributeFilter:['class']});}});
 })();
 </script>
@@ -3923,6 +4016,29 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
  new MutationObserver(ms=>{const Q=new Set();for(const m of ms){if(m.type==='characterData')Q.add(m.target);else m.addedNodes.forEach(n=>Q.add(n));}
   Q.forEach(n=>{if(!(n.nodeType===1&&n.classList.contains('bai')))scan(n);});})
   .observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+</script>
+<script>
+// ===== ACCESSIBILITY (keyboard + screen reader), one place, no template changes =====
+(function(){
+ // 1) things that open a popup on click but are plain span / div / img (student names & avatars, growth chips, boss links):
+ //    make them reachable with Tab, announce them as buttons, and let Enter / Space click them. One delegated key handler;
+ //    new elements from later renders are marked in one batch per frame.
+ const ACT='[data-stu],.hasg,.bl';
+ const mark=root=>{(root.matches&&root.matches(ACT)?[root]:[]).concat([...(root.querySelectorAll?root.querySelectorAll(ACT):[])]).forEach(el=>{
+  if(el.hasAttribute('tabindex')||el.closest('button,a[href]'))return;el.tabIndex=0;el.setAttribute('role','button');
+  if(el.tagName==='IMG'&&el.dataset.stu)el.setAttribute('aria-label',el.dataset.stu);});};
+ mark(document.body);
+ let Q=[],f=0;new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>n.nodeType===1&&Q.push(n)));
+  if(!f)f=requestAnimationFrame(()=>{f=0;Q.splice(0).forEach(n=>n.isConnected&&mark(n));});}).observe(document.body,{childList:true,subtree:true});
+ document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const el=e.target.closest&&e.target.closest('[role=button]');
+  if(!el||el.matches('button,a[href],input,textarea,select'))return;e.preventDefault();el.click();});
+ // 2) results that change when you type (Eligma plan, refresh notes) are read out politely; countdowns are NOT live (they tick every second)
+ ['cplan','csum','cpyro','lupd','bupd','pupd'].forEach(id=>{const el=document.getElementById(id);if(el)el.setAttribute('aria-live','polite');});
+ // 3) the dock / topbar link of the open screen says so
+ const cur=()=>{const h=location.hash.split('/')[0]||'#home';
+  document.querySelectorAll('#dock a[href^="#"]').forEach(a=>a.getAttribute('href')===h?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));};
+ addEventListener('hashchange',cur);cur();
 })();
 </script>
 </body>
