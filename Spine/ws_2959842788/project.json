@@ -1,0 +1,200 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "A fully interactive wallpaper of Yuragi Momoka's Work Live2D from Blue Archive. Includes headpatting, mouse tracking and voicelines. The character may also be repositioned.\n\nWorks best in tandem with the [url=https://github.com/Xenon257R/blue-archive-rainmeter#readme]Blue Archive Rainmeter Suite[/url] available for free, specifically the [url=https://github.com/Xenon257R/blue-archive-rainmeter#sub-hubs]Sub Hubs[/url].\n\nYou can add a background music track using the [b]BGM File[/b] parameter. Even though file navigation will explicitly filter only [b].webm[/b], [b].ogg[/b] and [b].ogv[/b] filetypes due to [i]WallpaperEngine[/i]'s 'Image or Video filetype only' restriction, the wallpaper will still accept most audio filetypes ([b].mp3[/b], [b].wav[/b], etc.) by navigating to the directory the music file is located in, then manually writing in the filename with the correct file extension in the ([b]File name:[/b]) box yourself (e.g. Rolling Beat.mp3). If this doesn't work, [b].ogg[/b] still works as an audio filetype, so you can convert your file(s) appropriately.",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"bgmfile" : 
+			{
+				"fileType" : "video",
+				"index" : 14,
+				"order" : 114,
+				"text" : "BGM File (Refresh to Apply)",
+				"type" : "file",
+				"value" : ""
+			},
+			"bgmvolume" : 
+			{
+				"fraction" : false,
+				"index" : 15,
+				"max" : 100,
+				"min" : 0,
+				"order" : 115,
+				"text" : "BGM Volume",
+				"type" : "slider",
+				"value" : 10
+			},
+			"characterx" : 
+			{
+				"condition" : "posactions.value==true",
+				"fraction" : true,
+				"index" : 9,
+				"max" : 100,
+				"min" : 0,
+				"order" : 109,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "CharacterX",
+				"type" : "slider",
+				"value" : 20
+			},
+			"charactery" : 
+			{
+				"condition" : "posactions.value==true",
+				"fraction" : true,
+				"index" : 10,
+				"max" : 100,
+				"min" : 0,
+				"order" : 110,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "CharacterY",
+				"type" : "slider",
+				"value" : 45
+			},
+			"dialogx" : 
+			{
+				"condition" : "posactions.value==true && showdialog.value == true",
+				"fraction" : true,
+				"index" : 12,
+				"max" : 100,
+				"min" : 0,
+				"order" : 112,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "DialogX",
+				"type" : "slider",
+				"value" : 12.5
+			},
+			"dialogy" : 
+			{
+				"condition" : "posactions.value==true && showdialog.value == true",
+				"fraction" : true,
+				"index" : 13,
+				"max" : 100,
+				"min" : 0,
+				"order" : 113,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "DialogY",
+				"type" : "slider",
+				"value" : 75
+			},
+			"headpatting" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 6,
+				"order" : 106,
+				"text" : "Headpatting",
+				"type" : "bool",
+				"value" : true
+			},
+			"introanimation" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "Intro Animation",
+				"type" : "bool",
+				"value" : true
+			},
+			"mouseactions" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "Show Mouse Actions",
+				"type" : "bool",
+				"value" : false
+			},
+			"mousetracking" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 7,
+				"order" : 107,
+				"text" : "Mouse Tracking",
+				"type" : "bool",
+				"value" : true
+			},
+			"posactions" : 
+			{
+				"index" : 8,
+				"order" : 108,
+				"text" : "Show Position Actions",
+				"type" : "bool",
+				"value" : false
+			},
+			"scale" : 
+			{
+				"fraction" : true,
+				"index" : 0,
+				"max" : 2,
+				"min" : 0.8,
+				"order" : 100,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"showdialog" : 
+			{
+				"condition" : "posactions.value==true",
+				"index" : 11,
+				"order" : 111,
+				"text" : "Show Dialog",
+				"type" : "bool",
+				"value" : true
+			},
+			"targetfps" : 
+			{
+				"fraction" : false,
+				"index" : 1,
+				"max" : 144,
+				"min" : 30,
+				"order" : 101,
+				"text" : "Target FPS",
+				"type" : "slider",
+				"value" : 60
+			},
+			"voicelines" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 4,
+				"order" : 104,
+				"text" : "Voicelines",
+				"type" : "bool",
+				"value" : true
+			},
+			"voicevolume" : 
+			{
+				"condition" : "mouseactions.value == true && voicelines.value == true",
+				"fraction" : false,
+				"index" : 5,
+				"max" : 100,
+				"min" : 0,
+				"order" : 105,
+				"text" : "Volume",
+				"type" : "slider",
+				"value" : 50
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Anime" ],
+	"title" : "Blue Archive Yuragi Momoka - Fully Interactive L2D",
+	"type" : "Web",
+	"version" : 2,
+	"visibility" : "public",
+	"workshopid" : "2959842788",
+	"workshopurl" : "steam://url/CommunityFilePage/2959842788"
+}
