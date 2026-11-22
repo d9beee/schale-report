@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
+<link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
 <script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
@@ -350,6 +351,7 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
 
 <header class="topbar" id="topbar">
   <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>
+  <img class="tb-logo" src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()">
   <h1 class="tb-title" id="tbTitle">Schale Report</h1>
   <button class="tb-help" id="tbHelp" type="button" aria-label="Hướng dẫn màn này" aria-expanded="false" aria-controls="hpop">?</button>
   <div class="tb-res">
@@ -376,15 +378,18 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
   <aside class="cast lobby" id="lobbyCast"></aside>
   <div class="pane">
     <div class="tiles">
-      <a class="tile big" href="#live" id="tRaid" data-ic="⚔️"><div class="tbg"></div><span class="ttag"></span><b>Total Assault · Grand Assault</b><small></small></a>
-      <a class="tile wide" href="#banners" id="tBan" data-ic="🎟️"><div class="tbg"></div><span class="ttag pink"></span><b>Banner Global</b><small></small></a>
-      <a class="tile" href="#pvp" id="tPvp" data-ic="🏆"><div class="tbg"></div><span class="ttag"></span><b>Tactical Challenge</b><small>PvP · đồng hồ, meta, đội</small></a>
-      <a class="tile" href="#tier" id="tStu" data-ic="👥"><div class="tbg"></div><span class="ttag"></span><b>Học sinh</b><small>Tier list roster</small></a>
-      <a class="tile" href="#ue" id="tUe" data-ic="💠"><div class="tbg"></div><span class="ttag"></span><b>Kế hoạch UE</b><small>Máy tính Eligma · thứ tự nâng</small></a>
-      <a class="tile" href="#teams" id="tBoss" data-ic="🎯"><div class="tbg"></div><b>Cơ chế boss</b><small>15 boss · khắc hệ · đội hình</small></a>
-      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><b>Thẻ EX mở đầu</b><small>Cách xếp đội vào trận</small></a>
-      <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></a>
-      <a class="tile flat" href="#servers" id="tSrv" data-ic="🌐"><div class="tbg"></div><b>JP · KR · Global</b><small>So sánh tier · nguồn</small></a>
+      <a class="tile big" href="#live" id="tRaid" data-ic="⚔️"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Total Assault · Grand Assault</b><small></small></span></a>
+      <a class="tile wide" href="#banners" id="tBan" data-ic="🎟️"><div class="tbg"></div><span class="ttag pink"></span><span class="tlab"><b>Banner Global</b><small></small></span></a>
+      <a class="tile" href="#pvp" id="tPvp" data-ic="🏆"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Tactical Challenge</b><small>PvP · đồng hồ, meta, đội</small></span></a>
+      <a class="tile" href="#tier" id="tStu" data-ic="👥"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Học sinh</b><small>Tier list roster</small></span></a>
+      <a class="tile" href="#ue" id="tUe" data-ic="💠"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Kế hoạch UE</b><small>Máy tính Eligma · thứ tự nâng</small></span></a>
+      <a class="tile" href="#teams" id="tBoss" data-ic="🎯"><div class="tbg"></div><span class="tlab"><b>Cơ chế boss</b><small>15 boss · khắc hệ · đội hình</small></span></a>
+      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX mở đầu</b><small>Cách xếp đội vào trận</small></span></a>
+      <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></span></a>
+      <a class="tile flat" href="#servers" id="tSrv" data-ic="🌐"><div class="tbg"></div><span class="tlab"><b>JP · KR · Global</b><small>So sánh tier · nguồn</small></span></a>
+      <a class="tile lock" id="tLock" aria-disabled="true" tabindex="-1" title="Chưa mở"><div class="tbg"></div>
+        <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/><circle cx="12" cy="15.5" r="1.8" fill="#5b6b82"/></svg>
+        <b><span class="beta">BETA</span>Đang phát triển</b><small>Sắp có…</small></a>
     </div>
     <section class="notice">
       <div class="nhead"><span class="ntag">Thông báo</span><span class="kicker">Schale Tactical Report · 17/11/2026</span></div>
@@ -734,7 +739,7 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
     <div class="sec-head"><div class="sec-num">5</div><div><h2>JP, KR và Global khác nhau ở đâu</h2><p>Ưu tiên Nhật và Hàn, rồi mới đến Global.</p></div></div>
     <div class="grid2">
       <div class="card">
-        <h3>🇯🇵 Nhật ≈ 🇰🇷 Hàn</h3>
+        <h3><span class="srv">JP</span> Nhật ≈ <span class="srv">KR</span> Hàn</h3>
         <p>Bảng SS của BlueStacks KR có đúng 13 tên SS+ trong roster bạn. Hàn chỉ xếp Mari (Pop Idol) và Himari (Armed) thấp hơn một bậc (S); Iroha / Ibuki (Swimsuit) chưa có trong bảng Hàn. Kayoko (New Year) và Tsubaki bị Hàn xếp A.</p>
       </div>
       <div class="card">
@@ -775,7 +780,7 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
     </div>
   </section>
 
-  <footer>Schale Tactical Report · Soạn cho roster 215 học sinh của bạn</footer>
+  <footer><div class="flogo"><img src="Icons/schale.png" alt="SCHALE" onerror="this.remove()"><img src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()"></div>Schale Tactical Report · Soạn cho roster 215 học sinh của bạn<br><small>Logo, icon và hình học sinh © NEXON Games / Yostar · Blue Archive. Trang fan phi thương mại.</small></footer>
   </div>
 </div>
 
@@ -1177,17 +1182,9 @@ body.hud-off :is(.aro-btn,.totop){display:none}
  html body #home.screen.on{display:block;position:relative;height:calc(100vh - var(--tb,56px));min-height:0;overflow:hidden}
  #home .cast.lobby{position:absolute;inset:0;height:auto;width:auto}
  #home>.pane{position:absolute;left:55%;width:40%;top:calc(100% / 12);height:calc(100% * 9 / 12);padding:0;margin:0;overflow:visible;z-index:3}
- #home .tiles{height:100%;margin:0;display:grid;gap:8px;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(9,minmax(0,1fr))}
- #home .tiles .tile{grid-column:auto;grid-row:auto;min-height:0;height:auto}
- #tRaid{grid-area:1/1/4/5!important}#tBan{grid-area:1/5/4/9!important}
- #tPvp{grid-area:4/1/7/5!important}#tUe{grid-area:4/5/7/9!important}
- #tStu{grid-area:7/1/10/5!important}
- #tBoss{grid-area:7/5/9/7!important}#tTask{grid-area:7/7/9/9!important}
- #tOrd{grid-area:9/5/10/7!important}#tSrv{grid-area:9/7/10/9!important}
- /* the two small 1-row tiles only fit their title: centred, one line, the sub line hidden */
- #home :is(#tOrd,#tSrv){justify-content:center;padding:4px 12px;overflow:hidden}
- #home :is(#tOrd,#tSrv) b{font-size:clamp(12px,1.05vw,15px);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- #home :is(#tOrd,#tSrv) small{display:none}
+ #home .tiles{height:100%;margin:0;display:grid}
+ #home .tiles .tile{min-height:0;height:auto}
+ /* (the card grid itself is set once, in the LOBBY TILES block at the end of the CSS) */
  /* dialogue box + hint stay on the student's side, clear of the tiles */
  #home .cast.lobby .dlg{left:2.5%;right:auto;width:min(48%,720px)}
  #home .cast.lobby .l2hint{left:2.5%;right:auto}
@@ -1586,6 +1583,96 @@ html[data-theme=dark] .tile.flat small{opacity:.8}
 html[data-theme=dark] :is(.lc .mode,.lm,.k){color:#b4b9dc}
 html[data-theme=dark] .lc .when .cd,html[data-theme=dark] .bcard .bcd{color:#b6a8ff}
 html[data-theme=dark] :is(.lsched .ls,.tk,.tk-ck,.pair,.lane,.calc-row){border-color:#2c2f52}
+/* ===== game icons (Icons/<key>.png, Blue Archive wiki "Game Icons") in place of emoji: sized to the text they sit in ===== */
+img.bai{display:inline-block;width:1.3em;height:1.3em;object-fit:contain;vertical-align:-.28em;margin:0 .1em;
+ filter:drop-shadow(0 1px 1px rgba(20,40,70,.25));user-select:none;-webkit-user-drag:none;pointer-events:none}
+html[data-theme=dark] img.bai{filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+/* tickets cut from the UI sheet are wide: same height as the other icons, own width */
+img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto;height:1.4em;max-width:2.8em}
+.res i img.bai{width:20px;height:20px;margin:0;vertical-align:middle}
+.tb-ic img.bai{width:28px;height:28px;margin:0}
+.dock a i img.bai{width:26px;height:26px;margin:0;vertical-align:middle}
+.tb-logo{height:32px;width:auto;flex:none;margin-right:-2px;filter:drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 2px 3px rgba(30,43,62,.45))}
+html[data-theme=dark] .tb-logo{filter:drop-shadow(0 0 4px rgba(0,174,239,.35))}
+/* the SCHALE logo is white line art: it sits in a navy disc so it reads on light glass too (purple disc in dark mode) */
+img.bai[data-k=schale]{background:var(--navy);border-radius:50%;padding:.14em;box-sizing:border-box;filter:none}
+html[data-theme=dark] img.bai[data-k=schale]{background:#5b4fc4}
+.flogo img:first-child{background:var(--navy);border-radius:50%;padding:5px;box-sizing:border-box}
+.flogo img+img{filter:drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 0 1px #1e2b3e)}
+html[data-theme=dark] .flogo img+img{filter:none}
+@media (max-width:900px){.tb-logo{display:none}}
+.flogo{display:flex;justify-content:center;align-items:center;gap:16px;margin:4px 0 10px}
+.flogo img{height:36px;width:auto}
+.srv{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--navy);border-radius:999px;padding:1px 8px;vertical-align:2px}
+html[data-theme=dark] .srv{background:var(--sky)}
+/* ===== LOBBY TILES: Skewed Card + Text Scrim =====
+   Shape vs content: the tile box is only translated (never skewed / scaled), so its getBoundingClientRect() is the real card for the
+   FLIP zoom. Three shape layers lean by --sk around the tile's centre: ::before = fill + rim + shadow, .tbg = picture window (picture
+   skewed back = upright), ::after = text scrim (solid white / black under the title, clear 2/3 up). Title, sub line, status bubble
+   are upright content.
+   Alignment: every tile is shifted sideways by --dx = tan(8°) × (grid middle − tile middle), set by JS. Then the slanted edges
+   of tiles in different rows lie on ONE straight line, like a single sheet cut into cards (no staircase between tall and short rows). */
+#home .tiles{--sk:-8deg;--usk:8deg}
+#home .tile{--dx:0px;overflow:visible!important;border-radius:14px!important;color:var(--navy);padding:12px 22px!important;
+ justify-content:flex-end!important;align-items:flex-start!important;background:none!important;border:0!important;box-shadow:none!important;
+ -webkit-backdrop-filter:none;backdrop-filter:none;filter:none;transform:translateX(var(--dx))!important;transition:transform .25s cubic-bezier(.32,.72,0,1)!important}
+#home .tile:hover{transform:translateX(var(--dx)) translateY(-3px)!important}
+#home .tile:active{transform:translateX(var(--dx)) scale(.96)!important}
+#home .tile::before,#home .tile .tbg,#home .tile:after{border-radius:inherit;transform:skewX(var(--sk))}
+/* Apple frosted glass instead of the solid white / black fill: the room shows through, blurred and a little brighter,
+   with a light top rim (the glass edge) and a soft shadow. Dark mode = the same glass, tinted night blue. */
+#home .tile{--glass:rgba(255,255,255,.26);--rim:rgba(255,255,255,.75);--scrim:rgba(255,255,255,.42)}
+html[data-theme=dark] #home .tile{--glass:rgba(28,30,56,.36);--rim:rgba(200,200,255,.28);--scrim:rgba(14,15,30,.42)}
+#home .tile::before{content:""!important;position:absolute;inset:0;z-index:0;display:block;background:var(--glass);
+ -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+/* rim + shadow on the picture window's outside (the picture covers anything drawn inside it) */
+#home .tile .tbg{overflow:hidden;clip-path:none!important;box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(20,45,80,.22);transition:box-shadow .25s}
+#home .tile:hover .tbg{box-shadow:0 0 0 1.5px #fff,0 12px 28px rgba(20,45,80,.3)}
+html[data-theme=dark] #home .tile .tbg{box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(0,0,0,.5)}
+html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220,255,.5),0 12px 28px rgba(0,0,0,.6)}
+#home .tile .tbg img{transform:skewX(var(--usk)) scale(1.2)}
+/* text scrim = Apple's progressive blur: the bottom of the picture is frosted (blur + light / dark tint) under the title and the
+   frost fades out upward through a gradient mask, no solid colour band */
+#home .tile:after{display:block!important;background:var(--scrim)!important;
+ -webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);
+ -webkit-mask-image:linear-gradient(0deg,#000 0%,#000 30%,transparent 62%);mask-image:linear-gradient(0deg,#000 0%,#000 30%,transparent 62%)}
+#home .tile .tlab{display:flex;flex-direction:column;gap:1px;min-width:0;max-width:100%}
+#home .tile .tlab :is(b,small){color:var(--navy)!important;text-shadow:none}
+html[data-theme=dark] #home .tile .tlab :is(b,small){color:#fff!important}
+#home .tile b{font-style:normal;font-weight:800;letter-spacing:-.01em}
+#home .tile .tlab small{opacity:.78}
+/* small cards (Thẻ EX, JP·KR·Global, locked): plain card, title only, centred */
+#home .tile:is(#tOrd,#tSrv,#tLock){padding:6px 14px!important;align-items:center!important;justify-content:center!important;text-align:center}
+#home .tile:is(#tOrd,#tSrv,#tLock):after,#home .tile:is(#tOrd,#tSrv,#tLock) small{display:none!important}
+#home .tile:is(#tOrd,#tSrv) .tlab{align-items:center}
+#home .tile:is(#tOrd,#tSrv) b{white-space:normal!important;font-size:13px!important;line-height:1.25}
+/* status bubble on the top edge (yellow = time left, pink = in progress / to do) */
+#home .tile .ttag{--bb:#ffd84a;top:auto!important;bottom:calc(100% - 12px);left:16px;transform:none!important;z-index:4;
+ background:var(--bb)!important;color:#1e2b3e!important;font-size:12px;font-weight:800;padding:3px 12px;border-radius:999px!important;
+ box-shadow:0 3px 10px rgba(20,40,70,.25);white-space:nowrap}
+#home .tile .ttag::after{content:"";position:absolute;left:14px;top:100%;border:6px solid transparent;border-top-color:var(--bb);border-bottom:0}
+#home .tile :is(.ttag.pink),#home .tile.alert .ttag{--bb:#ff7fa6;color:#fff!important}
+/* locked card: grey, padlock, orange BETA */
+#home .tile.lock{--glass:rgba(120,132,150,.45);cursor:default;pointer-events:none}
+html[data-theme=dark] #home .tile.lock{--glass:rgba(40,44,62,.55)}
+#home .tile.lock .lk{position:static;width:28px;height:28px;margin:0 0 4px;color:#fff;opacity:.95}
+#home .tile.lock b{font-size:11px!important;line-height:1.2;white-space:normal;color:#fff!important}
+#home .tile.lock .beta{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;color:#ffb02e}
+@media (min-width:901px){
+ /* 6 equal columns, one gap, rows 1 : 1 : .55 → every card edge sits on a shared column line
+    row 1: TA·GA | Banner | Học sinh   row 2: PvP | Kế hoạch UE | Cơ chế boss   (2 columns each)
+    row 3: Nhiệm vụ (3 columns) | locked | Thẻ EX | JP·KR·Global (1 column each) */
+ #home .tiles{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-template-rows:1fr 1fr .55fr!important;gap:16px 14px!important;position:relative}
+ #home .tiles #tRaid{grid-area:1/1/2/3!important}#home .tiles #tBan{grid-area:1/3/2/5!important}#home .tiles #tStu{grid-area:1/5/2/7!important}
+ #home .tiles #tPvp{grid-area:2/1/3/3!important}#home .tiles #tUe{grid-area:2/3/3/5!important}#home .tiles #tBoss{grid-area:2/5/3/7!important}
+ #home .tiles #tTask{grid-area:3/1/4/4!important}#home .tiles #tLock{grid-area:3/4/4/5!important}
+ #home .tiles #tOrd{grid-area:3/5/4/6!important}#home .tiles #tSrv{grid-area:3/6/4/7!important}
+ #home .tiles .tile:not(#tOrd,#tSrv,#tLock) b{font-size:clamp(15px,1.3vw,22px)!important}
+ #home .tiles .tile:not(#tOrd,#tSrv,#tLock) small{font-size:12px}
+ /* the controller-button marks the game prints above its menu */
+ #home .tiles::before{content:"△ ✕ ＋ ○";position:absolute;right:6px;top:-24px;font-size:12px;font-weight:700;letter-spacing:.35em;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(20,40,70,.5)}
+}
+@media (max-width:900px){#home #tLock{display:none!important}}
 </style>
 
 <button class="totop" id="totop" type="button" aria-label="Lên đầu trang">↑</button>
@@ -2796,8 +2883,20 @@ function zoomScr(prev,sc,from,prevTop,prevY){
  // tapped tile to the full screen. Nothing is stretched or resized, so the room pictures (fixed backgrounds) stay exactly
  // as they are from the first frame to the last and there is no jump when the animation ends. Corners: clip-path round.
  const px=v=>Math.max(0,v).toFixed(1)+'px',rad=Math.min(18,r.height/3,r.width/3),bw=mover.getBoundingClientRect().width||W;
- const small={clipPath:`inset(${px(r.top-tb)} ${px(bw-r.right)} ${px(tb+Hv-r.bottom)} ${px(r.left)} round ${rad}px)`};
- const big={clipPath:'inset(0px 0px 0px 0px round 0px)'};
+ let small={clipPath:`inset(${px(r.top-tb)} ${px(bw-r.right)} ${px(tb+Hv-r.bottom)} ${px(r.left)} round ${rad}px)`};
+ let big={clipPath:'inset(0px 0px 0px 0px round 0px)'};
+ // SHAPE MORPH for lobby tiles: the tile's shape layer leans (skewX --sk) with round corners, so the window grows out of that
+ // exact rounded parallelogram into the full rectangle. Both ends are polygons with the same 16 points (4 per corner, a curve
+ // through each corner; at the open end the 4 points of a corner sit on the corner = radius 0), so the browser morphs point by point.
+ const ot=ZM.orig[(closing?prev:sc).id];
+ if(ot&&ot.matches&&ot.matches('#home .tile')){
+  const mr=mover.getBoundingClientRect(),ox=mr.left,oy=mr.top,skd=parseFloat(getComputedStyle(ot).getPropertyValue('--sk'))||0,
+   T=Math.tan(-skd*Math.PI/180)*r.height/2,cr=Math.min(14,r.height/4,r.width/4);
+  const poly=(C,R)=>'polygon('+C.map((c,i)=>{const p=C[(i+3)%4],n=C[(i+1)%4],u=(a,b)=>{const d=Math.hypot(b[0]-a[0],b[1]-a[1])||1;return [(b[0]-a[0])/d,(b[1]-a[1])/d];};
+    const a=u(c,p),b=u(c,n),P=[c[0]+a[0]*R,c[1]+a[1]*R],Q=[c[0]+b[0]*R,c[1]+b[1]*R];
+    return [0,1/3,2/3,1].map(t=>{const s=1-t;return `${(s*s*P[0]+2*s*t*c[0]+t*t*Q[0]-ox).toFixed(1)}px ${(s*s*P[1]+2*s*t*c[1]+t*t*Q[1]-oy).toFixed(1)}px`;}).join(',');}).join(',')+')';
+  small={clipPath:poly([[r.left+T,r.top],[r.right+T,r.top],[r.right-T,r.bottom],[r.left-T,r.bottom]],cr)};
+  big={clipPath:poly([[ox,oy],[ox+mr.width,oy],[ox+mr.width,oy+mr.height],[ox,oy+mr.height]],0)};}
  // closing runs ~20% faster than opening; opacity steps are linear so the cross-fade lands in the first / last ~120 ms
  const o={duration:closing?330:420,easing:ZE,fill:'both'},ol={...o,easing:'linear'};
  const k=(a,z)=>closing?[z,a]:[a,z],fadeIn=closing?[{opacity:1},{opacity:1,offset:.7},{opacity:0}]:[{opacity:0},{opacity:1,offset:.3},{opacity:1}];
@@ -3608,6 +3707,14 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
  b.addEventListener('click',()=>set(!document.body.classList.contains('hud-off')));
  addEventListener('hashchange',()=>{if(document.body.classList.contains('hud-off'))set(false);});
 })();
+// lobby cards (desktop): every card leans around its own middle, so a tall card and a short one would leave a staircase between
+// rows. Shift each card sideways by tan(lean) × (grid middle − card middle): all slanted edges then fall on one straight line.
+// One ResizeObserver on the grid (fires on resize, on opening the lobby, on the 900px switch); phones keep --dx = 0.
+(function(){const g=document.querySelector('#home .tiles');if(!g||!window.ResizeObserver)return;const mq=matchMedia('(min-width:901px)');let q=0;
+ const lay=()=>{q=0;const on=mq.matches&&g.offsetHeight>0,gy=g.offsetHeight/2,
+   k=Math.tan(-(parseFloat(getComputedStyle(g).getPropertyValue('--sk'))||0)*Math.PI/180);
+  g.querySelectorAll('.tile').forEach(t=>t.style.setProperty('--dx',on?(k*(gy-t.offsetTop-t.offsetHeight/2)).toFixed(1)+'px':'0px'));};
+ new ResizeObserver(()=>{if(!q)q=requestAnimationFrame(lay);}).observe(g);})();
 // ===== swipe back from the left or right edge (touch): the open screen follows the finger and the screen before it shows
 // underneath; let go past a third of the width (or flick) and it slides away = back, otherwise it springs back into place
 (function(){
@@ -3672,6 +3779,35 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   const gp=box.querySelector('.gpane');if(gp){let q=0;const sh=()=>{q=0;box.style.setProperty('--sh',Math.min(1,gp.scrollTop/140).toFixed(3));};
    gp.addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(sh);},{passive:true});
    new MutationObserver(()=>{if(gm.classList.contains('on'))requestAnimationFrame(sh);}).observe(gm,{attributes:true,attributeFilter:['class']});}});
+})();
+</script>
+<script>
+// (own <script> tag on purpose: an error anywhere in the big script above used to stop everything after it, icons included)
+// ===== game icons instead of emoji. ONE table (emoji -> Icons/<key>.png, from the Blue Archive wiki "Game Icons" category, fetched by
+// get_icons.ps1) and ONE pass over the page's text, run again on whatever re-renders (cards, timers, theme button, dialogue), so no
+// template has to know about icons. An icon file that is missing turns back into its emoji, and that key isn't tried again.
+(function(){
+ // value = icon files to try in order ("ui-*" = cut from the game's own UI sheet by crop_ui.ps1, the rest = wiki item icons)
+ const MAP={'📋':'ui-task|task','👥':'ui-stu','💠':'ui-eligma|eligma','⚔':'ui-sword|battle','🎟':'ui-shop|gacha','🏠':'ui-home|schale','🏆':'ui-pvp|pvp',
+  '🎯':'ui-boss|target','🃏':'card','🌐':'ui-city|city','☀':'outdoor','🌙':'indoor','🔄':'dice','🧮':'calc','🛡':'ui-shield|tank','💚':'heal',
+  '✨':'buff','🧭':'flag','✅':'ui-check|ok','📅':'ui-raid|calendar','⏱':'calendar','📜':'ui-book|scroll','💡':'ui-mega|tip','🧩':'team',
+  '🔭':'scope','👆':'pat','❔':'ui-help|help','🛠':'ui-gear|gear'};
+ const RE=new RegExp('('+Object.keys(MAP).join('|')+')\\uFE0F?','gu'),BAD=new Set();
+ const SKIP='script,style,textarea,option,select,title,svg,canvas,.bai-fb';
+ const ok=v=>v.split('|').filter(f=>!BAD.has(f));
+ const mk=(ch,L)=>{const i=new Image();i.className='bai';i.alt=ch;i.draggable=false;i.decoding='async';
+  const go=()=>{const f=L.shift();if(!f){const s=document.createElement('span');s.className='bai-fb';s.textContent=ch;i.replaceWith(s);return;}i.dataset.k=f;i.src='Icons/'+f+'.png';};
+  i.onerror=()=>{BAD.add(i.dataset.k);go();};go();return i;};
+ const one=t=>{const p=t.parentElement,s=t.nodeValue;if(!p||!s||p.closest(SKIP))return;RE.lastIndex=0;if(!RE.test(s))return;
+  const f=document.createDocumentFragment();let i=0;RE.lastIndex=0; // matchAll starts where test() stopped: reset, or the first emoji is skipped
+  for(const m of s.matchAll(RE)){const L=MAP[m[1]]&&ok(MAP[m[1]]);if(!L||!L.length)continue;f.append(s.slice(i,m.index),mk(m[0],L));i=m.index+m[0].length;}
+  if(!i)return;f.append(s.slice(i));t.replaceWith(f);};
+ const scan=n=>{if(!n||!n.isConnected)return;if(n.nodeType===3)return one(n);if(n.nodeType!==1||n.closest(SKIP))return;
+  const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),L=[];while(w.nextNode())L.push(w.currentNode);L.forEach(one);};
+ scan(document.body);
+ // runs as a microtask right after each change, before the browser paints, so the emoji never shows for a frame
+ new MutationObserver(ms=>ms.forEach(m=>m.type==='characterData'?scan(m.target):m.addedNodes.forEach(scan)))
+  .observe(document.body,{childList:true,subtree:true,characterData:true});
 })();
 </script>
 </body>
