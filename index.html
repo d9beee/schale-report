@@ -1395,6 +1395,14 @@ html[data-theme=dark] #zdim{background:rgba(0,0,0,.45)}
 .screen.nz{animation:none!important}
 html[data-theme=dark] .screen.zmove{background-color:#0e0f1d}
 /* ===== phone Dock: floating frosted glass bar at the bottom replaces the top-bar resource pills ===== */
+/* ===== phone: room pictures. Phone browsers don't do background-attachment:fixed (iOS ignores it), so "cover" was worked out
+   against the whole screen, thousands of px tall: the picture blew up until it broke, or didn't draw at all. Here the screen's own
+   picture is switched off and redrawn on a window-sized fixed layer behind it (same image, same position), sized to the window. */
+@media (max-width:900px){
+ .screen:not(#home){background-size:0 0!important;background-color:transparent!important}
+ .screen:not(#home)::before{content:"";position:fixed;left:0;right:0;top:var(--tb);bottom:0;z-index:-1;pointer-events:none;
+  background:inherit;background-size:cover!important;background-attachment:scroll!important;background-repeat:no-repeat!important}
+}
 .dock{display:none}
 @media (max-width:900px){
  .topbar .tb-res{display:none}
@@ -3279,18 +3287,31 @@ function stageTalk(K){const sc=document.querySelector(K.sc),cast=sc&&sc.querySel
   drawGrid(FX,cast,E||L,L2D[K.ch]&&L2D[K.ch].grid&&L2D[K.ch].grid());};
  hint.addEventListener('click',()=>{cast.classList.toggle('zones');draw();});
  addEventListener('resize',draw);
- let tried=false;
- function wake(){if(P){P.play&&P.play();return;}if(tried||!window.spineLoad)return;tried=true;
+ let tried=false,introQ=null;
+ // intro like the game: one of the Start animations, then idle, with its voice line. A rig loaded ahead of time (screen not open)
+ // keeps its intro for the first time the screen is actually opened.
+ const intro=o=>{const st=o.p.animationState,k=Math.random()*IN.length|0;
+  if(has2(K.start(k))){st.setAnimation(0,K.start(k),false);st.addAnimation(0,'Idle_01',true,0);
+   setTimeout(()=>{if(on()){audio(K.inFile(k+1));say(IN[k]);}},ID[k]);}};
+ function wake(){if(P){if(on()){P.play&&P.play();if(introQ){const o=introQ;introQ=null;intro(o);}}return;}if(tried||!window.spineLoad)return;tried=true;
   spineLoad(K.ch).then(o=>{P=o.p;H=o.H;E=o.el;L.querySelectorAll('.cpor').forEach(x=>x.remove());hint.title=o.info+'\n\nBấm để hiện / ẩn vùng chạm';
    const st=o.p.animationState,A=o.p.skeleton.data.animations.map(a=>a.name),blink=A.find(n=>/^eye_?close/i.test(n));
    S=st;AN=A;TE=o.p.skeleton.findBone('Touch_Eye')||o.p.skeleton.findBone('Touch_Eye_Key');if(TE){EX=TE.x;EY=TE.y;}
-   // intro like the game: one of the Start animations, then idle, with its voice line
-   const k=Math.random()*IN.length|0;
-   if(has2(K.start(k))&&on()){st.setAnimation(0,K.start(k),false);st.addAnimation(0,'Idle_01',true,0);
-    setTimeout(()=>{if(on()){audio(K.inFile(k+1));say(IN[k]);}},ID[k]);}
+   if(on())intro(o);else introQ=o;
    setInterval(()=>{if(on()&&blink&&!(st.getCurrent(1))&&!(H.busy&&H.busy()))st.setAnimation(2,blink,false);},6000);
-   if(!on())P.pause&&P.pause();})
+   if(!on())P.pause&&P.pause();window.l2dRefit&&l2dRefit();})
   .catch(e=>{console.warn(K.ch+':',e);L.insertAdjacentHTML('afterbegin',porImg(CAST[K.cast][0],'cpor'));nm.textContent=CAST[K.cast][0];say(CAST[K.cast][1]);});}
+ // warm-up: every screen student is loaded in the background, one after another, a few seconds after the page is up, and right
+ // away when a finger / mouse goes down on a tile or Dock icon leading to its screen, so it is already standing there on open
+ {const W=window.WARM=window.WARM||[];W.push({sc,go:()=>{if(!P&&!tried)wake();}});
+  if(!W.t){W.t=1;
+   const idle=f=>(window.requestIdleCallback?requestIdleCallback(f,{timeout:3000}):setTimeout(f,300));
+   const run=()=>{const n=W.find(w=>!w.done);if(!n)return;n.done=1;n.go();setTimeout(()=>idle(run),1800);};
+   const start=()=>setTimeout(()=>idle(run),2500);
+   if(document.readyState==='complete')start();else addEventListener('load',start);
+   document.addEventListener('pointerdown',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+    const t=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))),s=t&&t.closest('.screen'),w=s&&W.find(x=>x.sc===s);
+    if(w&&!w.done){w.done=1;w.go();}},{capture:true,passive:true});}}
  let seen=false;
  const enter=()=>{if(!on()){P&&P.pause&&P.pause();mStop(au);return;}wake();say(seen?next():LOGIN);seen=true;};
  addEventListener('hashchange',enter);enter();
