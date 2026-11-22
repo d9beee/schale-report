@@ -384,9 +384,9 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
       <a class="tile" href="#tier" id="tStu" data-ic="👥"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Học sinh</b><small>Tier list roster</small></span></a>
       <a class="tile" href="#ue" id="tUe" data-ic="💠"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Kế hoạch UE</b><small>Máy tính Eligma · thứ tự nâng</small></span></a>
       <a class="tile" href="#teams" id="tBoss" data-ic="🎯"><div class="tbg"></div><span class="tlab"><b>Cơ chế boss</b><small>15 boss · khắc hệ · đội hình</small></span></a>
-      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX mở đầu</b><small>Cách xếp đội vào trận</small></span></a>
+      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX</b><small>Cách xếp đội vào trận</small></span></a>
       <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></span></a>
-      <a class="tile flat" href="#servers" id="tSrv" data-ic="🌐"><div class="tbg"></div><span class="tlab"><b>JP · KR · Global</b><small>So sánh tier · nguồn</small></span></a>
+      <a class="tile flat" href="#servers" id="tSrv" data-ic="🌐"><div class="tbg"></div><span class="tlab"><b>Servers</b><small>JP · KR · Global</small></span></a>
       <a class="tile lock" id="tLock" aria-disabled="true" tabindex="-1" title="Chưa mở"><div class="tbg"></div>
         <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/><circle cx="12" cy="15.5" r="1.8" fill="#5b6b82"/></svg>
         <b><span class="beta">BETA</span>Đang phát triển</b><small>Sắp có…</small></a>
@@ -1230,6 +1230,16 @@ html[data-theme=dark] .screen[data-cast="banner"]{background:linear-gradient(180
 :is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) :is(.cast,.cast .l2d,.cast .spn,.pane){background:transparent!important}
 :is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) .cast::before,:is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) .cast::after{display:none!important}
 :is(#s-raid,.screen[data-cast="ue"],#home) .cast::before,:is(#s-raid,.screen[data-cast="ue"],#home) .cast::after{display:none!important}
+/* screens without a student get the same backdrops as their lobby cards (wiki "Background images", local copies in BG/):
+   Cơ chế boss = Abydos ruins (Binah's desert), Servers = city downtown; night versions in dark mode.
+   Thẻ EX is a section inside the boss screen: its card gets the arcade under a frosted veil so the text stays readable. */
+#s-boss.screen{background:#1e2b3e url(BG/BG_AbydosRuinArea.jpg) center/cover no-repeat fixed}
+html[data-theme=dark] #s-boss.screen{background-image:url(BG/BG_AbydosRuinArea_Night.jpg)}
+#s-srv.screen{background:#1e2b3e url(BG/BG_CityDowntown.jpg) center/cover no-repeat fixed}
+html[data-theme=dark] #s-srv.screen{background-image:url(BG/BG_CityDowntown_Night.jpg)}
+:is(#s-boss,#s-srv) .pane{background:transparent!important}
+#order.card{background:linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
+html[data-theme=dark] #order.card{background:linear-gradient(rgba(20,22,42,.86),rgba(20,22,42,.86)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
 #tSrv{grid-column:span 1}
 #tTask{background:linear-gradient(135deg,#00aeef,#1e2b3e)}
 .tile.alert .ttag{background:#ff4d6a;color:#fff}
@@ -1586,6 +1596,10 @@ html[data-theme=dark] :is(.lsched .ls,.tk,.tk-ck,.pair,.lane,.calc-row){border-c
 /* ===== game icons (Icons/<key>.png, Blue Archive wiki "Game Icons") in place of emoji: sized to the text they sit in ===== */
 img.bai{display:inline-block;width:1.3em;height:1.3em;object-fit:contain;vertical-align:-.28em;margin:0 .1em;
  filter:drop-shadow(0 1px 1px rgba(20,40,70,.25));user-select:none;-webkit-user-drag:none;pointer-events:none}
+/* an icon inside a picture box must not take the picture rules (.scard .ph img = 100% × 100% covered the whole student card) */
+:is(.scard,.tbg,.bhero,.gl,.cast) img.bai{position:static!important;width:1.3em!important;height:1.3em!important;max-width:none;object-fit:contain!important;
+ transform:none!important;margin:0!important;vertical-align:-.25em}
+.scard .gico img.bai{width:14px!important;height:14px!important;vertical-align:-2px}
 html[data-theme=dark] img.bai{filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 /* tickets cut from the UI sheet are wide: same height as the other icons, own width */
 img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto;height:1.4em;max-width:2.8em}
@@ -1641,11 +1655,19 @@ html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220
 html[data-theme=dark] #home .tile .tlab :is(b,small){color:#fff!important}
 #home .tile b{font-style:normal;font-weight:800;letter-spacing:-.01em}
 #home .tile .tlab small{opacity:.78}
-/* small cards (Thẻ EX, JP·KR·Global, locked): plain card, title only, centred */
+/* small cards (Thẻ EX, Servers, locked): scene picture under an even frosted veil, icon + title centred */
 #home .tile:is(#tOrd,#tSrv,#tLock){padding:6px 14px!important;align-items:center!important;justify-content:center!important;text-align:center}
-#home .tile:is(#tOrd,#tSrv,#tLock):after,#home .tile:is(#tOrd,#tSrv,#tLock) small{display:none!important}
-#home .tile:is(#tOrd,#tSrv) .tlab{align-items:center}
-#home .tile:is(#tOrd,#tSrv) b{white-space:normal!important;font-size:13px!important;line-height:1.25}
+#home .tile:is(#tOrd,#tSrv,#tLock) small{display:none!important}
+#home .tile:is(#tOrd,#tSrv,#tLock):after{--scrim:rgba(255,255,255,.5);-webkit-mask-image:none;mask-image:none;
+ -webkit-backdrop-filter:blur(3px) saturate(150%);backdrop-filter:blur(3px) saturate(150%)}
+html[data-theme=dark] #home .tile:is(#tOrd,#tSrv):after{--scrim:rgba(10,11,24,.5)}
+#home .tile.lock:after{--scrim:rgba(24,30,46,.5)!important}
+#home .tile:is(#tOrd,#tSrv) .tlab{align-items:center;gap:3px}
+#home .tile:is(#tOrd,#tSrv) b{white-space:normal!important;font-size:14px!important;line-height:1.2}
+/* scene picture behind the portrait (or alone), day / night by theme */
+#home .tile .tbg img.bgi{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;
+ object-fit:cover!important;object-position:50% 50%!important;z-index:-1!important;margin:0!important}
+html[data-theme=dark] #home .tile .tbg img.bgi.day,html:not([data-theme=dark]) #home .tile .tbg img.bgi.night{display:none}
 /* status bubble on the top edge (yellow = time left, pink = in progress / to do) */
 #home .tile .ttag{--bb:#ffd84a;top:auto!important;bottom:calc(100% - 12px);left:16px;transform:none!important;z-index:4;
  background:var(--bb)!important;color:#1e2b3e!important;font-size:12px;font-weight:800;padding:3px 12px;border-radius:999px!important;
@@ -2339,7 +2361,8 @@ function renderLive(){const now=new Date();
  document.getElementById('lupd').textContent='Giờ Việt Nam (UTC+7) · cập nhật lúc '+now.toLocaleTimeString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'});}
 renderLive();
 document.getElementById('lrf').addEventListener('click',renderLive);
-setInterval(()=>{const now=Date.now();let flip=false;
+// countdowns tick once a second only while their screen is open and the tab is visible (they were running on every screen)
+setInterval(()=>{if(document.hidden||!document.querySelector('#s-raid.on'))return;const now=Date.now();let flip=false;
  document.querySelectorAll('#lgrid .cd').forEach(el=>{const ms=+el.dataset.t-now;if(ms<=0)flip=true;el.textContent=left(ms);});
  if(flip)renderLive();},1000);
 
@@ -2408,7 +2431,7 @@ function renderBan(){const now=new Date(),cur=curBan(now);if(BSEL===null)BSEL=cu
  document.getElementById('bpick').innerHTML=picks.join(' → ')||'Chưa có học sinh nào đáng quay trong lịch.';}
 document.getElementById('bw').addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;BSEL=+t.dataset.i;renderBan();});
 renderBan();
-setInterval(()=>{const now=Date.now();let flip=false;
+setInterval(()=>{if(document.hidden||!document.querySelector('#s-banner.on'))return;const now=Date.now();let flip=false;
  document.querySelectorAll('#bcard .bcd').forEach(el=>{const ms=+el.dataset.t-now;if(ms<=0)flip=true;el.textContent=left(ms);});
  if(flip){BSEL=null;renderBan();}},1000);
 
@@ -2481,7 +2504,7 @@ renderPvp();renderPvpMeta();
 document.getElementById('prf').addEventListener('click',renderPvp);
 document.getElementById('pgrid').addEventListener('click',e=>{if(!e.target.closest('#prw'))return;
  PRW=PRW==='srv'?'utc':'srv';LS.set('ba_pvp_rw',PRW);renderPvp();});
-setInterval(()=>{const now=Date.now();let flip=false;
+setInterval(()=>{if(document.hidden||!document.querySelector('#s-pvp.on'))return;const now=Date.now();let flip=false;
  document.querySelectorAll('#pgrid .pcd').forEach(el=>{const ms=+el.dataset.t-now;if(ms<=0)flip=true;el.textContent=left(ms);});
  if(flip)renderPvp();},1000);
 
@@ -2975,7 +2998,15 @@ function fillShell(){const now=new Date();
  T('tStu').querySelector('.tbg').innerHTML=porImg('Hanako (Swimsuit)','');
  const u=T('tUe'),f=planFor(Math.max(0,+eliIn.value||0)).rows.find(x=>x.st==='ok');u.querySelector('.tbg').innerHTML=porImg('Seia','');
  u.querySelector('.ttag').textContent=f?`Tiếp: ${f.n} UE ${f.t}★`:'';
- T('tBoss').querySelector('.tbg').innerHTML=bossImg('Binah','Portrait','');}
+ T('tBoss').querySelector('.tbg').innerHTML=bossImg('Binah','Portrait','');
+ lobbyBG();}
+// scene behind the lobby cards (wiki "Background images"): [day, night]; night shows in dark mode. Local copy BG/<file>.jpg first
+// (get_bg.ps1 downloads them, needed for GitHub Pages), the wiki's image server as fallback (hash path read from each file page).
+const LBG={tStu:['4/4b/BG_ClassRoom','9/94/BG_ClassRoom_Night'],tBoss:['4/41/BG_AbydosRuinArea','0/04/BG_AbydosRuinArea_Night'],
+ tTask:['2/29/BG_CityOffice','c/c7/BG_CityOffice_Night'],tLock:['5/59/BG_183LabRoom_Night_Off'],tOrd:['6/63/BG_Arcade'],tSrv:['a/ac/BG_CityDowntown','4/47/BG_CityDowntown_Night']};
+const bgI=(f,c)=>`<img class="bgi${c}" alt="" loading="lazy" decoding="async" src="BG/${f.split('/').pop()}.jpg" onerror="this.onerror=null;this.src='https://static.wikitide.net/bluearchivewiki/${f}.jpg'">`;
+function lobbyBG(){for(const id in LBG){const g=document.querySelector('#'+id+' .tbg');if(!g||g.querySelector('.bgi'))continue;
+ const[d,n]=LBG[id];g.insertAdjacentHTML('afterbegin',n?bgI(d,' day')+bgI(n,' night'):bgI(d,''));}}
 fillShell();eliIn.addEventListener('input',fillShell);
 route();
 
@@ -3806,7 +3837,8 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),L=[];while(w.nextNode())L.push(w.currentNode);L.forEach(one);};
  scan(document.body);
  // runs as a microtask right after each change, before the browser paints, so the emoji never shows for a frame
- new MutationObserver(ms=>ms.forEach(m=>m.type==='characterData'?scan(m.target):m.addedNodes.forEach(scan)))
+ new MutationObserver(ms=>{const Q=new Set();for(const m of ms){if(m.type==='characterData')Q.add(m.target);else m.addedNodes.forEach(n=>Q.add(n));}
+  Q.forEach(n=>{if(!(n.nodeType===1&&n.classList.contains('bai')))scan(n);});})
   .observe(document.body,{childList:true,subtree:true,characterData:true});
 })();
 </script>
