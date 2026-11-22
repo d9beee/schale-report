@@ -1442,6 +1442,18 @@ html[data-theme=dark] .gm .grab i{background:rgba(231,233,251,.5);box-shadow:non
  .pane{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
  .totop{bottom:calc(92px + env(safe-area-inset-bottom))!important}
  .hud-tg{bottom:calc(96px + env(safe-area-inset-bottom))}
+ /* TA/GA, PvP, banner frames: no solid colour band with the cut top-right corner (it read as "cut off" on a narrow screen);
+    a light frosted glass panel like the UE section instead, the room picture shows through */
+ .live{clip-path:none!important;border-radius:16px!important;background:rgba(255,255,255,.42)!important;background-image:none!important;
+  -webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.6)!important;box-shadow:0 6px 22px rgba(21,48,77,.12)!important;color:var(--ink)!important}
+ .live::before,.live::after{display:none!important}
+ .live .live-top{background:transparent!important;background-image:none!important;clip-path:none!important;box-shadow:none!important;padding-left:0;padding-right:0}
+ .live .live-top h2{color:var(--navy)!important;font-style:italic;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+ .live .live-top small{color:var(--muted)!important}
+ .live .lnote{color:var(--muted)!important}
+ html[data-theme=dark] .live{background:rgba(22,24,44,.45)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 6px 22px rgba(0,0,0,.35)!important}
+ html[data-theme=dark] .live .live-top h2{color:#e7e9fb!important;text-shadow:none}
 }
 /* ===== PHONE ANTI-CUT (≤900px only, desktop untouched): nothing may be wider than the screen. Every grid / flex child may shrink
    (min-width:0), multi-column blocks stack, cards grow with their text instead of keeping a fixed height, long words wrap. ===== */
