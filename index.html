@@ -1403,6 +1403,14 @@ html[data-theme=dark] .screen.zmove{background-color:#0e0f1d}
  .screen:not(#home)::before{content:"";position:fixed;left:0;right:0;top:var(--tb);bottom:0;z-index:-1;pointer-events:none;
   background:inherit;background-size:cover!important;background-attachment:scroll!important;background-repeat:no-repeat!important}
 }
+/* edge swipe back: the screen being dragged away casts a soft shadow on the one underneath */
+.screen.swp{z-index:3!important;box-shadow:0 0 40px rgba(10,25,50,.35);will-change:transform}
+/* student profile: grab bar on top, drag it (or the portrait) down to close, like an iOS sheet */
+.gm .grab{position:absolute;top:0;left:0;right:0;height:28px;z-index:6;display:flex;justify-content:center;align-items:center;touch-action:none;cursor:grab}
+.gm .grab i{display:block;width:44px;height:5px;border-radius:3px;background:rgba(30,43,62,.38);box-shadow:0 0 0 1px rgba(255,255,255,.5)}
+.gm .grab:active{cursor:grabbing}
+html[data-theme=dark] .gm .grab i{background:rgba(231,233,251,.5);box-shadow:none}
+@media (max-width:760px){.gm .gbox .gl{touch-action:none}}
 .dock{display:none}
 @media (max-width:900px){
  .topbar .tb-res{display:none}
@@ -2694,7 +2702,8 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let 
  if(!sc){sc=document.getElementById('home');el=null;}
  if(zReverse(sc)){zUI(sc);return;}
  zClean();
- const prev=curScr,moved=prev&&prev!==sc,anim=moved&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const prev=curScr,moved=prev&&prev!==sc,skip=ZM.skip;ZM.skip=0;
+ const anim=moved&&!skip&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  const from=anim&&sc.id!=='home'?zOrigin(sc):null,prevTop=prev?prev.getBoundingClientRect().top:0,prevY=scrollY;
  if(moved&&prev.id==='home')ZM.homeY=scrollY;
  SCR.forEach(s=>{s.classList.toggle('on',s===sc);if(moved)s.classList.toggle('nz',anim&&s===sc);});curScr=sc;
@@ -3461,6 +3470,67 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   b.setAttribute('aria-label',off?'Hiện lại các ô chức năng':'Ẩn các ô chức năng để ngắm học sinh');dispatchEvent(new Event('resize'));};
  b.addEventListener('click',()=>set(!document.body.classList.contains('hud-off')));
  addEventListener('hashchange',()=>{if(document.body.classList.contains('hud-off'))set(false);});
+})();
+// ===== swipe back from the left or right edge (touch): the open screen follows the finger and the screen before it shows
+// underneath; let go past a third of the width (or flick) and it slides away = back, otherwise it springs back into place
+(function(){
+ const HS=[location.hash||'#home'];
+ addEventListener('hashchange',()=>{const h=location.hash||'#home',i=HS.lastIndexOf(h);if(i>=0)HS.length=i+1;else HS.push(h);});
+ const scrOfH=h=>{const t=document.getElementById(decodeURIComponent((h||'#home').slice(1)));return (t&&t.closest('.screen'))||document.getElementById('home');};
+ // where "back" goes: the last earlier entry that is on another screen (else the lobby)
+ const backTo=()=>{const cur=curScr;for(let i=HS.length-2;i>=0;i--){const s=scrOfH(HS[i]);if(s!==cur)return {h:HS[i],s,n:HS.length-1-i};}
+  return {h:'#home',s:document.getElementById('home'),n:0};};
+ const goBack=b=>{if(b.n>0&&history.length>1)history.go(-b.n);else location.hash=b.h;};
+ const EDGE=28,popOpen=()=>!!document.querySelector('.gm.on');let g=null;
+ const begin=()=>{const cur=curScr,b=backTo(),tgt=b.s;if(!cur||cur===tgt)return false;zClean();
+  const tb=Math.max(0,document.getElementById('topbar').getBoundingClientRect().bottom),Hv=innerHeight-tb,top=cur.getBoundingClientRect().top;
+  g.y=scrollY;g.cur=cur;g.tgt=tgt;g.b=b;g.W=innerWidth;
+  cur.classList.add('zfix','swp');cur.style.top=tb+'px';cur.style.height=Hv+'px';cur.scrollTop=Math.max(0,tb-top);
+  tgt.classList.add('on','zleave');tgt.style.top=tb+'px';tgt.style.height=Hv+'px';tgt.scrollTop=tgt.id==='home'?ZM.homeY:0;
+  tgt.style.transformOrigin=`50% ${Hv/2}px`;ZD.classList.add('z');return true;};
+ const paint=d=>{const p=Math.min(1,Math.max(0,d/g.W));g.cur.style.transform=`translateX(${(g.side*d).toFixed(1)}px)`;
+  ZD.style.opacity=(1-p).toFixed(3);g.tgt.style.transform=`translateX(${(-g.side*(1-p)*g.W*.25).toFixed(1)}px) scale(${(.95+.05*p).toFixed(4)})`;};
+ const tidy=()=>{const {cur,tgt}=g;[cur,tgt].forEach(s=>{s.style.transform=s.style.transformOrigin='';});cur.classList.remove('swp');ZD.style.opacity='';};
+ addEventListener('touchstart',e=>{g=null;if(e.touches.length!==1||!curScr||curScr.id==='home'||popOpen())return;const t=e.touches[0];
+  const side=t.clientX<EDGE?1:t.clientX>innerWidth-EDGE?-1:0;if(!side)return;g={x0:t.clientX,y0:t.clientY,side,on:false,t:performance.now(),v:0,lx:t.clientX};},{passive:true});
+ addEventListener('touchmove',e=>{if(!g)return;const t=e.touches[0],dx=(t.clientX-g.x0)*g.side,dy=t.clientY-g.y0;
+  if(!g.on){if(Math.abs(dy)>12&&Math.abs(dy)>Math.abs(dx)){g=null;return;}if(dx<10)return;if(!begin()){g=null;return;}g.on=true;}
+  e.preventDefault();const now=performance.now();g.v=(t.clientX-g.lx)*g.side/Math.max(1,now-g.t);g.t=now;g.lx=t.clientX;paint(Math.max(0,dx-10));},{passive:false});
+ const end=e=>{if(!g)return;const s=g;g=null;if(!s.on)return;g=s;
+  const d=Math.max(0,(s.lx-s.x0)*s.side-10),go=e.type!=='touchcancel'&&(d>s.W*.33||(s.v>.45&&d>30)),o={duration:go?230:260,easing:'cubic-bezier(.32,.72,0,1)',fill:'forwards'};
+  const from=s.cur.style.transform,toX=go?s.side*s.W:0;
+  const a=s.cur.animate([{transform:from},{transform:`translateX(${toX}px)`}],o);
+  s.tgt.animate([{transform:s.tgt.style.transform},{transform:go?'translateX(0px) scale(1)':`translateX(${-s.side*s.W*.25}px) scale(.95)`}],o);
+  ZD.animate([{opacity:ZD.style.opacity||1},{opacity:go?0:1}],o);
+  a.onfinish=()=>{const q=s;g=null;q.cur.getAnimations().concat(q.tgt.getAnimations(),ZD.getAnimations()).forEach(x=>x.cancel());
+   if(go){q.cur.style.visibility='hidden';tidy.call(null,g=q);g=null;ZM.skip=1;goBack(q.b);
+    // the swiped screen stays hidden until the route has switched away from it
+    const un=()=>{q.cur.style.visibility='';removeEventListener('hashchange',un);};addEventListener('hashchange',un);setTimeout(un,800);}
+   else{g=q;tidy();g=null;q.cur.classList.remove('zfix');q.cur.style.top=q.cur.style.height='';
+    q.tgt.classList.remove('on','zleave');q.tgt.style.top=q.tgt.style.height='';ZD.classList.remove('z');zJump(q.y);}};};
+ addEventListener('touchend',end);addEventListener('touchcancel',end);
+})();
+// ===== student profile popup: small grab bar on top; drag it (or the portrait on a phone) down to close, like an iOS sheet
+(function(){
+ document.querySelectorAll('.gm .gbox').forEach(box=>{const gm=box.closest('.gm');if(box.querySelector('.grab'))return;
+  box.insertAdjacentHTML('afterbegin','<div class="grab" role="button" aria-label="Vuốt xuống để đóng" title="Vuốt xuống để đóng"><i></i></div>');
+  const closeBtn=()=>gm.querySelector('#gmx')||gm.querySelector('.gtop button');
+  let d=null;
+  const down=e=>{if(e.pointerType==='mouse'&&e.button!==0)return;
+   const onGl=e.target.closest('.gl')&&!e.target.closest('.grab');if(onGl&&!matchMedia('(max-width:760px)').matches)return;
+   d={y0:e.clientY,y:e.clientY,t:performance.now(),v:0,id:e.pointerId,el:e.currentTarget,moved:false};try{d.el.setPointerCapture(e.pointerId);}catch(_){}};
+  const move=e=>{if(!d||e.pointerId!==d.id)return;const dy=Math.max(0,e.clientY-d.y0);if(dy>4)d.moved=true;
+   const now=performance.now();d.v=(e.clientY-d.y)/Math.max(1,now-d.t);d.t=now;d.y=e.clientY;
+   box.style.transition='none';box.style.transform=`translateY(${dy}px)`;gm.style.backgroundColor=`rgba(15,40,70,${(.45*Math.max(0,1-dy/400)).toFixed(3)})`;};
+  const up=e=>{if(!d||e.pointerId!==d.id)return;const s=d;d=null;const dy=Math.max(0,s.y-s.y0),go=e.type!=='pointercancel'&&(dy>120||(s.v>.6&&dy>30));
+   if(!s.moved&&!go){box.style.transform='';gm.style.backgroundColor='';return;}
+   const o={duration:go?220:280,easing:'cubic-bezier(.32,.72,0,1)',fill:'forwards'};
+   const a=box.animate([{transform:`translateY(${dy}px)`},{transform:go?`translateY(${innerHeight}px)`:'translateY(0px)'}],o);
+   gm.animate([{backgroundColor:gm.style.backgroundColor||'rgba(15,40,70,.45)'},{backgroundColor:go?'rgba(15,40,70,0)':'rgba(15,40,70,.45)'}],o);
+   a.onfinish=()=>{if(go){const b=closeBtn();b?b.click():gm.classList.remove('on');}
+    box.getAnimations().concat(gm.getAnimations()).forEach(x=>x.cancel());box.style.transform=box.style.transition='';gm.style.backgroundColor='';};};
+  [box.querySelector('.grab'),box.querySelector('.gl')].filter(Boolean).forEach(h=>{h.addEventListener('pointerdown',down);
+   h.addEventListener('pointermove',move);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up);});});
 })();
 </script>
 </body>
