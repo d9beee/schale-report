@@ -1,0 +1,272 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "A fully interactive wallpaper of Arona and Plana's Work Live2D from Blue Archive. Includes headpatting, mouse tracking and voicelines. The character may also be repositioned. Plana can be enabled using the \"Enable Plana\" option, which is disabled by default. This option also unlocks the day/night cycle, which can be set to be automated, a fixed time of day or random at every launch.\n\nWorks best in tandem with the [url=https://github.com/Xenon257R/blue-archive-rainmeter#readme]Blue Archive Rainmeter Suite[/url]  available for free, specifically the [url=https://github.com/Xenon257R/blue-archive-rainmeter#sub-hubs]Sub Hubs[/url].\n\nThe Dialog Box can be toggled to only ever be in one position or to follow the character that is speaking using the option \"Organize Dialog Boxes\". This is on by default. The Primary Dialog Box will never adhere to this option, and you must manually position it using Primary DialogX/Y if you move the character to keep it aligned to your liking.\n\nIf you want the mouse to be automatically tracked, you can toggle on the \"Auto-Track Mouse\" option under \"Mouse Tracking\", which must be toggled on as well for the former option to be available. When switched on, the character will follow your mouse after significant mouse activity and will stop looking when your mouse is idle for 1 second. The character will resume auto-looking after a 3 second downtime.\n\nYou can add a background music track using the [b]BGM File[/b] parameter. Even though file navigation will explicitly filter only [b].webm[/b], [b].ogg[/b] and [b].ogv[/b] filetypes due to [i]WallpaperEngine[/i]'s 'Image or Video filetype only' restriction, the wallpaper will still accept most audio filetypes ([b].mp3[/b], [b].wav[/b], etc.) by navigating to the directory the music file is located in, then manually writing in the filename with the correct file extension in the ([b]File name:[/b]) box yourself (e.g. Connected Sky.mp3). If this doesn't work, [b].ogg[/b] still works as an audio filetype, so you can convert your file(s) appropriately.",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"autotrackmouse" : 
+			{
+				"condition" : "mouseactions.value == true && mousetracking.value == true",
+				"index" : 11,
+				"order" : 111,
+				"text" : "Auto-Track Mouse",
+				"type" : "bool",
+				"value" : false
+			},
+			"bgmfile" : 
+			{
+				"fileType" : "video",
+				"index" : 19,
+				"order" : 119,
+				"text" : "BGM File (Refresh to Apply)",
+				"type" : "file",
+				"value" : ""
+			},
+			"bgmvolume" : 
+			{
+				"fraction" : false,
+				"index" : 20,
+				"max" : 100,
+				"min" : 0,
+				"order" : 120,
+				"text" : "BGM Volume",
+				"type" : "slider",
+				"value" : 10
+			},
+			"bonuschar" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "Enable Plana (Refresh to Apply)",
+				"type" : "bool",
+				"value" : false
+			},
+			"characterx" : 
+			{
+				"condition" : "posactions.value == true",
+				"fraction" : true,
+				"index" : 13,
+				"max" : 100,
+				"min" : 0,
+				"order" : 113,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "CharacterX",
+				"type" : "slider",
+				"value" : 20
+			},
+			"charactery" : 
+			{
+				"condition" : "posactions.value == true",
+				"fraction" : true,
+				"index" : 14,
+				"max" : 100,
+				"min" : 0,
+				"order" : 114,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "CharacterY",
+				"type" : "slider",
+				"value" : 45
+			},
+			"dialogx" : 
+			{
+				"condition" : "posactions.value == true && showdialog.value == true",
+				"fraction" : true,
+				"index" : 16,
+				"max" : 100,
+				"min" : 0,
+				"order" : 116,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "Primary DialogX",
+				"type" : "slider",
+				"value" : 12.5
+			},
+			"dialogy" : 
+			{
+				"condition" : "posactions.value == true && showdialog.value == true",
+				"fraction" : true,
+				"index" : 17,
+				"max" : 100,
+				"min" : 0,
+				"order" : 117,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "Primary DialogY",
+				"type" : "slider",
+				"value" : 75
+			},
+			"fixeddialog" : 
+			{
+				"condition" : "posactions.value == true && showdialog.value == true",
+				"index" : 18,
+				"order" : 118,
+				"text" : "Organize Dialog Boxes (Excludes Primary Dialog)",
+				"type" : "bool",
+				"value" : true
+			},
+			"headpatting" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 9,
+				"order" : 109,
+				"text" : "Headpatting",
+				"type" : "bool",
+				"value" : true
+			},
+			"idlelines" : 
+			{
+				"condition" : "introanimation.value==true",
+				"index" : 5,
+				"order" : 105,
+				"text" : "Idle Lines (Refresh to Apply)",
+				"type" : "bool",
+				"value" : true
+			},
+			"introanimation" : 
+			{
+				"index" : 4,
+				"order" : 104,
+				"text" : "Intro Animation",
+				"type" : "bool",
+				"value" : true
+			},
+			"mouseactions" : 
+			{
+				"index" : 6,
+				"order" : 106,
+				"text" : "Show Mouse Actions",
+				"type" : "bool",
+				"value" : false
+			},
+			"mousetracking" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 10,
+				"order" : 110,
+				"text" : "Mouse Tracking",
+				"type" : "bool",
+				"value" : true
+			},
+			"posactions" : 
+			{
+				"index" : 12,
+				"order" : 112,
+				"text" : "Show Position Actions",
+				"type" : "bool",
+				"value" : false
+			},
+			"scale" : 
+			{
+				"fraction" : true,
+				"index" : 0,
+				"max" : 2,
+				"min" : 0.8,
+				"order" : 100,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"showdialog" : 
+			{
+				"condition" : "posactions.value == true",
+				"index" : 15,
+				"order" : 115,
+				"text" : "Show Dialog",
+				"type" : "bool",
+				"value" : true
+			},
+			"targetfps" : 
+			{
+				"fraction" : false,
+				"index" : 1,
+				"max" : 144,
+				"min" : 30,
+				"order" : 101,
+				"text" : "Target FPS",
+				"type" : "slider",
+				"value" : 60
+			},
+			"timeofday" : 
+			{
+				"condition" : "bonuschar.value == true",
+				"index" : 3,
+				"options" : 
+				[
+					{
+						"label" : "Auto",
+						"value" : "-1"
+					},
+					{
+						"label" : "Day",
+						"value" : "12"
+					},
+					{
+						"label" : "Night",
+						"value" : "0"
+					},
+					{
+						"label" : "Random",
+						"value" : "-2"
+					}
+				],
+				"order" : 103,
+				"text" : "Time of Day (Refresh to Apply)",
+				"type" : "combo",
+				"value" : "-1"
+			},
+			"useoldvoices" : 
+			{
+				"condition" : "",
+				"index" : 21,
+				"order" : 121,
+				"text" : "Use Old Voices",
+				"type" : "bool",
+				"value" : false
+			},
+			"voicelines" : 
+			{
+				"condition" : "mouseactions.value == true",
+				"index" : 7,
+				"order" : 107,
+				"text" : "Voicelines",
+				"type" : "bool",
+				"value" : true
+			},
+			"voicevolume" : 
+			{
+				"condition" : "mouseactions.value == true && voicelines.value == true",
+				"fraction" : false,
+				"index" : 8,
+				"max" : 100,
+				"min" : 0,
+				"order" : 108,
+				"text" : "Volume",
+				"type" : "slider",
+				"value" : 50
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Anime" ],
+	"title" : "Blue Archive Arona and Plana - Fully Interactive L2D",
+	"type" : "Web",
+	"version" : 12,
+	"visibility" : "public",
+	"workshopid" : "2959252463",
+	"workshopurl" : "steam://url/CommunityFilePage/2959252463"
+}
