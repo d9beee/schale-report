@@ -361,11 +361,14 @@ footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
     <a class="res" href="#live" title="Total Assault"><i>⚔️</i><b id="rTA">TA</b></a>
     <a class="res" href="#banners" title="Banner nên quay tiếp theo"><i>🎟️</i><b id="rBan">Banner</b></a>
   </div>
-  <button class="tb-ic" id="thm" type="button" aria-label="Đổi giao diện sáng/tối">🌙</button>
-  <a class="tb-ic" href="#home" aria-label="Về sảnh" title="Về sảnh">🏠</a>
+  <button class="tb-ic" id="thm" type="button" aria-label="Đổi giao diện sáng/tối">
+    <svg class="vi i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z" fill="currentColor"/><path d="M17 3.5l.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5z" fill="currentColor" opacity=".7"/></svg>
+    <svg class="vi i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.55 1.55M17.15 17.15l1.55 1.55M5.3 18.7l1.55-1.55M17.15 6.85l1.55-1.55"/></g></svg>
+  </button>
+  <a class="tb-ic" href="#home" aria-label="Về sảnh" title="Về sảnh"><svg class="vi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.6 12 3.6l8.5 7v9.1a1.3 1.3 0 0 1-1.3 1.3h-4.6v-5.9H9.4V21H4.8a1.3 1.3 0 0 1-1.3-1.3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.4 21v-5.9h5.2V21" fill="currentColor" opacity=".25"/></svg></a>
 </header>
 <nav class="dock" id="dock" aria-label="Chuyển màn nhanh">
-  <a href="#home"><i>🏠</i><span>Sảnh</span></a>
+  <a href="#home"><i><svg class="vi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.6 12 3.6l8.5 7v9.1a1.3 1.3 0 0 1-1.3 1.3h-4.6v-5.9H9.4V21H4.8a1.3 1.3 0 0 1-1.3-1.3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.4 21v-5.9h5.2V21" fill="currentColor" opacity=".25"/></svg></i><span>Sảnh</span></a>
   <a href="#live"><i>⚔️</i><span>TA/GA</span><b class="bd" id="dTA"></b></a>
   <a href="#banners"><i>🎟️</i><span>Banner</span><b class="bd" id="dBan"></b></a>
   <a href="#tier"><i>👥</i><span>Học sinh</span><b class="bd info" id="dStu"></b></a>
@@ -1237,7 +1240,9 @@ html[data-theme=dark] .screen[data-cast="banner"]{background:linear-gradient(180
 html[data-theme=dark] #s-boss.screen{background-image:url(BG/BG_AbydosRuinArea_Night.jpg)}
 #s-srv.screen{background:#1e2b3e url(BG/BG_CityDowntown.jpg) center/cover no-repeat fixed}
 html[data-theme=dark] #s-srv.screen{background-image:url(BG/BG_CityDowntown_Night.jpg)}
-:is(#s-boss,#s-srv) .pane{background:transparent!important}
+#s-stu.screen{background:#1e2b3e url(BG/BG_ClassRoom.jpg) center/cover no-repeat fixed}
+html[data-theme=dark] #s-stu.screen{background-image:url(BG/BG_ClassRoom_Night.jpg)}
+:is(#s-boss,#s-srv,#s-stu) .pane{background:transparent!important}
 #order.card{background:linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
 html[data-theme=dark] #order.card{background:linear-gradient(rgba(20,22,42,.86),rgba(20,22,42,.86)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
 #tSrv{grid-column:span 1}
@@ -1606,6 +1611,18 @@ img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto;height:1.4em;max-width:2
 .res i img.bai{width:20px;height:20px;margin:0;vertical-align:middle}
 .tb-ic img.bai{width:28px;height:28px;margin:0}
 .dock a i img.bai{width:26px;height:26px;margin:0;vertical-align:middle}
+/* vector icons: theme toggle (moon in light mode = go dark, sun in dark mode = go light) and home */
+svg.vi{display:block;width:22px;height:22px;margin:auto;pointer-events:none;transition:transform .45s cubic-bezier(.32,.72,0,1),opacity .25s}
+.dock a i svg.vi{width:26px;height:26px;display:inline-block;vertical-align:middle}
+#thm{position:relative;color:#5b4fc4}
+#thm .i-sun{display:none;color:#ffb02e}
+html[data-theme=dark] #thm .i-moon{display:none}
+html[data-theme=dark] #thm .i-sun{display:block}
+#thm:hover svg.vi{transform:rotate(-18deg) scale(1.08)}
+html[data-theme=dark] #thm:hover svg.vi{transform:rotate(45deg) scale(1.08)}
+#thm:active svg.vi,.tb-ic:active svg.vi{transform:scale(.86)}
+a.tb-ic svg.vi{color:var(--navy)}
+html[data-theme=dark] a.tb-ic svg.vi{color:var(--ink)}
 .tb-logo{height:32px;width:auto;flex:none;margin-right:-2px;filter:drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 2px 3px rgba(30,43,62,.45))}
 html[data-theme=dark] .tb-logo{filter:drop-shadow(0 0 4px rgba(0,174,239,.35))}
 /* the SCHALE logo is white line art: it sits in a navy disc so it reads on light glass too (purple disc in dark mode) */
@@ -1619,6 +1636,27 @@ html[data-theme=dark] .flogo img+img{filter:none}
 .flogo img{height:36px;width:auto}
 .srv{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--navy);border-radius:999px;padding:1px 8px;vertical-align:2px}
 html[data-theme=dark] .srv{background:var(--sky)}
+/* ===== student profile BOTTOM SHEET (JS adds .sheet to the profile box): docked to the bottom edge on every window size,
+   rounded top corners only, rises with the Apple curve; two resting heights: half (default) and .full; height changes animate */
+.gm:has(.gbox.sheet){align-items:end!important;justify-content:center!important;justify-items:center!important;padding:0!important}
+.gm .gbox.sheet{--sheet:min(68vh,660px);position:relative;height:var(--sheet)!important;max-height:calc(100dvh - 10px)!important;
+ width:min(1000px,100%)!important;margin:0 auto!important;border-radius:24px 24px 0 0!important;
+ box-shadow:0 -12px 40px rgba(15,40,70,.28)!important;transition:height .45s cubic-bezier(.32,.72,0,1);will-change:height,transform}
+.gm .gbox.sheet.full{--sheet:calc(100dvh - 10px)}
+/* desktop: one stop only, the sheet opens at full height (half = full, so the JS snap logic simply has nothing to switch);
+   dragging it down still closes it. Phones keep the two stops (half / full). */
+@media (min-width:761px){.gm .gbox.sheet,.gm .gbox.sheet.full{--sheet:calc(100dvh - 24px)}}
+.gm.on .gbox.sheet{animation:sheetUp .5s cubic-bezier(.32,.72,0,1) backwards}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+.gm .gbox.sheet .gl{border-radius:24px 0 0 0!important}
+@media (max-width:760px){.gm .gbox.sheet{--sheet:74dvh}.gm .gbox.sheet .gl{border-radius:24px 24px 0 0!important}}
+/* grab bar across the top of the sheet: drag / tap / double-click / Enter */
+.gbox.sheet>.grab{display:flex!important;position:absolute!important;left:0;right:0;top:0;height:24px;z-index:6;justify-content:center;align-items:center;
+ cursor:grab;touch-action:none;background:none!important;border:0!important;outline-offset:-4px}
+.gbox.sheet>.grab:active{cursor:grabbing}
+.gbox.sheet>.grab i{display:block;width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.85);box-shadow:0 1px 3px rgba(15,40,70,.35);transition:width .25s,background .25s}
+.gbox.sheet>.grab:hover i{width:56px;background:#fff}
+.gbox.sheet .gl{touch-action:pan-x;cursor:grab}
 /* ===== LOBBY TILES: Skewed Card + Text Scrim =====
    Shape vs content: the tile box is only translated (never skewed / scaled), so its getBoundingClientRect() is the real card for the
    FLIP zoom. Three shape layers lean by --sk around the tile's centre: ::before = fill + rim + shadow, .tbg = picture window (picture
@@ -1645,6 +1683,17 @@ html[data-theme=dark] #home .tile{--glass:rgba(28,30,56,.36);--rim:rgba(200,200,
 html[data-theme=dark] #home .tile .tbg{box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(0,0,0,.5)}
 html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220,255,.5),0 12px 28px rgba(0,0,0,.6)}
 #home .tile .tbg img{transform:skewX(var(--usk)) scale(1.2)}
+/* boss cards (TA·GA, Cơ chế boss): Boss_Portrait files are wide strips (Binah 660 × 200, head at about 26% across, 55% down).
+   object-position can't centre a point, so the strip is placed by hand: height = --bh of the card (width follows the
+   picture's own ratio), its left edge at the card's middle, then shifted back by --fx of its OWN width (translateX % = % of the
+   image) → the face point sits exactly on the card's horizontal middle. top puts the face at --cy of the card height. */
+#home :is(#tRaid,#tBoss){--fx:26%;--fy:.55;--bh:120%;--cy:44%}
+#home #tRaid{--bh:80%;--fx:40%}
+#home :is(#tRaid,#tBoss) .tbg img[data-strip]{position:absolute!important;left:50%!important;right:auto!important;bottom:auto!important;
+ height:var(--bh)!important;width:auto!important;max-width:none!important;max-height:none!important;
+ top:calc(var(--cy) - var(--bh) * var(--fy))!important;object-fit:fill!important;
+ transform:translateX(calc(-1 * var(--fx))) skewX(var(--usk))!important;transform-origin:var(--fx) 50%;filter:none}
+#home #tRaid .tbg{background:#1e2b3e url(Spine/rin_wp/assets/Raid_Bg.png) center/cover no-repeat}
 /* text scrim = Apple's progressive blur: the bottom of the picture is frosted (blur + light / dark tint) under the title and the
    frost fades out upward through a gradient mask, no solid colour band */
 #home .tile:after{display:block!important;background:var(--scrim)!important;
@@ -2815,7 +2864,8 @@ renderCalc();
 
 // ===== theme toggle (Arona light / Plana dark) =====
 const thm=document.getElementById('thm');
-const setThm=t=>{document.documentElement.dataset.theme=t;thm.textContent=t==='dark'?'☀️':'🌙';thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';};
+// the button holds two vector icons (moon / sun); CSS shows the one for the theme you can switch to, so only the labels change here
+const setThm=t=>{document.documentElement.dataset.theme=t;thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';thm.setAttribute('aria-label',thm.title);};
 setThm(document.documentElement.dataset.theme);
 thm.addEventListener('click',()=>{const t=dark()?'light':'dark';try{localStorage.setItem('ba_theme',t)}catch(e){}setThm(t);});
 
@@ -2983,23 +3033,29 @@ function fillShell(){const now=new Date();
  const nb=BAN.flatMap(x=>x.E>=now?x.st.filter(s=>!(s[0] in OWN)&&s[7]==='go').map(s=>[s[0],x]):[])[0];
  document.getElementById('rBan').textContent=nb?`${nb[0]} · ${dshort(nb[1].S)}`:'Chưa cần quay';
  const T=id=>document.getElementById(id),dot=el=>el.querySelector('.dot')||el.insertAdjacentHTML('beforeend','<span class="dot"></span>');
- const r=T('tRaid');r.querySelector('.tbg').innerHTML=bossImg(ta.k,'Portrait','');
+ // fillShell runs on every keystroke in the Eligma box: rebuild a card's picture only when it is a different picture
+ // (rewriting innerHTML re-downloads/decodes the images and drops the scene image lobbyBG added)
+ const pic=(el,h)=>{const g=el.querySelector('.tbg');if(g.dataset.p!==h){g.dataset.p=h;g.innerHTML=h;}};
+ const r=T('tRaid');pic(r,bossLobby(ta.k));
  r.querySelector('.ttag').textContent=tl?`Còn ${days(ta.E-now)} ngày`:now<ta.S?`Mở sau ${days(ta.S-now)} ngày`:'';
  r.querySelector('small').textContent=`TA ${ta.n}: ${when(ta,tl)} · GA ${ga.n}: ${when(ga,gl)}`;if(tl||gl)dot(r);
  const cb=BAN[curBan(now)],bl=cb.S<=now&&now<=cb.E,top=cb.st.find(s=>!(s[0] in OWN)&&s[7]==='go')||cb.st[0],b=T('tBan');
- b.querySelector('.tbg').innerHTML=porImg(top[0],'');b.querySelector('.ttag').textContent=bl?`Còn ${days(cb.E-now)} ngày`:`Mở sau ${days(cb.S-now)} ngày`;
+ pic(b,porImg(top[0],''));b.querySelector('.ttag').textContent=bl?`Còn ${days(cb.E-now)} ngày`:`Mở sau ${days(cb.S-now)} ngày`;
  b.querySelector('small').textContent=cb.st.map(s=>s[0]).join(' · ');if(bl)dot(b);
  // Dock badges (phone): days left of the open raid / banner, roster size
  const dl=[tl&&days(ta.E-now),gl&&days(ga.E-now)].filter(Boolean),sb=(id,v,t)=>{const e=T(id);if(e){e.textContent=v;e.title=t||'';}};
  sb('dTA',dl.length?Math.min(...dl):'',dl.length?`Raid đang mở, còn ${Math.min(...dl)} ngày`:'');
  sb('dBan',bl?days(cb.E-now):'',bl?`Banner đang mở, còn ${days(cb.E-now)} ngày`:'');
  sb('dStu',Object.keys(OWN).length,'Học sinh trong roster');
- const p=T('tPvp');p.querySelector('.tbg').innerHTML=porImg('Shiroko*Terror','');p.querySelector('.ttag').textContent=`Season ${PVS.n}`;
- T('tStu').querySelector('.tbg').innerHTML=porImg('Hanako (Swimsuit)','');
- const u=T('tUe'),f=planFor(Math.max(0,+eliIn.value||0)).rows.find(x=>x.st==='ok');u.querySelector('.tbg').innerHTML=porImg('Seia','');
+ const p=T('tPvp');pic(p,porImg('Shiroko*Terror',''));p.querySelector('.ttag').textContent=`Season ${PVS.n}`;
+ pic(T('tStu'),porImg('Hanako (Swimsuit)',''));
+ const u=T('tUe'),f=planFor(Math.max(0,+eliIn.value||0)).rows.find(x=>x.st==='ok');pic(u,porImg('Seia',''));
  u.querySelector('.ttag').textContent=f?`Tiếp: ${f.n} UE ${f.t}★`:'';
- T('tBoss').querySelector('.tbg').innerHTML=bossImg('Binah','Portrait','');
+ pic(T('tBoss'),bossLobby('Binah'));
  lobbyBG();}
+// lobby boss cards: the same Boss_Portrait <img> the rest of the page uses (bossImg, with its own file-name map and fallback),
+// tagged class "strip" so the lobby CSS can frame it on the boss's face
+function bossLobby(k){return bossImg(k,'Portrait','').replace(/<img\b/,'<img data-strip="1"');}
 // scene behind the lobby cards (wiki "Background images"): [day, night]; night shows in dark mode. Local copy BG/<file>.jpg first
 // (get_bg.ps1 downloads them, needed for GitHub Pages), the wiki's image server as fallback (hash path read from each file page).
 const LBG={tStu:['4/4b/BG_ClassRoom','9/94/BG_ClassRoom_Night'],tBoss:['4/41/BG_AbydosRuinArea','0/04/BG_AbydosRuinArea_Night'],
@@ -3785,31 +3841,58 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
     q.tgt.classList.remove('on','zleave');q.tgt.style.top=q.tgt.style.height='';ZD.classList.remove('z');zJump(q.y);}};};
  addEventListener('touchend',end);addEventListener('touchcancel',end);
 })();
-// ===== student profile popup: small grab bar on top; drag it (or the portrait on a phone) down to close, like an iOS sheet
+// ===== student profile = iOS-style BOTTOM SHEET (every window size): it rises from the bottom edge and has two resting heights,
+// "half" (~2/3 of the window) and "full". Drag the grab bar (or the portrait): up = expand to full, down = back to half, down again
+// (or a fast flick) = close. Tap / double-click the bar toggles half ⇄ full. While dragging, the sheet follows the finger 1:1
+// (height above the half stop, a slide below it) and the backdrop dims with it; on release it springs to the nearest stop with
+// the Apple curve. Reopening always starts at "half".
 (function(){
- document.querySelectorAll('.gm .gbox').forEach(box=>{const gm=box.closest('.gm');if(box.querySelector('.grab'))return;
-  box.insertAdjacentHTML('afterbegin','<div class="grab" role="button" aria-label="Vuốt xuống để đóng" title="Vuốt xuống để đóng"><i></i></div>');
+ const EASE='cubic-bezier(.32,.72,0,1)';
+ document.querySelectorAll('.gm .gbox').forEach(box=>{const gm=box.closest('.gm');if(box.classList.contains('sheet'))return;
+  box.classList.add('sheet');
+  if(!box.querySelector('.grab'))box.insertAdjacentHTML('afterbegin','<div class="grab" role="button" tabindex="0" aria-label="Kéo lên để mở rộng, kéo xuống để đóng" title="Kéo lên: mở rộng · Kéo xuống: đóng"><i></i></div>');
   const closeBtn=()=>gm.querySelector('#gmx')||gm.querySelector('.gtop button');
+  const dim=k=>gm.style.backgroundColor=`rgba(15,40,70,${(.45*Math.max(0,Math.min(1,k))).toFixed(3)})`;
+  // measure both stops with transitions off (a running height transition would report the in-between value)
+  const stops=()=>{const tr=box.style.transition;box.style.transition='none';box.style.height='';const was=box.classList.contains('full');
+   box.classList.remove('full');const half=box.getBoundingClientRect().height;box.classList.add('full');const full=box.getBoundingClientRect().height;
+   box.classList.toggle('full',was);void box.offsetHeight;box.style.transition=tr;return {half,full};};
+  const settle=(full)=>{box.style.transition='';void box.offsetHeight;box.classList.toggle('full',full);box.style.height='';box.style.transform='';gm.style.backgroundColor='';};
+  const close=from=>{const a=box.animate([{transform:`translateY(${from}px)`},{transform:`translateY(${innerHeight}px)`}],{duration:230,easing:EASE,fill:'forwards'});
+   gm.animate([{backgroundColor:gm.style.backgroundColor||'rgba(15,40,70,.45)'},{backgroundColor:'rgba(15,40,70,0)'}],{duration:230,easing:EASE,fill:'forwards'});
+   a.onfinish=()=>{const b=closeBtn();b?b.click():gm.classList.remove('on');
+    box.getAnimations().concat(gm.getAnimations()).forEach(x=>x.cancel());box.style.cssText='';gm.style.backgroundColor='';box.classList.remove('full');};};
   let d=null;
-  const down=e=>{if(e.pointerType==='mouse'&&e.button!==0)return;
-   const onGl=e.target.closest('.gl')&&!e.target.closest('.grab');if(onGl&&!matchMedia('(max-width:760px)').matches)return;
-   d={y0:e.clientY,y:e.clientY,t:performance.now(),v:0,id:e.pointerId,el:e.currentTarget,moved:false};try{d.el.setPointerCapture(e.pointerId);}catch(_){}};
-  const move=e=>{if(!d||e.pointerId!==d.id)return;const dy=Math.max(0,e.clientY-d.y0);if(dy>4)d.moved=true;
+  const down=e=>{if(e.pointerType==='mouse'&&e.button!==0)return;if(e.target.closest('button:not(.grab),a,input'))return;
+   const S=stops(),full=box.classList.contains('full');
+   d={y0:e.clientY,y:e.clientY,t:performance.now(),v:0,id:e.pointerId,el:e.currentTarget,moved:false,full,S,h0:full?S.full:S.half};
+   try{d.el.setPointerCapture(e.pointerId);}catch(_){}};
+  const move=e=>{if(!d||e.pointerId!==d.id)return;const dy=e.clientY-d.y0;if(Math.abs(dy)>4)d.moved=true;if(!d.moved)return;
    const now=performance.now();d.v=(e.clientY-d.y)/Math.max(1,now-d.t);d.t=now;d.y=e.clientY;
-   box.style.transition='none';box.style.transform=`translateY(${dy}px)`;gm.style.backgroundColor=`rgba(15,40,70,${(.45*Math.max(0,1-dy/400)).toFixed(3)})`;};
-  const up=e=>{if(!d||e.pointerId!==d.id)return;const s=d;d=null;const dy=Math.max(0,s.y-s.y0),go=e.type!=='pointercancel'&&(dy>120||(s.v>.6&&dy>30));
-   if(!s.moved&&!go){box.style.transform='';gm.style.backgroundColor='';return;}
-   const o={duration:go?220:280,easing:'cubic-bezier(.32,.72,0,1)',fill:'forwards'};
-   const a=box.animate([{transform:`translateY(${dy}px)`},{transform:go?`translateY(${innerHeight}px)`:'translateY(0px)'}],o);
-   gm.animate([{backgroundColor:gm.style.backgroundColor||'rgba(15,40,70,.45)'},{backgroundColor:go?'rgba(15,40,70,0)':'rgba(15,40,70,.45)'}],o);
-   a.onfinish=()=>{if(go){const b=closeBtn();b?b.click():gm.classList.remove('on');}
-    box.getAnimations().concat(gm.getAnimations()).forEach(x=>x.cancel());box.style.transform=box.style.transition='';gm.style.backgroundColor='';};};
+   box.style.transition='none';
+   // above the half stop the sheet changes height (rubber band past full), below it the half sheet slides down
+   let h=d.h0-dy;if(h>d.S.full)h=d.S.full+(h-d.S.full)*.25;
+   if(h>=d.S.half){box.style.height=h.toFixed(1)+'px';box.style.transform='';dim(1);}
+   else{box.style.height=d.S.half+'px';const off=d.S.half-h;box.style.transform=`translateY(${off.toFixed(1)}px)`;dim(1-off/d.S.half);}};
+  const up=e=>{if(!d||e.pointerId!==d.id)return;const s=d;d=null;
+   if(!s.moved){if(e.type!=='pointercancel'&&s.el.classList.contains('grab'))settle(!s.full);return;}
+   const dy=s.y-s.y0,h=s.h0-dy,fl=s.v;
+   if(e.type==='pointercancel')return settle(s.full);
+   if(h<s.S.half*.72||(fl>.7&&h<=s.S.half+20))return close(Math.max(0,s.S.half-h));     // pulled well below half, or flicked down from half
+   if(fl<-.45||h>(s.S.half+s.S.full)/2)return settle(true);                              // flicked up, or past the middle → full
+   settle(false);};                                                                        // otherwise → half
   [box.querySelector('.grab'),box.querySelector('.gl')].filter(Boolean).forEach(h=>{h.addEventListener('pointerdown',down);
    h.addEventListener('pointermove',move);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up);});
+  const gb=box.querySelector('.grab');gb.addEventListener('dblclick',()=>settle(!box.classList.contains('full')));
+  gb.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();settle(!box.classList.contains('full'));}});
+  // scrolling the text up from the top of a half sheet expands it, like Apple Maps
+  const gp=box.querySelector('.gpane');
+  if(gp)gp.addEventListener('wheel',e=>{if(!box.classList.contains('full')&&e.deltaY>0&&gp.scrollTop<=0&&gp.scrollHeight>gp.clientHeight+40)settle(true);},{passive:true});
   // collapsing header: how far the text pane has scrolled (0..1 over the first 140px) drives the portrait band height
-  const gp=box.querySelector('.gpane');if(gp){let q=0;const sh=()=>{q=0;box.style.setProperty('--sh',Math.min(1,gp.scrollTop/140).toFixed(3));};
-   gp.addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(sh);},{passive:true});
-   new MutationObserver(()=>{if(gm.classList.contains('on'))requestAnimationFrame(sh);}).observe(gm,{attributes:true,attributeFilter:['class']});}});
+  if(gp){let q=0;const sh=()=>{q=0;box.style.setProperty('--sh',Math.min(1,gp.scrollTop/140).toFixed(3));};
+   gp.addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(sh);if(!box.classList.contains('full')&&gp.scrollTop>60)settle(true);},{passive:true});
+   new MutationObserver(()=>{if(gm.classList.contains('on')){box.classList.remove('full');box.style.height=box.style.transform='';requestAnimationFrame(sh);}})
+    .observe(gm,{attributes:true,attributeFilter:['class']});}});
 })();
 </script>
 <script>
