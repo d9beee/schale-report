@@ -402,6 +402,8 @@ html[data-theme=dark] :is(.scard,.sc,.chip,.lc,.bs,.tile):has(img[role=button]:f
 .scard .ph .am.ai{width:22px!important;height:22px!important;border:0!important;border-radius:var(--icr)!important;
  background:var(--ic) center/116% no-repeat!important;box-shadow:0 1px 3px rgba(0,0,0,.35)!important}
 .scard .ph .am.ai::before,.scard .ph .am.ai::after{content:none!important}
+/* the two real tickets (Total Assault, Tactical Challenge) are wide: same height as the other icons, width follows the ticket */
+img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto!important;max-width:none!important;aspect-ratio:auto!important;object-fit:contain}
 </style>
 </head>
 <body>
@@ -1730,16 +1732,9 @@ html[data-theme=dark] #home .tile{--glass:rgba(28,30,56,.36);--rim:rgba(200,200,
 html[data-theme=dark] #home .tile .tbg{box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(0,0,0,.5)}
 html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220,255,.5),0 12px 28px rgba(0,0,0,.6)}
 #home .tile .tbg img{transform:skewX(var(--usk)) scale(1.2)}
-/* boss cards (TA·GA, Cơ chế boss): Boss_Portrait files are wide strips (Binah 660 × 200, head at about 26% across, 55% down).
-   object-position can't centre a point, so the strip is placed by hand: height = --bh of the card (width follows the
-   picture's own ratio), its left edge at the card's middle, then shifted back by --fx of its OWN width (translateX % = % of the
-   image) → the face point sits exactly on the card's horizontal middle. top puts the face at --cy of the card height. */
-#home :is(#tRaid,#tBoss){--fx:26%;--fy:.55;--bh:120%;--cy:44%}
-#home #tRaid{--bh:80%;--fx:40%}
-#home :is(#tRaid,#tBoss) .tbg img[data-strip]{position:absolute!important;left:50%!important;right:auto!important;bottom:auto!important;
- height:var(--bh)!important;width:auto!important;max-width:none!important;max-height:none!important;
- top:calc(var(--cy) - var(--bh) * var(--fy))!important;object-fit:fill!important;
- transform:translateX(calc(-1 * var(--fx))) skewX(var(--usk))!important;transform-origin:var(--fx) 50%;filter:none}
+/* boss cards (TA·GA, Cơ chế boss): size and place of the Boss_Portrait picture are set per card by fit() (last script, BFACE
+   table: the marked face box stays visible, the picture covers the card). Here only what holds before the picture has loaded. */
+#home :is(#tRaid,#tBoss) .tbg img[data-strip]{position:absolute!important;max-width:none!important;max-height:none!important;object-fit:fill!important;filter:none}
 #home #tRaid .tbg{background:#1e2b3e url(Spine/rin_wp/assets/Raid_Bg.png) center/cover no-repeat}
 /* text scrim = Apple's progressive blur: the bottom of the picture is frosted (blur + light / dark tint) under the title and the
    frost fades out upward through a gradient mask, no solid colour band */
@@ -1777,20 +1772,36 @@ html[data-theme=dark] #home .tile.lock{--glass:rgba(40,44,62,.55)}
 #home .tile.lock b{font-size:11px!important;line-height:1.2;white-space:normal;color:#fff!important}
 #home .tile.lock .beta{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;color:#ffb02e}
 @media (min-width:901px){
- /* 6 equal columns, one gap, rows 1 : 1 : .55 → every card edge sits on a shared column line
-    row 1: TA·GA | Banner | Học sinh   row 2: PvP | Kế hoạch UE | Cơ chế boss   (2 columns each)
-    row 3: Nhiệm vụ (3 columns) | locked | Thẻ EX | JP·KR·Global (1 column each) */
- #home .tiles{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-template-rows:1fr 1fr .55fr!important;gap:16px 14px!important;position:relative}
- #home .tiles #tRaid{grid-area:1/1/2/3!important}#home .tiles #tBan{grid-area:1/3/2/5!important}#home .tiles #tStu{grid-area:1/5/2/7!important}
- #home .tiles #tPvp{grid-area:2/1/3/3!important}#home .tiles #tUe{grid-area:2/3/3/5!important}#home .tiles #tBoss{grid-area:2/5/3/7!important}
- #home .tiles #tTask{grid-area:3/1/4/4!important}#home .tiles #tLock{grid-area:3/4/4/5!important}
- #home .tiles #tOrd{grid-area:3/5/4/6!important}#home .tiles #tSrv{grid-area:3/6/4/7!important}
+ /* 12 equal columns, one gap, rows 1 : 1 : .55 → every card edge sits on a shared column line
+    row 1: TA·GA (6, ≈ 2:1 for the wide boss banners) | Banner (3) | Học sinh (3)
+    row 2: PvP | Kế hoạch UE | Cơ chế boss (4 each)
+    row 3: Nhiệm vụ (6) | locked | Thẻ EX | JP·KR·Global (2 each) */
+ #home .tiles{grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-template-rows:1fr 1fr .55fr!important;gap:16px 14px!important;position:relative}
  #home .tiles .tile:not(#tOrd,#tSrv,#tLock) b{font-size:clamp(15px,1.3vw,22px)!important}
  #home .tiles .tile:not(#tOrd,#tSrv,#tLock) small{font-size:12px}
+ #home .tiles #tRaid{grid-area:1/1/2/7!important}#home .tiles #tBan{grid-area:1/7/2/10!important}#home .tiles #tStu{grid-area:1/10/2/13!important}
+ #home .tiles #tPvp{grid-area:2/1/3/5!important}#home .tiles #tUe{grid-area:2/5/3/9!important}#home .tiles #tBoss{grid-area:2/9/3/13!important}
+ #home .tiles #tTask{grid-area:3/1/4/7!important}#home .tiles #tLock{grid-area:3/7/4/9!important}
+ #home .tiles #tOrd{grid-area:3/9/4/11!important}#home .tiles #tSrv{grid-area:3/11/4/13!important}
  /* the controller-button marks the game prints above its menu */
  #home .tiles::before{content:"△ ✕ ＋ ○";position:absolute;right:6px;top:-24px;font-size:12px;font-weight:700;letter-spacing:.35em;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(20,40,70,.5)}
 }
 @media (max-width:900px){#home #tLock{display:none!important}}
+/* ===== AUTO-COMPACT (desktop, JS adds .cmp only when the text doesn't fit; full text stays in the hover tooltip) =====
+   top bar pills -> round icons · lobby card title -> round icon · ammo / armor filter chips -> icon only */
+.tb-res.cmp{gap:6px}
+.tb-res.cmp .res{padding:3px;gap:0}
+.tb-res.cmp .res :is(b,small){display:none}
+#home .tile .tic{display:none}
+#home .tile.cmp .tlab{display:none}
+#home .tile.cmp .tic{display:grid;place-items:center;align-self:flex-start;width:46px;height:46px;border-radius:50%;font-size:22px;line-height:1;
+ background:rgba(255,255,255,.88);box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(20,45,80,.25)}
+#home .tile.cmp:is(#tOrd,#tSrv) .tic{align-self:center;width:38px;height:38px}
+#home .tile.cmp .tic img.bai{width:28px!important;height:28px!important;margin:0!important;vertical-align:middle}
+html[data-theme=dark] #home .tile.cmp .tic{background:rgba(30,32,58,.88);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 4px 12px rgba(0,0,0,.45)}
+.sfil .fr.cmp .fb:has(.tag,.ar){padding:4px!important;min-width:40px;justify-content:center}
+.sfil .fr.cmp .fb :is(.tag,.ar){font-size:0!important;gap:0!important}
+.sfil .fr.cmp .fb :is(.tag,.ar)::before{margin:0!important}
 </style>
 
 <button class="totop" id="totop" type="button" aria-label="Lên đầu trang">↑</button>
@@ -1833,10 +1844,10 @@ const ueChip=u=>u>0?`<span class="ue u${u}">UE${u}</span>`:`<span class="ue u0">
 const avFile=n=>n.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
 const avImg=(n,c)=>`<img class="${c}" data-stu="${n}" src="Avatar_Collection/${avFile(n)}.webp" alt="" loading="lazy" onerror="this.remove()">`;
 const porImg=(n,c)=>`<img class="${c}" src="Portrait_Full/${avFile(n)}.webp" alt="" loading="lazy" onerror="this.remove()">`;
-// boss art: BlueArchive_TA_GA_Bosses_HD/Boss_Icon|Boss_Portrait/{key}.png, falls back to .webp, hidden if both are missing
-const BIMG={Gregorius:'EN0005',Kurokage:'EN0006',Geburah:'EN0008'};
+// boss art: BlueArchive_TA_GA_Bosses_HD/Boss_Icon|Boss_Portrait/{key}.png, falls back to .webp, hidden if both are missing.
+// Every file is named by the boss key (Fandom wiki banners / icons, 24/11/2026)
 function bimgErr(el){if(!el.dataset.f){el.dataset.f=1;el.src=el.src.replace(/\.png$/,'.webp')}else{(el.closest('.bhero,.lbg')||el).remove()}}
-const bossImg=(k,kind,c)=>`<img class="${c}" src="BlueArchive_TA_GA_Bosses_HD/Boss_${kind}/${BIMG[k]||k}.png" alt="" loading="lazy" onerror="bimgErr(this)">`;
+const bossImg=(k,kind,c)=>`<img class="${c}" src="BlueArchive_TA_GA_Bosses_HD/Boss_${kind}/${k}.png" alt="" loading="lazy" onerror="bimgErr(this)">`;
 const SSP=[
  ['Hina (Dress)',3,'Striker','E','Đánh giáp Light, AoE; PvP S'],
  ['Hanako (Swimsuit)',3,'Striker','S','Đánh giáp Elastic, AoE; PvP SS; map SS'],
@@ -2094,7 +2105,7 @@ const BK={
  'Mine':'Gregorius (tank)','Mine (Pop Idol)':'Geburah (di chuyển)','Asuna (School)':'Geburah','Niko':'Drum Crab (giải debuff)',
  'Erika':'Drum Crab (giải debuff)','Mari':'Drum Crab (giải debuff)','Cherino':'Chesed','Kotama (Camp)':'Hod','Kanna (Swimsuit)':'Binah',
  'Hina':'Kurokage (AoE giáp Light)','Shun':'Binah'};
-const BOSS_KEYS=['Binah','Chesed','Hod','Hovercraft','Kaiten','Hieronymus','Gregorius','Geburah','Nightmare','Shiro','Perorodzilla','Goz','Kurokage','Yesod','Drum'];
+const BOSS_KEYS=['Binah','Chesed','Hod','Hovercraft','Kaiten','Hieronymus','Gregorius','Geburah','Nightmare','Shiro','Perorodzilla','Goz','Kurokage','Yesod','Drum','Set'];
 const bkLinks=s=>s.split(' · ').map(p=>{const k=p.trim().split(' ')[0];
  return BOSS_KEYS.includes(k)?`<a class="bl" data-k="${k}" title="Xem boss ${k}">${p}</a>`:p}).join(' · ');
 const bkLine=n=>BK[n]?`<div class="bk">🎯 ${bkLinks(BK[n])}</div>`:'';
@@ -2262,7 +2273,20 @@ const BOSSES3=[
       ['must','Counter Claw & cần cẩu','DPS Mystic đánh thường vào thân để <b>nạp cần cẩu</b>. Khi cua thủ Counter Claw, nó tích damage (thanh đỏ); <b>kích hoạt cần cẩu lúc này trả lại toàn bộ damage</b> và cua choáng. Trong Counter Claw, mọi đòn tự nhắm vào càng.','Dồn EX Explosive lên càng để tích nhanh (Haruka (Dress) bỏ qua 68% DEF). Torment+: DEF của càng gấp 5 lần thân.'],
       ['tip','Đòn thường & Crab Bubble','Đòn thường 10 hit, Crab Bubble 30 hit.','Tank chịu được nhiều hit liên tục.']],
   k:['Aris (Armed)','Kei','Niko','Haruka (Dress)'],
-  team:['Game8, Extreme',['Eimi','Aris (Armed)','Kei','Seia (Swimsuit)'],['Nagisa (Swimsuit)','Mari']],op:['Seia (Swimsuit)','Nagisa (Swimsuit)','Aris (Armed)']}];
+  team:['Game8, Extreme',['Eimi','Aris (Armed)','Kei','Seia (Swimsuit)'],['Nagisa (Swimsuit)','Mari']],op:['Seia (Swimsuit)','Nagisa (Swimsuit)','Aris (Armed)']},
+ // Final Restriction Release (not TA/GA): floors 1→124, the armor alternates by season (v:1 = "one armor per season", not per body part).
+ // Skills = floor 50+ (Explosive attacks); Blue Archive Wiki / Fandom "The Fury of Set" guide, 11/2026
+ {n:'Set (The Fury of Set)',a:['light','special'],v:1,atk:'E',t:'Ngoài trời',d:5,time:'4:30',
+  ph:'Final Restriction Release (chế độ riêng, không thuộc TA/GA): leo tầng 1 → 124, giáp đổi giữa Light và Special theo mùa. Không chia phase: cả trận chạy theo kịch bản cố định và boss mạnh dần. Từ tầng 50 boss bắn Explosive.',
+  sk:[['must','Dawn-Devouring Storm · Bão nuốt bình minh','Boss nằm trong bão: <b>nhận ít hơn 80% damage từ EX</b>. ATG dưới 33%: boss gây ít hơn 70% damage; <b>ATG từ 66%: boss gây thêm 80%</b>.','DPS chính phải gây damage bằng <b>đánh thường và Normal Skill</b>, không phải EX. Suzumi (Magical) buff đúng loại damage này.'],
+      ['must','Flash of Light Through A Hawk · 2 cột obelisk','Sét đánh định kỳ vào <b>cột còn nhiều máu nhất</b> và học sinh đứng quanh nó: 35% ATK và <b>−70% damage gây ra trong 40 giây</b>. Cột bị đánh nhiễm điện tới khi được hồi đầy máu; <b>cột chỉ hồi được bằng EX</b>. Cả 2 cột nhiễm điện thì sét chuyển sang học sinh nhiều máu nhất.','Dồn DPS về một phía, <b>dùng EX hồi đầy cột phía bên kia</b>. Kokona hồi đầy cột chỉ bằng 1 EX.'],
+      ['warn','Arrow Through a Moment · quả cầu đỏ (tầng 25+)','475% ATK cả đội và gọi quả cầu đỏ. Cầu <b>chỉ EX đánh được</b>, gây 45% ATK quanh nó. Phá được: học sinh trong vùng +30% damage 35 giây. <b>Cầu chạm tới Set: thanh sét tăng vọt</b>.','Mang 1 người phá cầu bằng EX (Shiroko (Swimsuit) phá được cầu đỏ).'],
+      ['tip','Power to Eternity · thanh sét','Thanh sét tự tăng, giảm khi boss nhận damage. Về 0%: gọi quả cầu xanh, <b>cả đội +30% damage 30 giây</b>.','Đủ hỏa lực để kéo thanh sét về 0 càng sớm càng tốt.'],
+      ['must','Thunder Spear of Rage · cú choáng duy nhất','ATG đầy: 410% ATK cả đội rồi <b>boss tự choáng 24 giây</b>. Theo tốc độ ATG thì cả trận chỉ có 1 lần. Lúc choáng: cả đội <b>+500 hồi cost</b>, mọi đòn bỏ qua độ ổn định (luôn gây damage tối đa), và boss gọi thêm cầu đỏ.','Dồn buff và EX tốt nhất vào 24 giây choáng này.'],
+      ['warn','Vortex of Blue Lightning (tầng 75+)','390% ATK cả đội (trừ cột), thanh sét tăng mạnh. Từ tầng 100: khi ATG từ 66%, đòn này và Roar of Blue Thunder đánh thêm 450% vào cột nhiều máu nhất.','Healer AoE hồi liên tục; giữ máu cột.'],
+      ['tip','Đánh thường nảy 6 lần','Mỗi đòn 170% ATK, nảy sang người chưa bị trúng, tối đa 6 người. Từ tầng 50 nên mang Striker giáp Special / Elastic.','']],
+  k:['Kokona','Hoshino (Swimsuit)','Suzumi (Magical)','Shiroko (Swimsuit)'],
+  s:'Healer AoE nguồn gợi ý: Atsuko, Shigure (Hot Spring), Hanako, Natsu (Band). Mùa Light mang DPS Explosive, mùa Special mang DPS Mystic.'}];
 
 // damage multiplier: attacker ammo -> defender armor
 const MTX={E:{light:200,heavy:100,special:50,elastic:50,composite:100},P:{light:50,heavy:200,special:100,elastic:100,composite:100},
@@ -2374,7 +2398,14 @@ const GUIDE={
   'Phase 2 (dưới 50% HP): giải debuff Adhesive Fluid từ thùng phuy, mỗi lần giải cua nhận thêm damage vĩnh viễn.',
   'DPS Mystic đánh thường nạp cần cẩu; kích hoạt lúc cua thủ Counter Claw để trả lại toàn bộ damage và làm choáng.'],
   ro:{'Eimi':'Tank chịu nhiều hit liên tục.','Aris (Armed)':'DPS Mystic, xả EX sau khi phá hết bộ phận.','Kei':'Hỗ trợ Mystic, giáp Composite.','Seia (Swimsuit)':'Tăng damage EX cho 1 người, kèm hồi máu.',
-  'Nagisa (Swimsuit)':'Tăng Crit DMG; Cost Overload.','Mari':'Khiên và giải 1 debuff.','Niko':'Hợp nhất cho phase 1.','Haruka (Dress)':'EX bỏ qua 68% DEF, tích Counter Claw nhanh.'}}};
+  'Nagisa (Swimsuit)':'Tăng Crit DMG; Cost Overload.','Mari':'Khiên và giải 1 debuff.','Niko':'Hợp nhất cho phase 1.','Haruka (Dress)':'EX bỏ qua 68% DEF, tích Counter Claw nhanh.'}},
+ Set:{fl:['Xếp đội: DPS gây damage bằng đánh thường / Normal Skill (EX bị giảm 80%), cùng healer AoE hồi liên tục và 1 người hồi cột bằng EX.',
+  'Dồn DPS về một phía sân. Sét luôn đánh cột còn nhiều máu nhất: hồi đầy cột phía bên kia bằng EX để sét không trúng người mình (−70% damage 40 giây).',
+  'Mỗi lần Arrow Through a Moment gọi cầu đỏ: phá bằng EX trước khi nó bay tới Set (phá được thì cả nhóm +30% damage).',
+  'Kéo thanh sét về 0 để có cầu xanh (+30% damage cả đội). Giữ máu cả đội vì ATG từ 66% boss đánh mạnh thêm 80%.',
+  'ATG đầy: Thunder Spear of Rage rồi boss choáng 24 giây, cả trận chỉ 1 lần. Xả toàn bộ buff vào lúc này.'],
+  ro:{'Kokona':'Healer đơn mục tiêu số 1: EX hồi đầy cột ngay; giáp Special hợp từ tầng 50.','Hoshino (Swimsuit)':'Buff ATK vùng và hiệu quả Explosive (mùa Light).',
+  'Suzumi (Magical)':'Buff ATK và Basics Proficiency (đánh thường, Normal Skill) đúng thứ Set nhận đủ damage.','Shiroko (Swimsuit)':'Sub skill Cost Recovery, giảm DEF, phá cầu đỏ bằng EX.'}}};
 function guide(b){const g=GUIDE[b.n.split(' ')[0]]||{fl:[],ro:{}};const A=AM[b.atk];
  const off=b.a.map(a=>`<div class="gr"><span class="ar ${AR[a][0]}">${AR[a][1]}</span><span class="arrow">nhận</span><div class="gl">${Object.keys(AM).map(k=>`<span class="gi"><span class="tag ${AM[k][0]}">${AM[k][1]}</span>${pcA(MTX[k][a])}</span>`).join('')}</div></div>`).join('');
  const arms=['light','heavy','special','elastic','composite'];
@@ -2386,7 +2417,7 @@ function guide(b){const g=GUIDE[b.n.split(' ')[0]]||{fl:[],ro:{}};const A=AM[b.a
  const must=b.sk.filter(s=>s[0]==='must');
  return `<div class="guide">
   <h5>⚔️ Bạn đánh boss</h5>${off}
-  <p class="gp">Mang DPS <b>${b.a.map(a=>AR[a][3]).join(' + ')}</b> (200%).${b.a.length>1?' Boss có 2 loại giáp theo bộ phận, nên cần cả 2 hệ đạn.':''} Đạn sai hệ (ô đỏ) chỉ gây 50%.</p>
+  <p class="gp">Mang DPS <b>${b.a.map(a=>AR[a][3]).join(' + ')}</b> (200%).${b.a.length>1?(b.v?' Giáp đổi theo mùa: xem mùa đang mở rồi mang đúng 1 hệ đạn.':' Boss có 2 loại giáp theo bộ phận, nên cần cả 2 hệ đạn.'):''} Đạn sai hệ (ô đỏ) chỉ gây 50%.</p>
   <h5>🛡️ Boss bắn <span class="tag ${A[0]}">${A[1]}</span> vào đội bạn</h5><div class="gl">${dfn}</div>
   <p class="gp">Striker giáp <b>${good}</b> chỉ nhận 50%.${bad?` Tránh đặt giáp <b>${bad}</b> ở hàng đầu (nhận ${bad.includes(',')?'150–200':'200'}%).`:''}</p>
   <h5>🧭 Diễn biến trận</h5><ol>${g.fl.map(x=>`<li>${x}</li>`).join('')}</ol>
@@ -2448,6 +2479,9 @@ const SCHED=[
  {m:'TA',k:'Perorodzilla',n:'Perorodzilla',a:['special'],s:'2026-12-15T11:00:00+09:00',e:'2026-12-22T03:59:59+09:00',x:'Trong nhà · lịch dự đoán theo JP'},
  {m:'GA',k:'Shiro',n:'Shiro & Kuro',a:['light','special','elastic'],s:'2026-12-29T11:00:00+09:00',e:'2027-01-05T03:59:59+09:00',x:'Đô thị · Light và Special tới Torment · lịch dự đoán theo JP'},
  {m:'TA',k:'Drum',n:'Drum Crab',a:['light','special'],s:'2027-01-12T11:00:00+09:00',e:'2027-01-19T03:59:59+09:00',x:'Đô thị · lịch dự đoán theo JP'}];
+// modes shown as cards / ranked for the lobby: key -> card title, short label for text. Only TA and GA: Set belongs to
+// Final Restriction Release, a separate mode, so it is not scheduled here (its guide stays in Cơ chế boss)
+const MODES=[['TA','TOTAL ASSAULT','Total Assault'],['GA','GRAND ASSAULT','Grand Assault']];
 const VN=d=>d.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',weekday:'short',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 const left=ms=>{const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),z=s%60;
  return `${d} ngày ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(z).padStart(2,'0')}`};
@@ -2459,10 +2493,10 @@ function renderLive(){const now=new Date();
   return `<div class="lprep">${B.team?`<div class="k">Đội mẫu · ${B.team[0]}</div><div class="keys">${B.team[1].map(nm).join('')}<span class="plus">+</span>${B.team[2].map(nm).join('')}</div>`
    :`<div class="k">Chìa khóa trong roster</div><div class="keys">${B.k.map(nm).join('')}</div>`}
    ${must.length?`<div class="k">Phải nhớ</div><ul class="rl">${must.map(s=>`<li><b>${s[1]}</b>${s[3]?`: ${s[3]}`:''}</li>`).join('')}</ul>`:''}</div>`;};
- document.getElementById('lgrid').innerHTML=['TA','GA'].map(mode=>{const b=pick(mode,now);
+ document.getElementById('lgrid').innerHTML=MODES.map(([mode,title])=>{const b=pick(mode,now);if(!b)return '';
   const st=now<b.S?['soon','Sắp mở']:now<=b.E?['on','Đang diễn ra']:['off','Đã kết thúc'];
   const target=st[0]==='soon'?b.S:b.E;
-  return `<div class="lc"><div class="lbg">${bossImg(b.k,'Portrait','')}</div><div class="mode">${mode==='TA'?'TOTAL ASSAULT':'GRAND ASSAULT'}<span class="st ${st[0]}">${st[1]}</span></div>
+  return `<div class="lc"><div class="lbg">${bossImg(b.k,'Portrait','')}</div><div class="mode">${title}<span class="st ${st[0]}">${st[1]}</span></div>
    <h3>${bossImg(b.k,'Icon','lci')}${b.n}</h3>
    <div class="row">${b.a.map(a=>`<span class="ar ${AR[a][0]}">${AR[a][1]}</span><span class="arrow">←</span><span class="tag ${AR[a][2]}">${AR[a][3]}</span>`).join('&nbsp;&nbsp;')}</div>
    <div class="when">Mở: <b>${VN(b.S)}</b><br>Kết thúc: <b>${VN(b.E)}</b><br>
@@ -2902,7 +2936,7 @@ function taskList(){const now=new Date(),out=[];
  // the two daily modes Momoka (GSC Transportation Office) hands to Sensei in the game
  out.push({id:'bounty-'+vnDay(),c:'daily',t:'Truy nã tội phạm (Bounty): dùng hết vé',s:'Momoka giao. Đánh màn cao nhất đã mở, hoặc quét nhanh; nguồn đá nâng cấp vũ khí của học sinh.',h:'#tasks'});
  out.push({id:'comm-'+vnDay(),c:'daily',t:'Ủy thác đặc biệt (Commissions): dùng hết vé',s:'Momoka giao. Ưu tiên màn tín dụng hoặc màn báo cáo kinh nghiệm, tùy bạn đang thiếu thứ nào.',h:'#tasks'});
- [['TA','Total Assault'],['GA','Grand Assault']].forEach(([md,lab])=>{const b=pick(md,now);if(!b||now>b.E)return;const k=`${md}-${b.n}-${dshort(b.S)}`;
+ MODES.forEach(([md,,lab])=>{const b=pick(md,now);if(!b||now>b.E)return;const k=`${md}-${b.n}-${dshort(b.S)}`;
   if(now<b.S)out.push({id:k+'-prep',c:'raid',t:`Chuẩn bị đội cho ${lab} ${b.n}`,s:`Mở ${dshort(b.S)}, sau ${days(b.S-now)} ngày. Đọc cơ chế boss và cài thẻ mở đầu trước.`,h:'#teams'});
   else out.push({id:k+'-run',c:'raid',t:`Đánh ${lab} ${b.n}`,s:`Đang mở, còn ${days(b.E-now)} ngày.`,h:'#live'});});
  const nb=BAN.flatMap(x=>x.E>=now?x.st.filter(s=>!(s[0] in OWN)&&s[7]==='go').map(s=>[s[0],x]):[])[0];
@@ -3101,23 +3135,28 @@ document.getElementById('tbBack').addEventListener('click',()=>{location.hash='#
 // lobby tiles and top-bar numbers from the live data
 function fillShell(){const now=new Date();
  document.getElementById('rStu').textContent=Object.keys(OWN).length;
- const ta=pick('TA',now),ga=pick('GA',now),tl=now>=ta.S&&now<=ta.E,gl=now>=ga.S&&now<=ga.E;
  const when=(b,on)=>on?`còn ${days(b.E-now)} ngày`:now<b.S?`mở sau ${days(b.S-now)} ngày`:'đã kết thúc';
- document.getElementById('rTA').textContent=`${ta.n} · ${when(ta,tl)}`;
+ // the raid the lobby card / top bar feature: whichever of TA, GA and Limit Break Raid comes first for the player. Open beats
+ // coming, coming beats ended; between two of the same kind, the nearer date wins. The runner-up goes in the card's sub line.
+ const rk=(b,on)=>on?[0,b.E]:now<b.S?[1,b.S]:[2,-b.E];
+ const RAIDS=MODES.map(([m])=>{const b=pick(m,now);return b&&[b,now>=b.S&&now<=b.E,m];}).filter(Boolean)
+  .sort((p,q)=>{const a=rk(p[0],p[1]),c=rk(q[0],q[1]);return a[0]-c[0]||a[1]-c[1];});
+ const [fr,fl,fm]=RAIDS[0],other=RAIDS[1],anyOn=RAIDS.some(x=>x[1]);
+ document.getElementById('rTA').textContent=`${fm} ${fr.n} · ${when(fr,fl)}`;
  const nb=BAN.flatMap(x=>x.E>=now?x.st.filter(s=>!(s[0] in OWN)&&s[7]==='go').map(s=>[s[0],x]):[])[0];
  document.getElementById('rBan').textContent=nb?`${nb[0]} · ${dshort(nb[1].S)}`:'Chưa cần quay';
  const T=id=>document.getElementById(id),dot=el=>el.querySelector('.dot')||el.insertAdjacentHTML('beforeend','<span class="dot"></span>');
  // fillShell runs on every keystroke in the Eligma box: rebuild a card's picture only when it is a different picture
  // (rewriting innerHTML re-downloads/decodes the images and drops the scene image lobbyBG added)
  const pic=(el,h)=>{const g=el.querySelector('.tbg');if(g.dataset.p!==h){g.dataset.p=h;g.innerHTML=h;}};
- const r=T('tRaid');pic(r,bossLobby(ta.k));
- r.querySelector('.ttag').textContent=tl?`Còn ${days(ta.E-now)} ngày`:now<ta.S?`Mở sau ${days(ta.S-now)} ngày`:'';
- r.querySelector('small').textContent=`TA ${ta.n}: ${when(ta,tl)} · GA ${ga.n}: ${when(ga,gl)}`;if(tl||gl)dot(r);
+ const r=T('tRaid');pic(r,bossLobby(fr.k));
+ r.querySelector('.ttag').textContent=fl?`${fm} · còn ${days(fr.E-now)} ngày`:now<fr.S?`${fm} · mở sau ${days(fr.S-now)} ngày`:'';
+ r.querySelector('small').textContent=`${fm} ${fr.n}: ${when(fr,fl)}`+(other?` · ${other[2]} ${other[0].n}: ${when(other[0],other[1])}`:'');if(anyOn)dot(r);
  const cb=BAN[curBan(now)],bl=cb.S<=now&&now<=cb.E,top=cb.st.find(s=>!(s[0] in OWN)&&s[7]==='go')||cb.st[0],b=T('tBan');
  pic(b,porImg(top[0],''));b.querySelector('.ttag').textContent=bl?`Còn ${days(cb.E-now)} ngày`:`Mở sau ${days(cb.S-now)} ngày`;
  b.querySelector('small').textContent=cb.st.map(s=>s[0]).join(' · ');if(bl)dot(b);
  // Dock badges (phone): days left of the open raid / banner, roster size
- const dl=[tl&&days(ta.E-now),gl&&days(ga.E-now)].filter(Boolean),sb=(id,v,t)=>{const e=T(id);if(e){e.textContent=v;e.title=t||'';}};
+ const dl=RAIDS.filter(x=>x[1]).map(x=>days(x[0].E-now)),sb=(id,v,t)=>{const e=T(id);if(e){e.textContent=v;e.title=t||'';}};
  sb('dTA',dl.length?Math.min(...dl):'',dl.length?`Raid đang mở, còn ${Math.min(...dl)} ngày`:'');
  sb('dBan',bl?days(cb.E-now):'',bl?`Banner đang mở, còn ${days(cb.E-now)} ngày`:'');
  sb('dStu',Object.keys(OWN).length,'Học sinh trong roster');
@@ -3730,7 +3769,7 @@ stageTalk({sc:'#s-raid',cast:'raid',ch:'Rin',rd:'Spine/rin_wp/assets/',
  login:'Sensei, tôi là Nanagami Rin, Trưởng ban Hành chính Hội Học sinh Liên bang. Tôi xin báo cáo lịch Total Assault và Grand Assault.',
  // status lines come from the same schedule as the TA/GA cards
  status:()=>{const now=new Date(),out=[];
-  [['TA','Total Assault'],['GA','Grand Assault']].forEach(([md,lab])=>{const b=pick(md,now);if(!b)return;
+  MODES.forEach(([md,,lab])=>{const b=pick(md,now);if(!b)return;
    if(now<b.S)out.push(`${lab} ${b.n} sẽ mở sau ${days(b.S-now)} ngày, vào ngày ${dshort(b.S)}. Xin Sensei chuẩn bị đội hình từ bây giờ.`);
    else if(now<=b.E)out.push(`${lab} ${b.n} đang diễn ra, còn ${days(b.E-now)} ngày. Hội Học sinh Liên bang đề nghị Sensei hoàn thành trước hạn.`);});
   return out;},
@@ -3996,7 +4035,7 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
 (function(){
  // value = icon files to try in order ("ui-*" = cut from the game's own UI sheet by crop_ui.ps1, the rest = wiki item icons)
  const MAP={'📋':'ui-task|task','👥':'ui-stu','💠':'ui-eligma|eligma','⚔':'ui-sword|battle','🎟':'ui-shop|gacha','🏠':'ui-home|schale','🏆':'ui-pvp|pvp',
-  '🎯':'ui-boss|target','🃏':'card','🌐':'ui-city|city','☀':'outdoor','🌙':'indoor','🔄':'dice','🧮':'calc','🛡':'ui-shield|tank','💚':'heal',
+  '🎯':'ui-boss|target','🃏':'card','🌐':'ui-city|city','☀':'ui-outdoor|outdoor','🌙':'ui-indoor|indoor','🔄':'dice','🧮':'calc','🛡':'ui-shield|tank','💚':'heal',
   '✨':'buff','🧭':'flag','✅':'ui-check|ok','📅':'ui-raid|calendar','⏱':'calendar','📜':'ui-book|scroll','💡':'ui-mega|tip','🧩':'team',
   '🔭':'scope','👆':'pat','❔':'ui-help|help','🛠':'ui-gear|gear'};
  const RE=new RegExp('('+Object.keys(MAP).join('|')+')\\uFE0F?','gu'),BAD=new Set();
@@ -4016,6 +4055,46 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
  new MutationObserver(ms=>{const Q=new Set();for(const m of ms){if(m.type==='characterData')Q.add(m.target);else m.addedNodes.forEach(n=>Q.add(n));}
   Q.forEach(n=>{if(!(n.nodeType===1&&n.classList.contains('bai')))scan(n);});})
   .observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+</script>
+<script>
+// ===== AUTO-COMPACT (desktop ≥901px): a row whose text doesn't fit any more switches to icons (.cmp), and back as soon as it fits.
+// Test = drop .cmp, measure the full-text layout, put .cmp back if it overflows; all in one frame, so nothing flickers.
+// Runs when one of the rows changes size (window resize, screen opened) or its text changes (TA countdown, task count...).
+(function(){
+ const mq=matchMedia('(min-width:901px)');
+ const shown=el=>el.offsetParent!==null;
+ const over=el=>el&&shown(el)&&el.scrollWidth>el.clientWidth+1;
+ const wraps=r=>{const k=[...r.children].filter(shown);return k.length>1&&k[k.length-1].offsetTop>k[0].offsetTop+4;};
+ const txt=el=>el.textContent.replace(/\s+/g,' ').trim();
+ const G=[
+  // top bar: the pill row is cut (it scrolls sideways) -> round icons; tooltip = label + value
+  {sel:'.topbar .tb-res',test:over,
+   tip:el=>el.querySelectorAll('.res').forEach(a=>{if(a.dataset.t==null)a.dataset.t=a.title||'';
+    const v=[...a.querySelectorAll('b,small')].map(txt).join(' ');a.title=a.dataset.t?`${a.dataset.t}: ${v}`:v;})},
+  // lobby cards (not the locked one): title or sub line cut, or the text taller than the card -> the card's icon in a circle
+  {sel:'#home .tile:not(#tLock)',test:t=>{const l=t.querySelector('.tlab');if(!l||!shown(t))return false;
+    const cs=getComputedStyle(t),room=t.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+    return [...l.children].some(over)||l.offsetHeight>room+1;},
+   prep:t=>{if(!t.querySelector('.tic')&&t.dataset.ic)t.insertAdjacentHTML('beforeend',`<span class="tic" aria-hidden="true">${t.dataset.ic}</span>`);},
+   tip:t=>{const l=t.querySelector('.tlab');if(l)t.title=[...l.children].map(txt).filter(Boolean).join(' · ');}},
+  // student filters: a row of chips that is cut or wraps onto a 2nd line -> ammo / armor chips show their icon only
+  {sel:'.sfil .fr',test:r=>shown(r)&&(over(r)||wraps(r)),
+   tip:r=>r.querySelectorAll('.fb').forEach(b=>{if(!b.title)b.title=txt(b);})}];
+ let q=0;
+ const run=()=>{q=0;G.forEach(g=>document.querySelectorAll(g.sel).forEach(el=>{
+  g.prep&&g.prep(el);el.classList.remove('cmp');
+  const on=mq.matches&&g.test(el);el.classList.toggle('cmp',on);g.tip&&g.tip(el);}));};
+ const ask=()=>{if(!q)q=requestAnimationFrame(run);};
+ const els=()=>G.flatMap(g=>[...document.querySelectorAll(g.sel)]);
+ if('ResizeObserver' in window){const ro=new ResizeObserver(ask);els().forEach(el=>ro.observe(el));}
+ // text changes only (childList / characterData), not attributes: the class + title written here can't retrigger it
+ const mo=new MutationObserver(ask);
+ document.querySelectorAll('.topbar .tb-res,#home .tiles,.sfil').forEach(el=>mo.observe(el,{childList:true,characterData:true,subtree:true}));
+ mq.addEventListener?mq.addEventListener('change',ask):mq.addListener(ask);
+ addEventListener('hashchange',()=>setTimeout(ask,60));
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ask);
+ ask();
 })();
 </script>
 <script>
@@ -4040,6 +4119,52 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   document.querySelectorAll('#dock a[href^="#"]').forEach(a=>a.getAttribute('href')===h?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));};
  addEventListener('hashchange',cur);cur();
 })();
+</script>
+<script>
+/* ===== BOSS FACE BOXES for the lobby cards TA·GA and Cơ chế boss (marked by the player on face_grid.html, 24/11/2026).
+   Grid = 20 columns A→T × 10 rows 1→10 laid over each Boss_Portrait file. Each entry = the box that must stay visible,
+   [first column, last column, top row, bottom row] = the smallest area that must stay visible on the card;
+   'full' = the whole picture (Hovercraft is a ship, Shiro / Per / Goz whole body).
+   The picture then fills the card (see fit below), so the card shows the box plus as much around it as the picture has. Bosses not listed = 'full'.
+   24/11/2026: pictures replaced by the Fandom banners (923×284, Set 566×1045), marks redone on the new pictures (same day).
+   The SAME table is copied into face_grid.html (BFACE there): marked bosses show "Xong" + their box on that page. */
+const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 10',Kaiten:'E Q 2 9',Hieronymus:'F O 2 9',
+ Gregorius:'E M 2 9',Geburah:'D L 2 9',Nightmare:'F O 2 9',Shiro:'F P 2 9',Perorodzilla:'F Q 1 10',Goz:'G P 1 10',Kurokage:'C I 2 9',
+ Yesod:'G O 1 7',Drum:'E P 2 9',Set:'F O 2 5'};
+{const COL='ABCDEFGHIJKLMNOPQRST';
+ // box in fractions of the picture: x0 x1 y0 y1
+ const box=k=>{const s=BFACE[k];if(!s||s==='full')return[0,1,0,1];const[a,b,t,u]=s.split(' ');
+  return[COL.indexOf(a)/20,(COL.indexOf(b)+1)/20,(+t-1)/10,(+u)/10];};
+ // boss key = the file name (Boss_Portrait/<key>.png or .webp)
+ const keyOf=img=>(img.getAttribute('src')||'').split('/').pop().replace(/\.(png|webp)$/,'');
+ const TEXT=.24; // bottom share of the card kept for the title / sub line (the frosted scrim)
+ // The marked box is the MINIMUM that must show. The picture is scaled to fill the whole card (no empty strip, never past the
+ // picture's own edges) and slid so the box sits in the middle of the area above the title. Only if filling the card would
+ // push part of the box out does the face win: then the picture is made just small enough for the box to fit.
+ const K8=Math.tan(8*Math.PI/180);   // the card window leans 8°: its corners reach tan(8°)·H/2 past each side
+ function fit(img){const w=img.naturalWidth,h=img.naturalHeight,host=img.closest('.tbg');if(!w||!host)return;
+  const W=host.clientWidth,Hf=host.clientHeight,H=Hf*(1-TEXT);if(!W||!Hf)return;
+  const[x0,x1,y0,y1]=box(keyOf(img)),ex=K8*Hf/2;
+  const sCover=Math.max((W+2*ex)/w,Hf/h),sFit=Math.min(W/((x1-x0)*w),H/((y1-y0)*h));
+  const s=Math.min(sCover,sFit),iw=w*s,ih=h*s;
+  const cx=(x0+x1)/2*iw,cy=(y0+y1)/2*ih;                   // box centre inside the scaled picture (px)
+  let L=W/2-cx,T=H/2-cy;
+  // keep the picture covering the card: never let its edge come inside the card window
+  if(iw>=W+2*ex)L=Math.min(-ex,Math.max(W+ex-iw,L));else L=(W-iw)/2;
+  if(ih>=Hf)T=Math.min(0,Math.max(Hf-ih,T));
+  const set=(p,v)=>img.style.setProperty(p,v,'important');
+  set('height',ih+'px');set('width',iw+'px');set('left',L+'px');set('top',T+'px');
+  set('transform','skewX(var(--usk))');set('transform-origin',(W/2-L)+'px '+(Hf/2-T)+'px');}
+ const all=()=>document.querySelectorAll('#home .tbg img[data-strip]').forEach(fit);
+ document.addEventListener('load',e=>{if(e.target.matches&&e.target.matches('#home .tbg img[data-strip]'))fit(e.target);},true);
+ const tl=document.querySelector('#home .tiles');
+ if(tl&&'ResizeObserver' in window){let q=0;new ResizeObserver(()=>{if(!q)q=requestAnimationFrame(()=>{q=0;all();});}).observe(tl);}
+ // the lobby rebuilds a card picture when the boss changes: fit only the boss pictures that just arrived (the tiles' text also
+ // changes on every keystroke in the Eligma box, that must not refit anything)
+ if(tl)new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1)
+  (n.matches('img[data-strip]')?[n]:n.querySelectorAll('img[data-strip]')).forEach(i=>requestAnimationFrame(()=>fit(i)));})
+  .observe(tl,{childList:true,subtree:true});
+ all();}
 </script>
 </body>
 </html>
