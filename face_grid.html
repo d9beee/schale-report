@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lưới chấm mặt boss</title>
+<style>
+:root{color-scheme:light dark;--ok:#1f9d6a;--todo:#d6264f}
+body{margin:0;padding:18px;font:14px/1.5 "Segoe UI",system-ui,sans-serif;background:#eef3f8;color:#1e2b3e}
+@media (prefers-color-scheme:dark){body{background:#12162a;color:#e8eaf6}.card{background:#1c2140!important}p.h{color:#9aa7c7!important}}
+h1{font-size:20px;margin:0 0 4px}p.h{margin:0 0 10px;color:#5d7088}
+.prog{display:flex;gap:10px;align-items:center;margin:0 0 16px;font-weight:600}
+.prog .bar{flex:1;max-width:320px;height:8px;border-radius:8px;background:rgba(120,140,170,.25);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--ok)}
+.wrap{display:grid;gap:18px}
+.card{background:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 4px 14px rgba(21,80,140,.08);border-left:5px solid var(--todo)}
+.card.done{border-left-color:var(--ok)}
+.card h2{margin:0 0 8px;font-size:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.card h2 small{font-weight:500;color:#5d7088}
+.st{font:700 12px/1 "Segoe UI",system-ui;padding:5px 9px;border-radius:99px;color:#fff;background:var(--todo)}
+.done .st{background:var(--ok)}
+.fig{position:relative;display:inline-block;max-width:100%;padding:18px 0 0 22px}
+.fig img{display:block;max-width:100%;height:auto;max-height:70vh;background:repeating-conic-gradient(#ccd 0 25%,#f4f4f8 0 50%) 0 0/16px 16px}
+.grid{position:absolute;left:22px;top:18px;right:0;bottom:0;display:grid;grid-template-columns:repeat(20,1fr);grid-template-rows:repeat(10,1fr);pointer-events:none}
+.grid i{border-right:1px solid rgba(255,40,80,.55);border-bottom:1px solid rgba(255,40,80,.55)}
+.grid i:nth-child(20n+1){border-left:1px solid rgba(255,40,80,.55)}.grid i:nth-child(-n+20){border-top:1px solid rgba(255,40,80,.55)}
+.cols,.rows{position:absolute;display:grid;font:700 11px/1 Consolas,monospace;color:#d6264f}
+.cols{left:22px;right:0;top:0;height:16px;grid-template-columns:repeat(20,1fr);text-align:center;align-items:end}
+.rows{left:0;top:18px;bottom:0;width:20px;grid-template-rows:repeat(10,1fr);align-items:center;text-align:right}
+/* the marked box, drawn over the grid so you can check it */
+.box{position:absolute;border:3px solid var(--ok);background:rgba(31,157,106,.15);border-radius:4px;pointer-events:none;box-shadow:0 0 0 1px #fff}
+.miss{color:#c23a63;font-weight:700}
+</style></head><body>
+<h1>Lưới chấm mặt boss (ảnh banner Fandom, dùng cho thẻ TA/GA và Cơ chế boss ở sảnh)</h1>
+<p class="h">Cột A → T (trái → phải), hàng 1 → 10 (trên → dưới). Gửi theo dạng <b>Binah: C9 đến K2</b> = ô nhỏ nhất phải luôn thấy trên thẻ, hoặc <b>Binah: full</b> = lấy cả hình.
+ Viền <b style="color:var(--ok)">xanh + "Xong"</b> = đã chấm (khung xanh trên ảnh là ô đã lưu), viền <b style="color:var(--todo)">đỏ</b> = còn chờ chấm.</p>
+<div class="prog"><span id="pn"></span><span class="bar"><i id="pb"></i></span></div>
+<div class="wrap" id="w"></div>
+<script>
+// SAME table as BFACE in index.html: [first column, last column, top row, bottom row] or 'full'. Add a boss here = it shows "Xong".
+const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 10',Kaiten:'E Q 2 9',Hieronymus:'F O 2 9',
+ Gregorius:'E M 2 9',Geburah:'D L 2 9',Nightmare:'F O 2 9',Shiro:'F P 2 9',Perorodzilla:'F Q 1 10',Goz:'G P 1 10',Kurokage:'C I 2 9',
+ Yesod:'G O 1 7',Drum:'E P 2 9',Set:'F O 2 5'};
+const KEYS=['Binah','Chesed','Hod','Hovercraft','Kaiten','Hieronymus','Gregorius','Geburah','Nightmare','Shiro','Perorodzilla','Goz','Kurokage','Yesod','Drum','Set'];
+const L='ABCDEFGHIJKLMNOPQRST';
+// not marked yet first, so the next one to do is always at the top
+const ORDER=[...KEYS.filter(k=>!BFACE[k]),...KEYS.filter(k=>BFACE[k])];
+const boxCss=s=>{if(s==='full')return 'left:0;top:0;width:100%;height:100%';const[a,b,t,u]=s.split(' ');
+ const x0=L.indexOf(a)/20,x1=(L.indexOf(b)+1)/20,y0=(+t-1)/10,y1=+u/10;
+ return `left:${x0*100}%;top:${y0*100}%;width:${(x1-x0)*100}%;height:${(y1-y0)*100}%`;};
+const n=KEYS.filter(k=>BFACE[k]).length;
+document.getElementById('pn').textContent=`Đã chấm ${n} / ${KEYS.length}`;document.getElementById('pb').style.width=n/KEYS.length*100+'%';
+document.getElementById('w').innerHTML=ORDER.map(k=>{const s=BFACE[k];
+ return `<div class="card${s?' done':''}"><h2>${k}<span class="st">${s?'Xong · '+(s==='full'?'full':s.replace(/^(\S) (\S) (\S+) (\S+)$/,'$1$4 đến $2$3')):'Chờ chấm'}</span><small class="sz"></small></h2>
+ <div class="fig"><div class="cols">${[...L].map(c=>`<span>${c}</span>`).join('')}</div>
+  <div class="rows">${Array.from({length:10},(_,i)=>`<span>${i+1}</span>`).join('')}</div>
+  <img src="BlueArchive_TA_GA_Bosses_HD/Boss_Portrait/${k}.png" alt="${k}"
+   onload="this.closest('.card').querySelector('.sz').textContent=this.naturalWidth+' × '+this.naturalHeight+' px'"
+   onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace(/\\.png$/,'.webp')}else{this.closest('.fig').outerHTML='<p class=miss>Không có file ảnh</p>'}">
+  <div class="grid">${'<i></i>'.repeat(200)}${s?`<span class="box" style="${boxCss(s)}"></span>`:''}</div></div></div>`;}).join('');
+</script>
+</body></html>
