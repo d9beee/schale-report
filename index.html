@@ -3388,6 +3388,12 @@ addEventListener('keydown',e=>{if(e.key!=='Escape'||!curScr||curScr.id==='home')
 addEventListener('hashchange',route);
 document.getElementById('tbBack').addEventListener('click',()=>{location.hash='#home';});
 // lobby tiles and top-bar numbers from the live data
+// lobby cards Học sinh / Cơ chế boss: a random owned student and a random boss, drawn once per page load (fillShell re-runs on
+// every Eligma keystroke, so the pick is kept). The boss avoids the one on the TA·GA card. A student without a Portrait_Full file
+// draws again (5 tries), then the picture is dropped like any missing portrait.
+const lbRnd=a=>a[Math.random()*a.length|0],lbPool=Object.keys(OWN);
+const lbStu=lbRnd(lbPool)||'Hanako (Swimsuit)';let lbBoss=null;
+function lbStuErr(el){const t=+(el.dataset.t||0);if(t>=5){el.remove();return;}el.dataset.t=t+1;el.src=`Portrait_Full/${avFile(lbRnd(lbPool))}.webp`;}
 function fillShell(){const now=new Date();
  document.getElementById('rStu').textContent=Object.keys(OWN).length;
  const when=(b,on)=>on?`còn ${days(b.E-now)} ngày`:now<b.S?`mở sau ${days(b.S-now)} ngày`:'đã kết thúc';
@@ -3416,10 +3422,11 @@ function fillShell(){const now=new Date();
  sb('dBan',bl?days(cb.E-now):'',bl?`Banner đang mở, còn ${days(cb.E-now)} ngày`:'');
  sb('dStu',Object.keys(OWN).length,'Học sinh trong roster');
  const p=T('tPvp');pic(p,porImg('Shiroko*Terror',''));p.querySelector('.ttag').textContent=`Season ${PVS.n}`;
- pic(T('tStu'),porImg('Hanako (Swimsuit)',''));
+ pic(T('tStu'),`<img class="" src="Portrait_Full/${avFile(lbStu)}.webp" alt="" loading="lazy" onerror="lbStuErr(this)">`);
  const u=T('tUe'),f=planFor(Math.max(0,+eliIn.value||0)).rows.find(x=>x.st==='ok');pic(u,porImg('Seia',''));
  u.querySelector('.ttag').textContent=f?`Tiếp: ${f.n} UE ${f.t}★`:'';
- pic(T('tBoss'),bossLobby('Binah'));
+ if(!lbBoss){const o=BOSS_KEYS.filter(k=>k!==fr.k);lbBoss=lbRnd(o.length?o:BOSS_KEYS);}
+ pic(T('tBoss'),bossLobby(lbBoss));
  lobbyBG();}
 // lobby boss cards: the same Boss_Portrait <img> the rest of the page uses (bossImg, with its own file-name map and fallback),
 // tagged class "strip" so the lobby CSS can frame it on the boss's face
@@ -4495,8 +4502,8 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
    24/11/2026: pictures replaced by the Fandom banners (923×284, Set 566×1045), marks redone on the new pictures (same day).
    The SAME table is copied into face_grid.html (BFACE there): marked bosses show "Xong" + their box on that page. */
 const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 10',Kaiten:'E Q 2 9',Hieronymus:'F O 2 9',
- Gregorius:'E M 2 9',Geburah:'D L 2 9',Nightmare:'F O 2 9',Shiro:'F P 2 9',Perorodzilla:'F Q 1 10',Goz:'G P 1 10',Kurokage:'C I 2 9',
- Yesod:'G O 1 7',Drum:'E P 2 9',Set:'F O 2 5'};
+ Gregorius:'E M 2 9',Geburah:'D L 2 9',Nightmare:'F O 2 9',Shiro:'F P 2 9',Perorodzilla:'F K 1 10',Goz:'G P 1 10',Kurokage:'C I 2 9',
+ Yesod:'G O 1 7',Drum:'G L 4 8',Set:'F O 2 5'};
 {const COL='ABCDEFGHIJKLMNOPQRST';
  // box in fractions of the picture: x0 x1 y0 y1
  const box=k=>{const s=BFACE[k];if(!s||s==='full')return[0,1,0,1];const[a,b,t,u]=s.split(' ');
@@ -4504,9 +4511,9 @@ const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 1
  // boss key = the file name (Boss_Portrait/<key>.png or .webp)
  const keyOf=img=>(img.getAttribute('src')||'').split('/').pop().replace(/\.(png|webp)$/,'');
  const TEXT=.24; // bottom share of the card kept for the title / sub line (the frosted scrim)
- // The marked box is the MINIMUM that must show. The picture is scaled to fill the whole card (no empty strip, never past the
- // picture's own edges) and slid so the box sits in the middle of the area above the title. Only if filling the card would
- // push part of the box out does the face win: then the picture is made just small enough for the box to fit.
+ // The marked box = the smallest area that should show. The picture always fills the whole card and its own edges never come
+ // inside the card window (player's rule, 25/11/2026); within that it is slid so the box sits in the middle of the area above
+ // the title. A box wider than the card's shape allows gets its far sides cropped: mark a tighter box for that boss.
  const K8=Math.tan(8*Math.PI/180);   // the card window leans 8°: its corners reach tan(8°)·H/2 past each side
  function fit(img){const w=img.naturalWidth,h=img.naturalHeight,host=img.closest('.tbg');if(!w||!host)return;
   // phone strip cards (TA/GA): the face goes into the right 45% of the card, the left side is the text safe zone
@@ -4514,15 +4521,13 @@ const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 1
   const W=host.clientWidth,Hf=host.clientHeight,H=strip?Hf:Hf*(1-TEXT);if(!W||!Hf)return;
   const AW=strip?W*.45:W,AX=strip?W-AW:0;                  // the area the face must sit in: x from AX, width AW
   const[x0,x1,y0,y1]=box(keyOf(img)),ex=K8*Hf/2;
-  const sCover=strip?Math.max((AW+ex)/w,Hf/h):Math.max((W+2*ex)/w,Hf/h),sFit=Math.min(AW/((x1-x0)*w),H/((y1-y0)*h));
-  const s=Math.min(sCover,sFit),iw=w*s,ih=h*s;
+  const s=strip?Math.max((AW+ex)/w,Hf/h):Math.max((W+2*ex)/w,Hf/h),iw=w*s,ih=h*s;   // smallest scale that covers the card
   const cx=(x0+x1)/2*iw,cy=(y0+y1)/2*ih;                   // box centre inside the scaled picture (px)
   let L=AX+AW/2-cx,T=H/2-cy;
-  // keep the picture covering the card: never let its edge come inside the card window.
+  // clamp so the picture's edge never comes inside the card window (the scale above always leaves enough picture for it).
   // Phone strip: the picture only has to cover the right art area (the left is the text zone, its fade hides the room behind)
-  if(strip){L=Math.min(AX,Math.max(W+ex-iw,L));}
-  else if(iw>=W+2*ex)L=Math.min(-ex,Math.max(W+ex-iw,L));else L=(W-iw)/2;
-  if(ih>=Hf)T=Math.min(0,Math.max(Hf-ih,T));
+  L=strip?Math.min(AX,Math.max(W+ex-iw,L)):Math.min(-ex,Math.max(W+ex-iw,L));
+  T=Math.min(0,Math.max(Hf-ih,T));
   const set=(p,v)=>img.style.setProperty(p,v,'important');
   set('height',ih+'px');set('width',iw+'px');set('left',L+'px');set('top',T+'px');
   set('transform','skewX(var(--usk))');set('transform-origin',(W/2-L)+'px '+(Hf/2-T)+'px');}
