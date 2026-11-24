@@ -1439,18 +1439,18 @@ html:has(.gm.on){overflow:hidden}
   width:min(460px,calc(100vw - 20px));gap:2px;padding:6px;border-radius:26px;justify-content:space-between;
   background:rgba(255,255,255,.58);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
   border:1px solid rgba(255,255,255,.75);box-shadow:0 12px 32px rgba(21,48,77,.24),inset 0 1px 0 rgba(255,255,255,.85);
-  transition:opacity .25s,transform .25s,width .55s var(--spring),padding .55s var(--spring)}
+  transform-origin:50% 100%;will-change:transform;transition:opacity .25s,transform .55s var(--spring)}
  .dock a{flex:1 1 0;min-width:0;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 2px 6px;border-radius:20px;
-  text-decoration:none;color:var(--navy);font-size:10.5px;font-weight:700;line-height:1.1;-webkit-tap-highlight-color:transparent;
-  transition:background .2s,color .2s,padding .55s var(--spring)}
- .dock a span{max-width:100%;max-height:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:max-height .55s var(--spring),opacity .3s .08s}
- /* minimized while scrolling (JS adds .mini): ~44px tall, 62% wide, icons only, badges shrink to dots. Shrinking is a quick
-    ease, growing back uses the iOS spring above (a transition follows the state it goes TO) */
- .dock.mini{width:calc(min(460px,100vw - 20px)*.62);padding:4px}
- .dock.mini a{padding:4px 2px}
- .dock.mini a span{max-height:0;opacity:0}
- .dock.mini .bd{top:3px;left:calc(50% + 9px);min-width:9px;height:9px;padding:0;font-size:0}
- .dock.mini,.dock.mini a,.dock.mini a span,.dock.mini .bd{transition-duration:.3s;transition-delay:0s;transition-timing-function:cubic-bezier(.3,.7,.4,1)}
+  text-decoration:none;color:var(--navy);font-size:10.5px;font-weight:700;line-height:1.1;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+ .dock a span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .3s .1s}
+ /* minimized while scrolling (JS adds .mini): only transform + opacity move, so the phone's GPU animates it without re-laying out
+    the glass. The whole dock shrinks to 70% toward its bottom edge (~43px tall), labels fade, icons drop into the middle and grow
+    back a little, badges become dots. Shrinking is a quick ease, growing back the iOS spring (a transition follows the state it goes TO) */
+ .dock.mini{transform:translateX(-50%) scale(.7)}
+ .dock.mini a span{opacity:0}
+ .dock.mini a i{transform:translateY(7px) scale(1.15)!important}
+ .dock.mini .bd{transform:translate(2px,6px) scale(.5);color:transparent}
+ .dock.mini,.dock.mini a i,.dock.mini a span,.dock.mini .bd{transition-duration:.3s;transition-delay:0s;transition-timing-function:cubic-bezier(.3,.7,.4,1)}
  .dock a i{font-style:normal;font-size:22px;line-height:1.2;display:block;transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
  .dock a:active i{transform:scale(.8)}
  .dock a.on{background:rgba(21,151,240,.15);color:var(--sky)}
@@ -1460,7 +1460,7 @@ html:has(.gm.on){overflow:hidden}
   font-size:10px;font-weight:800;line-height:18px;text-align:center;white-space:nowrap;box-shadow:0 0 0 2px rgba(255,255,255,.95);font-variant-numeric:tabular-nums}
  .dock .bd:empty{display:none}
  .dock .bd.info{background:var(--sky)}
- .dock .bd{transition:top .55s var(--spring),left .55s var(--spring),min-width .55s var(--spring),height .55s var(--spring),font-size .2s}
+ .dock .bd{transform-origin:0 0;transition:transform .55s var(--spring),color .2s}
  html[data-theme=dark] .dock{background:rgba(24,26,46,.6);border-color:rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08)}
  html[data-theme=dark] .dock a{color:#dfe6ff}
  html[data-theme=dark] .dock a.on{background:rgba(139,124,246,.22);color:#c9c0ff}
@@ -4520,16 +4520,18 @@ const BFACE={Binah:'D I 1 10',Chesed:'G L 1 9',Hod:'E J 2 9',Hovercraft:'G P 2 1
  all();}
 // ===== phone Dock minimize-on-scroll (Safari style, <=900px only): scrolling down shrinks it to icons, scrolling up,
 // 300ms without scrolling, the top of the page, a screen change or a tap springs it back. While small, the first tap only opens it.
-{const D=document.getElementById('dock'),GMS=document.getElementById('gm'),mq=matchMedia('(max-width:900px)'),last=new WeakMap();let t=0;
- const open=()=>{clearTimeout(t);D.classList.remove('mini');};
+{const D=document.getElementById('dock'),GMS=document.getElementById('gm'),mq=matchMedia('(max-width:900px)'),last=new WeakMap();let t=0,acc=0;
+ const open=()=>{clearTimeout(t);acc=0;D.classList.remove('mini');};
  addEventListener('scroll',e=>{
   const el=e.target===document?document.scrollingElement:e.target;
   if(!mq.matches||!(el instanceof Element)||el.closest('.dock')||GMS?.classList.contains('on'))return;
   const y=el.scrollTop,dy=y-(last.get(el)??y);last.set(el,y);
-  if(!dy)return;                                   // sideways scrolling (tab rows, the student strip) changes nothing
-  if(y<40||dy<-4)return open();                    // near the top or scrolling up: full size
-  if(dy>4)D.classList.add('mini');
-  clearTimeout(t);t=setTimeout(open,300);          // debounce: still for 300ms = back to full size
+  if(!dy||y<0||y>el.scrollHeight-el.clientHeight)return;   // sideways scrolling, or iOS rubber-band past the top / bottom edge
+  if(y<40)return open();                                   // near the top: full size
+  acc=Math.sign(dy)===Math.sign(acc)?acc+dy:dy;            // distance moved in the same direction, so a jittery finger does nothing
+  if(acc<-16)return open();                                // scrolled up a little: full size
+  if(acc>16)D.classList.add('mini');
+  clearTimeout(t);t=setTimeout(open,300);                  // debounce: still for 300ms = back to full size
  },{capture:true,passive:true});
  D.addEventListener('click',e=>{if(D.classList.contains('mini')){e.preventDefault();e.stopImmediatePropagation();open();}},true);
  D.addEventListener('focusin',e=>{if(e.target.matches(':focus-visible'))open();});   // keyboard users never meet a small dock
