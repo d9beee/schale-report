@@ -373,16 +373,16 @@ html[data-theme=dark] :is(.scard,.sc,.chip,.lc,.bs,.tile):has(img[role=button]:f
 }
 /* ===== GAME ICONS for ammo / armor / role (Icons/atk-*, def-*, role-*, cut from the game UI).
    Keyed on the chip classes the page already prints (.tag.t-exp…, .ar.ar-light…), so every chip (profile, tier cards, banners,
-   boss guide, matrix, filters) gets its icon with no template change. Corrosive has no game icon yet and keeps its old chip. */
-.t-exp{--ic:url(Icons/atk-explosive.png)}.t-pie{--ic:url(Icons/atk-piercing.png)}.t-mys{--ic:url(Icons/atk-mystic.png)}.t-son{--ic:url(Icons/atk-sonic.png)}
+   boss guide, matrix, filters) gets its icon with no template change. Corrosive = the sword icon in the Composite teal. */
+.t-exp{--ic:url(Icons/atk-explosive.png)}.t-pie{--ic:url(Icons/atk-piercing.png)}.t-mys{--ic:url(Icons/atk-mystic.png)}.t-son{--ic:url(Icons/atk-sonic.png)}.t-cor{--ic:url(Icons/atk-corrosive.png)}
 .ar-light{--ic:url(Icons/def-light.png)}.ar-heavy{--ic:url(Icons/def-heavy.png)}.ar-special{--ic:url(Icons/def-special.png)}
 .ar-elastic{--ic:url(Icons/def-elastic.png)}.ar-comp{--ic:url(Icons/def-teal.png)}
 /* no chip frame any more: the game icon itself is the badge (square, Apple-style rounded corners ≈ 27% of its size), the
    name follows as plain bold text. background-size 116% crops the icon's own small corners so only the rounding here shows. */
 :root{--icr:27%}
-.tag:is(.t-exp,.t-pie,.t-mys,.t-son),.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp){display:inline-flex;align-items:center;gap:5px;
+.tag:is(.t-exp,.t-pie,.t-mys,.t-son,.t-cor),.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp){display:inline-flex;align-items:center;gap:5px;
  vertical-align:middle;line-height:1.2;background:none!important;border:0!important;border-radius:0!important;padding:0!important;color:var(--ink)!important;font-weight:700}
-.tag:is(.t-exp,.t-pie,.t-mys,.t-son)::before,.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp)::before{
+.tag:is(.t-exp,.t-pie,.t-mys,.t-son,.t-cor)::before,.ar:is(.ar-light,.ar-heavy,.ar-special,.ar-elastic,.ar-comp)::before{
  content:"";flex:none;width:20px;height:20px;border-radius:var(--icr);background:var(--ic) center/116% no-repeat;box-shadow:0 1px 2px rgba(15,40,70,.2)}
 /* role = icon only (name in the tooltip and for screen readers); object-view-box crops the icon's own corners the same way */
 .rlic{width:20px;height:20px;border-radius:var(--icr);object-fit:cover;object-view-box:inset(7%);vertical-align:-5px;flex:none;box-shadow:0 1px 2px rgba(15,40,70,.2)}
@@ -449,9 +449,9 @@ img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto!important;max-width:none
       <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX</b><small>Cách xếp đội vào trận</small></span></a>
       <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></span></a>
       <a class="tile flat" href="#servers" id="tSrv" data-ic="🌐"><div class="tbg"></div><span class="tlab"><b>Servers</b><small>JP · KR · Global</small></span></a>
-      <a class="tile lock" id="tLock" aria-disabled="true" tabindex="-1" title="Chưa mở"><div class="tbg"></div>
+      <a class="tile lock" href="#jfd" id="tLock" title="Joint Firing Drill"><div class="tbg"></div><span class="ttag"></span>
         <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/><circle cx="12" cy="15.5" r="1.8" fill="#5b6b82"/></svg>
-        <b><span class="beta">BETA</span>Đang phát triển</b><small>Sắp có…</small></a>
+        <span class="tlab"><b>Joint Firing Drill</b><small></small></span></a>
     </div>
     <section class="notice">
       <div class="nhead"><span class="ntag">Thông báo</span><span class="kicker">Schale Tactical Report · 17/11/2026</span></div>
@@ -614,11 +614,11 @@ img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto!important;max-width:none
   <div class="pane">
   <section class="block tasks" id="tasks">
     <div class="tk-top">
-      <div class="ttabs" id="tkTabs"><button type="button" class="on" data-c="all">Tất cả</button><button type="button" data-c="daily">Hằng ngày</button><button type="button" data-c="raid">Raid</button><button type="button" data-c="banner">Banner</button><button type="button" data-c="ue">Kế hoạch UE</button></div>
+      <div class="ttabs" id="tkTabs"><button type="button" class="on" data-c="all">Tất cả</button><button type="button" data-c="daily">Hằng ngày</button><button type="button" data-c="raid">Raid</button><button type="button" data-c="banner">Banner</button><button type="button" data-c="ue">Kế hoạch UE</button><button type="button" data-c="jfd">Joint Firing Drill</button></div>
       <div class="tk-prog"><b id="tkCnt">0/0</b><small>việc đã xong</small><div class="pbar"><i id="tkBar"></i></div></div>
     </div>
     <div class="tk-list" id="tkList"></div>
-    <div class="tk-foot"><p class="lnote" id="tkNote">Danh sách tự lập từ lịch TA/GA, banner và kế hoạch UE trong report. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam. Dấu tích lưu trên trình duyệt này.</p>
+    <div class="tk-foot"><p class="lnote" id="tkNote">Danh sách tự lập từ lịch TA/GA, Joint Firing Drill, banner và kế hoạch UE trong report. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam. Dấu tích lưu trên trình duyệt này.</p>
       <button class="go tk-all" id="tkAll" type="button">✓ Hoàn thành tất cả</button></div>
   </section>
   </div>
@@ -641,12 +641,11 @@ img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto!important;max-width:none
       <div class="ttabs" id="ttabs"><button type="button" class="on" data-t="all">Tất cả</button><button type="button" data-t="0">SS+</button><button type="button" data-t="1">SS</button><button type="button" data-t="2">S</button><button type="button" data-t="3">A</button><button type="button" data-t="4">B–C</button></div>
       <input id="q" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit, Kayoko)">
       <div class="legend">
-        <span class="tag t-exp">Explosive</span><span class="tag t-pie">Piercing</span><span class="tag t-mys">Mystic</span><span class="tag t-son">Sonic</span>
-        <span>· icon góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
+        <span class="tag t-exp">Explosive</span><span class="tag t-pie">Piercing</span><span class="tag t-mys">Mystic</span><span class="tag t-son">Sonic</span><span class="tag t-cor">Corrosive</span>        <span>· icon góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
       </div>
       <div class="sfil" id="sfil">
         <div class="fr"><b>Vai trò</b><button type="button" class="fb" data-g="r" data-v="T" title="Tank" aria-label="Tank"><img class="rlic" src="Icons/role-tank.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="A" title="Dealer" aria-label="Dealer"><img class="rlic" src="Icons/role-dealer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="H" title="Healer" aria-label="Healer"><img class="rlic" src="Icons/role-healer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="S" title="Support" aria-label="Support"><img class="rlic" src="Icons/role-support.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="X" title="Tactical Support (T.S.)" aria-label="Tactical Support"><img class="rlic" src="Icons/role-tactical-support.png" alt=""></button></div>
-        <div class="fr"><b>Hệ đạn</b><button type="button" class="fb" data-g="a" data-v="E"><span class="tag t-exp">Explosive</span></button><button type="button" class="fb" data-g="a" data-v="P"><span class="tag t-pie">Piercing</span></button><button type="button" class="fb" data-g="a" data-v="M"><span class="tag t-mys">Mystic</span></button><button type="button" class="fb" data-g="a" data-v="S"><span class="tag t-son">Sonic</span></button></div>
+        <div class="fr"><b>Hệ đạn</b><button type="button" class="fb" data-g="a" data-v="E"><span class="tag t-exp">Explosive</span></button><button type="button" class="fb" data-g="a" data-v="P"><span class="tag t-pie">Piercing</span></button><button type="button" class="fb" data-g="a" data-v="M"><span class="tag t-mys">Mystic</span></button><button type="button" class="fb" data-g="a" data-v="S"><span class="tag t-son">Sonic</span></button><button type="button" class="fb" data-g="a" data-v="C"><span class="tag t-cor">Corrosive</span></button></div>
         <div class="fr"><b>Giáp</b><button type="button" class="fb" data-g="m" data-v="l"><span class="ar ar-light">Light</span></button><button type="button" class="fb" data-g="m" data-v="h"><span class="ar ar-heavy">Heavy</span></button><button type="button" class="fb" data-g="m" data-v="s"><span class="ar ar-special">Special</span></button><button type="button" class="fb" data-g="m" data-v="e"><span class="ar ar-elastic">Elastic</span></button><button type="button" class="fb" data-g="m" data-v="c"><span class="ar ar-comp">Composite</span></button></div>
         <div class="fr"><b>Loại</b><button type="button" class="fb" data-g="k" data-v="1">STRIKER</button><button type="button" class="fb" data-g="k" data-v="0">SPECIAL</button></div>
         <div class="fr"><b>Vị trí</b><button type="button" class="fb" data-g="p" data-v="F" title="Front" aria-label="Front"><img class="psic" src="Icons/pos-front.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="M" title="Middle" aria-label="Middle"><img class="psic" src="Icons/pos-middle.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="B" title="Back" aria-label="Back"><img class="psic" src="Icons/pos-back.png" alt=""></button>
@@ -844,6 +843,31 @@ img.bai:is([data-k=ui-raid],[data-k=ui-pvp]){width:auto!important;max-width:none
   </section>
 
   <footer><div class="flogo"><img src="Icons/schale.png" alt="SCHALE" onerror="this.remove()"><img src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()"></div>Schale Tactical Report · Soạn cho roster 215 học sinh của bạn<br><small>Logo, icon và hình học sinh © NEXON Games / Yostar · Blue Archive. Trang fan phi thương mại.</small></footer>
+  </div>
+</div>
+
+<!-- Joint Firing Drill guide: opened from the lobby card, no student on duty (full-width panel), 4 tabs. The first one ("Mùa này")
+     shows the running season's rules + the suggested team at once; it, the types and rewards tabs and the season line are filled
+     by JS from the JFD schedule; the room picture follows the season's terrain (data-g). -->
+<div class="screen" id="s-jfd" data-title="Joint Firing Drill" data-cast="jfd">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="block" id="jfd">
+    <div class="sec-head"><div class="sec-num">J</div><div><h2>Joint Firing Drill · cho người mới</h2><p id="jfdCd"></p></div></div>
+    <div class="ttabs" id="jfdTabs" role="tablist"><button type="button" role="tab" data-p="s" class="on">Mùa này</button><button type="button" role="tab" data-p="a">Cách chơi</button><button type="button" role="tab" data-p="b">Kiểu đề</button><button type="button" role="tab" data-p="d">Thưởng</button></div>
+    <div class="jp" data-p="s"><div id="jfdNow"></div><div id="jfdTeam"></div></div>
+    <div class="jp" data-p="a" hidden><div class="jgrid">
+      <div class="jk"><h4>🔓 Mở khóa</h4><p>Xong <b>Mission 5 Act 3</b> (Chương 5, màn 3) là vào được. Mỗi đợt mở <b>1 tuần</b>, giữa các đợt có vài tuần nghỉ.</p></div>
+      <div class="jk"><h4>🎫 Vé</h4><p>Mỗi ngày nhận <b>3 vé</b> lúc reset server; vé chưa dùng được giữ lại, tối đa <b>6 vé</b>. Chạy thử (nút xanh) <b>không tốn vé</b>.</p></div>
+      <div class="jk"><h4>📶 Chọn độ khó</h4><p>Có <b>4 phase</b> (địch Lv 25 · 40 · 65 · 78). Phase cao điểm cao hơn nhưng có thêm luật đặc biệt. Mẹo: chạy thử phase định đánh trước để xem đội có kịp giờ không.</p></div>
+      <div class="jk"><h4>👥 3 màn, 3 đội riêng</h4><p>Một lượt gồm <b>3 màn</b>, mỗi màn một đội. Học sinh đã ra trận ở màn trước <b>không dùng lại</b> được trong cùng lượt, nên cần đủ người cho 3 đội. Đánh thua thì học sinh vẫn dùng lại được.</p></div>
+      <div class="jk"><h4>⏱ Tính điểm</h4><p>Điểm mỗi màn theo <b>thời gian còn lại</b> và độ khó; cộng 3 màn thành tổng điểm. Điểm càng cao, càng nhiều coin.</p></div>
+      <div class="jk"><h4>🤝 Mượn &amp; quét</h4><p>Mượn học sinh của bạn trong club như ở raid. Đánh xong 1 lượt, các vé còn lại dùng để <b>quét</b> (sweep) mà không cần đánh lại.</p></div>
+    </div></div>
+    <div class="jp" data-p="b" hidden><div class="jgrid" id="jfdType"></div></div>
+    <div class="jp" data-p="d" hidden><div id="jfdRw"></div></div>
+    <p class="lnote">Nguồn: <a href="https://bluearchive.wiki/wiki/Joint_Firing_Drill" target="_blank" rel="noopener">Blue Archive Wiki · Joint Firing Drill</a> (luật, lịch Global, mốc thưởng), <a href="https://bluearchive.fandom.com/wiki/Joint_Firepower_Exercise" target="_blank" rel="noopener">Fandom · Joint Firepower Exercise</a> (mở khóa, cấp địch), bảng địa hình ở <a href="https://bluearchive.wiki/wiki/Characters" target="_blank" rel="noopener">Blue Archive Wiki · Characters</a> (đọc 24/11/2026).</p>
+  </section>
   </div>
 </div>
 
@@ -1291,7 +1315,7 @@ html[data-theme=dark] #s-boss.screen{background-image:url(BG/BG_AbydosRuinArea_N
 html[data-theme=dark] #s-srv.screen{background-image:url(BG/BG_CityDowntown_Night.jpg)}
 #s-stu.screen{background:#1e2b3e url(BG/BG_ClassRoom.jpg) center/cover no-repeat fixed}
 html[data-theme=dark] #s-stu.screen{background-image:url(BG/BG_ClassRoom_Night.jpg)}
-:is(#s-boss,#s-srv,#s-stu) .pane{background:transparent!important}
+:is(#s-boss,#s-srv,#s-stu,#s-jfd) .pane{background:transparent!important}
 #order.card{background:linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
 html[data-theme=dark] #order.card{background:linear-gradient(rgba(20,22,42,.86),rgba(20,22,42,.86)),url(BG/BG_Arcade.jpg) center/cover no-repeat!important}
 #tSrv{grid-column:span 1}
@@ -1746,15 +1770,16 @@ html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220
 html[data-theme=dark] #home .tile .tlab :is(b,small){color:#fff!important}
 #home .tile b{font-style:normal;font-weight:800;letter-spacing:-.01em}
 #home .tile .tlab small{opacity:.78}
-/* small cards (Thẻ EX, Servers, locked): scene picture under an even frosted veil, icon + title centred */
+/* small cards (Thẻ EX, Servers, Joint Firing Drill): scene picture under an even frosted veil, icon + title centred.
+   Thẻ EX / Servers hide their sub line; Joint Firing Drill keeps it (it carries "mở sau X ngày" / the time left) */
 #home .tile:is(#tOrd,#tSrv,#tLock){padding:6px 14px!important;align-items:center!important;justify-content:center!important;text-align:center}
-#home .tile:is(#tOrd,#tSrv,#tLock) small{display:none!important}
+#home .tile:is(#tOrd,#tSrv) small{display:none!important}
 #home .tile:is(#tOrd,#tSrv,#tLock):after{--scrim:rgba(255,255,255,.5);-webkit-mask-image:none;mask-image:none;
  -webkit-backdrop-filter:blur(3px) saturate(150%);backdrop-filter:blur(3px) saturate(150%)}
-html[data-theme=dark] #home .tile:is(#tOrd,#tSrv):after{--scrim:rgba(10,11,24,.5)}
+html[data-theme=dark] #home .tile:is(#tOrd,#tSrv,#tLock):after{--scrim:rgba(10,11,24,.5)}
 #home .tile.lock:after{--scrim:rgba(24,30,46,.5)!important}
-#home .tile:is(#tOrd,#tSrv) .tlab{align-items:center;gap:3px}
-#home .tile:is(#tOrd,#tSrv) b{white-space:normal!important;font-size:14px!important;line-height:1.2}
+#home .tile:is(#tOrd,#tSrv,#tLock) .tlab{align-items:center;gap:3px}
+#home .tile:is(#tOrd,#tSrv,#tLock) b{white-space:normal!important;font-size:14px!important;line-height:1.2}
 /* scene picture behind the portrait (or alone), day / night by theme */
 #home .tile .tbg img.bgi{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;
  object-fit:cover!important;object-position:50% 50%!important;z-index:-1!important;margin:0!important}
@@ -1765,28 +1790,61 @@ html[data-theme=dark] #home .tile .tbg img.bgi.day,html:not([data-theme=dark]) #
  box-shadow:0 3px 10px rgba(20,40,70,.25);white-space:nowrap}
 #home .tile .ttag::after{content:"";position:absolute;left:14px;top:100%;border:6px solid transparent;border-top-color:var(--bb);border-bottom:0}
 #home .tile :is(.ttag.pink),#home .tile.alert .ttag{--bb:#ff7fa6;color:#fff!important}
-/* locked card: grey, padlock, orange BETA */
-#home .tile.lock{--glass:rgba(120,132,150,.45);cursor:default;pointer-events:none}
+/* Joint Firing Drill card (#tLock, id kept so the grid / scene rules stay as they were). JS switches two states:
+   .lock = between seasons: grey glass, padlock, "mở sau X ngày"; .open = a season runs: normal glass, exercise name, time left
+   (armor + terrain only in the tooltip: icons on the card made it too crowded). Both states open the guide screen (#jfd). */
+#home .tile.lock{--glass:rgba(120,132,150,.45)}
 html[data-theme=dark] #home .tile.lock{--glass:rgba(40,44,62,.55)}
 #home .tile.lock .lk{position:static;width:28px;height:28px;margin:0 0 4px;color:#fff;opacity:.95}
-#home .tile.lock b{font-size:11px!important;line-height:1.2;white-space:normal;color:#fff!important}
-#home .tile.lock .beta{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;color:#ffb02e}
+#home #tLock.open .lk{display:none}
+#home .tile.lock .tlab :is(b,small){color:#fff!important}
+#home #tLock small{font-variant-numeric:tabular-nums;opacity:.85}
+/* ===== Joint Firing Drill guide (#s-jfd): no student on duty, so one full-width glass panel. The room picture follows the
+   season's terrain (data-g, set by JS): indoor = classroom, outdoor = Abydos ruins, urban = downtown; night pictures in dark mode
+   (same BG/ files as the lobby cards) ===== */
+#s-jfd.screen{background:#1e2b3e center/cover no-repeat fixed}
+#s-jfd.screen[data-g=indoor]{background-image:url(BG/BG_ClassRoom.jpg)}
+#s-jfd.screen[data-g=outdoor]{background-image:url(BG/BG_AbydosRuinArea.jpg)}
+#s-jfd.screen[data-g=urban]{background-image:url(BG/BG_CityDowntown.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=indoor]{background-image:url(BG/BG_ClassRoom_Night.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=outdoor]{background-image:url(BG/BG_AbydosRuinArea_Night.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=urban]{background-image:url(BG/BG_CityDowntown_Night.jpg)}
+#s-jfd .ttabs{margin:0 0 var(--s4)}
+/* cards: auto-fit columns, one column on a phone */
+#s-jfd .jgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:var(--s3)}
+#s-jfd .jk{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);border-radius:var(--r-md);padding:var(--s3) var(--s4)}
+html[data-theme=dark] #s-jfd .jk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+#s-jfd .jk.now{border:2px solid var(--sky)}
+#s-jfd .jk h4{margin:0 0 var(--s1);font-size:var(--fs-md);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#s-jfd .jk :is(p,li){margin:0;font-size:var(--fs-sm);line-height:1.5}
+#s-jfd .jk ul{margin:0;padding-left:18px}
+#s-jfd .jk+.jk,#s-jfd .jgrid+.jk,#s-jfd .jk+.jgrid,#jfdTeam{margin-top:var(--s3)}
+/* "Mùa này" tab: the team groups sit right under the season card. Each student chip carries its terrain grade badge (S orange,
+   A green) and, when the season has one, the school bonus mark (pink) */
+#s-jfd .jc{display:inline-flex;align-items:center;gap:3px}
+#s-jfd :is(.jgr,.jsb){display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:var(--r-pill);font-size:11px;font-weight:800;font-style:normal;color:#fff;
+ flex:none;white-space:nowrap;overflow-wrap:normal!important;word-break:keep-all}
+#s-jfd .jgr.gS{background:#e8930c}#s-jfd .jgr.gA{background:#21b37f}
+#s-jfd .jsb{background:#ff7fa6}
+#s-jfd .jrw td,#s-jfd .jrw th{text-align:center;padding:6px 8px;font-variant-numeric:tabular-nums}
 @media (min-width:901px){
  /* 12 equal columns, one gap, rows 1 : 1 : .55 → every card edge sits on a shared column line
     row 1: TA·GA (6, ≈ 2:1 for the wide boss banners) | Banner (3) | Học sinh (3)
     row 2: PvP | Kế hoạch UE | Cơ chế boss (4 each)
-    row 3: Nhiệm vụ (6) | locked | Thẻ EX | JP·KR·Global (2 each) */
+    row 3: Nhiệm vụ (5) | Joint Firing Drill (3, room for the exercise name + time left) | Thẻ EX | JP·KR·Global (2 each) */
  #home .tiles{grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-template-rows:1fr 1fr .55fr!important;gap:16px 14px!important;position:relative}
  #home .tiles .tile:not(#tOrd,#tSrv,#tLock) b{font-size:clamp(15px,1.3vw,22px)!important}
  #home .tiles .tile:not(#tOrd,#tSrv,#tLock) small{font-size:12px}
  #home .tiles #tRaid{grid-area:1/1/2/7!important}#home .tiles #tBan{grid-area:1/7/2/10!important}#home .tiles #tStu{grid-area:1/10/2/13!important}
  #home .tiles #tPvp{grid-area:2/1/3/5!important}#home .tiles #tUe{grid-area:2/5/3/9!important}#home .tiles #tBoss{grid-area:2/9/3/13!important}
- #home .tiles #tTask{grid-area:3/1/4/7!important}#home .tiles #tLock{grid-area:3/7/4/9!important}
+ #home .tiles #tTask{grid-area:3/1/4/6!important}#home .tiles #tLock{grid-area:3/6/4/9!important}
  #home .tiles #tOrd{grid-area:3/9/4/11!important}#home .tiles #tSrv{grid-area:3/11/4/13!important}
  /* the controller-button marks the game prints above its menu */
  #home .tiles::before{content:"△ ✕ ＋ ○";position:absolute;right:6px;top:-24px;font-size:12px;font-weight:700;letter-spacing:.35em;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(20,40,70,.5)}
 }
-@media (max-width:900px){#home #tLock{display:none!important}}
+/* phone: the Joint Firing Drill card shows only while a season is open, as a half-row card like Thẻ EX / Servers */
+@media (max-width:900px){#home #tLock:not(.open){display:none!important}
+ #home #tLock.open{min-height:64px}}
 /* ===== AUTO-COMPACT (desktop, JS adds .cmp only when the text doesn't fit; full text stays in the hover tooltip) =====
    top bar pills -> round icons · lobby card title -> round icon · ammo / armor filter chips -> icon only */
 .tb-res.cmp{gap:6px}
@@ -1838,7 +1896,7 @@ const mDuck=keep=>MEDIA.forEach(a=>{if(a.__own!==keep)mStop(a);});
 {const HID=[];document.addEventListener('visibilitychange',()=>{
  if(document.hidden){MEDIA.forEach(a=>{if(!a.paused&&!a.ended){a.pause();a.__hid=1;HID.push(a);}});}
  else HID.splice(0).forEach(a=>{a.__hid=0;if(a.__own===(window.__scr||'home'))a.play().catch(()=>{});else MEDIA.delete(a);});});}
-const TYPE={E:['t-exp','Explosive','var(--exp)'],P:['t-pie','Piercing','var(--pie)'],M:['t-mys','Mystic','var(--mys)'],S:['t-son','Sonic','var(--son)']};
+const TYPE={E:['t-exp','Explosive','var(--exp)'],P:['t-pie','Piercing','var(--pie)'],M:['t-mys','Mystic','var(--mys)'],S:['t-son','Sonic','var(--son)'],C:['t-cor','Corrosive','var(--cor)']};
 const ueChip=u=>u>0?`<span class="ue u${u}">UE${u}</span>`:`<span class="ue u0">Chưa UE</span>`;
 // avatar from Avatar_Collection; file names are web-safe: "Hina (Dress)" -> "Hina_Dress.webp". Hidden if the file is missing
 const avFile=n=>n.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
@@ -2129,7 +2187,9 @@ const ATK={E:['t-exp','Explosive'],P:['t-pie','Piercing'],M:['t-mys','Mystic']};
 const RES={E:['special','elastic'],P:['light'],M:['heavy','composite']};
 const DIFF=['','Dễ','Hơi dễ','Trung bình','Hơi khó','Khó','Rất khó','Cực khó'];
 const OWN={};[SSP,SS,S,A,BC].forEach(g=>g.forEach(x=>OWN[x[0]]=x[1]));
-const nm=n=>n in OWN?`<span class="chip">${avImg(n,'av-s')}${n}${ueChip(OWN[n])}</span>`:`<span class="chip no">${avImg(n,'av-s')}${n}<span class="ue u0">chưa có · mượn</span></span>`;
+// student chip; data-stu = the exact name, so a click anywhere on it opens the right profile (reading the chip's text failed:
+// the UE badge right after the name, "KokonaUE2", broke the name match)
+const nm=n=>n in OWN?`<span class="chip" data-stu="${n}">${avImg(n,'av-s')}${n}${ueChip(OWN[n])}</span>`:`<span class="chip no" data-stu="${n}">${avImg(n,'av-s')}${n}<span class="ue u0">chưa có · mượn</span></span>`;
 const MX={must:'Bắt buộc',warn:'Cẩn thận',tip:'Mẹo'};
 const BOSSES3=[
  {n:'Binah',a:['heavy'],atk:'P',t:'Đô thị · Ngoài trời',d:1,time:'3:00',
@@ -2485,8 +2545,27 @@ const MODES=[['TA','TOTAL ASSAULT','Total Assault'],['GA','GRAND ASSAULT','Grand
 const VN=d=>d.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',weekday:'short',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 const left=ms=>{const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),z=s%60;
  return `${d} ngày ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(z).padStart(2,'0')}`};
-function pick(mode,now){const L=SCHED.filter(x=>x.m===mode).map(x=>({...x,S:new Date(x.s),E:new Date(x.e)})).sort((p,q)=>p.S-q.S);
+// src: the schedule to pick from (TA / GA by default, the Joint Firing Drill card passes JFD)
+function pick(mode,now,src=SCHED){const L=src.filter(x=>x.m===mode).map(x=>({...x,S:new Date(x.s),E:new Date(x.e)})).sort((p,q)=>p.S-q.S);
  return L.find(x=>x.S<=now&&now<=x.E)||L.find(x=>x.S>now)||L[L.length-1];}
+// ===== Joint Firing Drill schedule (lobby card, guide screen #jfd, Nhiệm vụ, lobby reminders); defined here, before the task
+// list, because that list is first built while the page loads.
+// Global schedule: bluearchive.wiki "Joint Firing Drill", Global tab (read 24/11/2026), server time UTC+9; the 24/11 start is also in
+// the official @EN_BlueArchive preview post. t = exercise, a = enemy armor (AR key), g = terrain (JFDG key).
+// Armor / terrain come from the wiki season pages via the handoff notes (the schedule table doesn't list them).
+// p:1 = predicted from the JP order, not on the Global table yet.
+// Guide screen extras (season page on bluearchive.wiki): n = exercise number, tm = time limit of phase 1–4, sch = schools whose
+// Mystic gets the phase 3 / 4 bonus, r = special rules by phase, u:1 = armor / terrain from the handoff notes, not checked yet
+// (the current Escort's Special / Indoor was confirmed in game by the player, 24/11/2026).
+const JFD=[
+ {m:'JFD',t:'Escort',a:'special',g:'indoor',s:'2026-11-24T11:00:00+09:00',e:'2026-12-01T03:59:59+09:00',n:9,
+  tm:['3:00','3:00','2:00','2:30'],sch:['Trinity','Gehenna'],
+  r:['Phase 1–2: không có luật thêm.','Phase 3: học sinh <b>Trinity</b> và <b>Gehenna</b> được <b>+100% hiệu quả Mystic</b>.',
+   'Phase 4: như phase 3, thêm: Avant Garde-kun còn <b>từ 80% HP</b> thì cả đội <b>+900 hồi cost</b> và <b>+30% damage EX</b>; địch <b>+100% HP tối đa</b>.']},
+ {m:'JFD',t:'Shooting',a:'special',g:'outdoor',s:'2026-12-22T11:00:00+09:00',e:'2026-12-29T03:59:59+09:00',u:1},
+ {m:'JFD',t:'Escort',a:'heavy',g:'urban',s:'2027-01-19T11:00:00+09:00',e:'2027-01-26T03:59:59+09:00',p:1,u:1}];
+// terrain -> name (card tooltip, guide screen, task text)
+const JFDG={indoor:'Trong nhà',outdoor:'Ngoài trời',urban:'Đô thị'};
 function renderLive(){const now=new Date();
  // quick prep inside each card, from the boss page: sample team (or the roster's keys) + the first "must" rules
  const prep=k=>{const B=BOSSES3.find(x=>keyOf(x)===k);if(!B)return '';const must=B.sk.filter(s=>s[0]==='must').slice(0,2);
@@ -2930,7 +3009,7 @@ const days=ms=>Math.max(0,Math.ceil(ms/864e5));
 const tkGet=()=>{try{return JSON.parse(localStorage.getItem('ba_tasks'))||{};}catch(e){return {};}};
 const tkPut=m=>{try{localStorage.setItem('ba_tasks',JSON.stringify(m));}catch(e){}};
 const vnDay=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Ho_Chi_Minh'});
-const TKC={daily:'Hằng ngày',raid:'Raid',banner:'Banner',ue:'Kế hoạch UE'};
+const TKC={daily:'Hằng ngày',raid:'Raid',banner:'Banner',ue:'Kế hoạch UE',jfd:'Joint Firing Drill'};
 function taskList(){const now=new Date(),out=[];
  out.push({id:'pvp-'+vnDay(),c:'daily',t:'Đánh hết 5 vé Tactical Challenge',s:'Trước 12:00 trưa, lúc phát thưởng hạng ngày.',h:'#pvp'});
  // the two daily modes Momoka (GSC Transportation Office) hands to Sensei in the game
@@ -2939,6 +3018,10 @@ function taskList(){const now=new Date(),out=[];
  MODES.forEach(([md,,lab])=>{const b=pick(md,now);if(!b||now>b.E)return;const k=`${md}-${b.n}-${dshort(b.S)}`;
   if(now<b.S)out.push({id:k+'-prep',c:'raid',t:`Chuẩn bị đội cho ${lab} ${b.n}`,s:`Mở ${dshort(b.S)}, sau ${days(b.S-now)} ngày. Đọc cơ chế boss và cài thẻ mở đầu trước.`,h:'#teams'});
   else out.push({id:k+'-run',c:'raid',t:`Đánh ${lab} ${b.n}`,s:`Đang mở, còn ${days(b.E-now)} ngày.`,h:'#live'});});
+ // Joint Firing Drill: only a "prep teams" task while no season is open (the player's choice: no task during the season, the
+ // lobby reminds instead); the id carries the season's start date, so the tick belongs to that season only
+ {const j=pick('JFD',now,JFD);if(now<j.S)out.push({id:'jfd-'+j.s.slice(0,10)+'-prep',c:'jfd',t:`Chuẩn bị 3 đội cho Joint Firing Drill · ${j.t} Exercise`,
+  s:`Mở ${dshort(j.S)}, sau ${days(j.S-now)} ngày${j.p?' (dự đoán theo lịch JP)':''}. Giáp ${AR[j.a][1].replace('Giáp ','')} → mang đạn ${AR[j.a][3]}; địa hình ${JFDG[j.g].toLowerCase()}. 3 màn, mỗi màn một đội riêng.`,h:'#jfd'});}
  const nb=BAN.flatMap(x=>x.E>=now?x.st.filter(s=>!(s[0] in OWN)&&s[7]==='go').map(s=>[s[0],x]):[])[0];
  if(nb)out.push({id:'ban-'+nb[0],c:'banner',t:`Để dành pyroxene cho ${nb[0]}`,
   s:nb[1].S<=now?`Banner đang mở, tới ${dshort(nb[1].E)}.`:`Banner mở ${dshort(nb[1].S)}. Mốc chắc chắn có học sinh là 200 lượt (24.000 pyroxene).`,h:'#banners'});
@@ -3010,7 +3093,7 @@ const CAST={home:['Hina (Dress)','Chào mừng trở lại, Sensei. Hôm nay mì
  students:['Hanako (Swimsuit)','Cả 215 học sinh đều ở đây. Bấm vào ai cũng xem được hồ sơ ạ.'],
  boss:['Hoshino (Armed)','Đọc kỹ mấy dòng "Bắt buộc" rồi hẵng vào trận nhé~'],
  servers:['Rio','Dữ liệu tier của JP, KR và Global đã được đối chiếu.']};
-document.querySelectorAll('.screen').forEach(s=>{const k=s.dataset.cast||'home',[n,t]=CAST[k],c=s.querySelector('.cast');
+document.querySelectorAll('.screen').forEach(s=>{const k=s.dataset.cast||'home',[n,t]=CAST[k]||[],c=s.querySelector('.cast');
  // TA/GA: Rin, Kế hoạch UE: Aoi (Spine, loaded later) beside the game's dialogue box; the CAST portrait only shows if the Spine files fail
  const TK={raid:'Nanagami Rin',ue:'Oki Aoi',tasks:'Iwabitsu Ayumu',banner:'Sora',pvp:'Yuraki Momoka'}[k];
  if(TK){c.classList.add('talk');c.innerHTML=`<div class="l2d"></div><div class="dlg"><b>${TK}</b><p></p><i>▼</i></div><div class="fx"></div><button type="button" class="l2hint" title="Bấm để hiện / ẩn vùng chạm">👆 Hiện vùng chạm của ${TK.split(' ').pop()}</button>`;return;}
@@ -3177,6 +3260,99 @@ const bgI=(f,c)=>`<img class="bgi${c}" alt="" loading="lazy" decoding="async" sr
 function lobbyBG(){for(const id in LBG){const g=document.querySelector('#'+id+' .tbg');if(!g||g.querySelector('.bgi'))continue;
  const[d,n]=LBG[id];g.insertAdjacentHTML('afterbegin',n?bgI(d,' day')+bgI(n,' night'):bgI(d,''));}}
 fillShell();eliIn.addEventListener('input',fillShell);
+// ===== Joint Firing Drill card on the lobby (the old locked BETA tile); schedule JFD / JFDG is defined next to SCHED =====
+// The card follows the real clock: checked every second while the lobby is on screen (so it opens / locks right on time), but the
+// DOM is only written when a string changes. The time left is shown to the minute on purpose: the auto-compact and icon scripts
+// watch the tiles' text, a per-second number would make them re-measure the lobby every second.
+const jfdTile=(()=>{const t=document.getElementById('tLock');if(!t)return ()=>{};const tag=t.querySelector('.ttag'),lab=t.querySelector('.tlab');
+ const put=(el,v)=>{if(el&&el.textContent!==v)el.textContent=v;};let key='';
+ return ()=>{const now=new Date(),b=pick('JFD',now,JFD),on=now>=b.S&&now<=b.E,soon=now<b.S;
+  // rebuild the card only when the season or its state changes
+  const k=b.s+(on?1:soon?0:2);
+  if(k!==key){key=k;t.classList.toggle('lock',!on);t.classList.toggle('open',on);
+   const arm=AR[b.a][1].replace('Giáp ',''),gn=JFDG[b.g],pr=b.p?' (dự đoán theo lịch JP)':'';
+   lab.innerHTML=`<b>${on?b.t:'Joint Firing Drill'}</b><small></small>`;
+   t.title=on?`Joint Firing Drill · ${b.t} Exercise · giáp ${arm} · ${gn}\n${VN(b.S)} → ${VN(b.E)} (giờ VN)`
+    :soon?`Joint Firing Drill · đợt sau: ${b.t} Exercise, mở ${VN(b.S)} (giờ VN)${pr}`:'Joint Firing Drill · chưa có lịch đợt mới';
+   tag.textContent=on?'Đang mở':'';
+   const d=t.querySelector('.dot');if(on&&!d)t.insertAdjacentHTML('beforeend','<span class="dot"></span>');else if(!on&&d)d.remove();}
+  // left() = "6 ngày 17:06:12"; the seconds are cut (see above)
+  put(lab.querySelector('small'),on?'còn '+left(b.E-now).slice(0,-3):soon?`mở sau ${days(b.S-now)} ngày`:'chưa có lịch');};})();
+jfdTile();
+// ===== Joint Firing Drill guide screen (#jfd, opened from the lobby card) =====
+// Terrain grade of every roster student: Blue Archive Wiki "Characters" table (read 24/11/2026), wiki names mapped to the Global
+// ones used here. 3 letters = Đô thị · Ngoài trời · Trong nhà (the table's three terrain columns, in that order).
+const JTR={};('Hina (Dress):DAS|Hanako (Swimsuit):SAD|Neru (School):SAD|Hoshino (Armed):ASD|Hoshino (Swimsuit):SAD|Mika (Swimsuit):SAD|Aris (Armed):SDA|Kei:SDA'
+ +'|Mari (Pop Idol):DSB|Kisaki:BDS|Rio:ADS|Nagisa (Swimsuit):SAD|Himari (Armed):BDS|Shiroko (Swimsuit):BSD|Michiru (Dress):DBS|Iroha (Swimsuit):SAD|Ibuki (Swimsuit):SAD'
+ +'|Mika:DAS|Shiroko*Terror:DSA|Wakamo:ADS|Kokona:SBD|Hikari:DBS|Satsuki (Swimsuit):SBD|Fuuka (New Year):BDS|Hare (Camp):DSB|Kayoko (New Year):BDS|Aru (Dress):DBS'
+ +'|Seia:BDS|Seia (Swimsuit):SBD|Suzumi (Magical):SDB|Himari:SBD|Ako:DBS|Reisa (Magical):SDB'
+ +'|Tsubaki:AAD|Koharu:DSB|Iori:CCS|Aru:SBD|Nozomi:DBS|Maki:CSC|Rio (Armed):SBD|Shun:SBD|Kurumi:SBD|Niko:SDB|Makoto (Swimsuit):BDS|Tsukuyo (Dress):DSB|Yuuka (Track):BDS'
+ +'|Mine:BSD|Midori (Maid):DSB|Cherino:BSD|Kanna (Swimsuit):DSB|Ui:BSD|Aris (Maid):SBD|Atsuko:BDS|Sakurako (Pop Idol):DSB|Yuuka (Pajamas):DSB|Sena (Casual):SBD|Kanoe:DBS'
+ +'|Haruka (Dress):SBD|Haruka (New Year):CSC|Takane:BDS|Misaki (Swimsuit):DBS'
+ +'|Yuuka:BBA|Momoi:AAD|Utaha:ADA|Koharu (Swimsuit):BBB|Serina:ACB|Eimi:SBD|Hanako:ADA|Mari:DAA|Ibuki:CBA|Hibiki:SBB|Iroha:DBS|Haruna (New Year):DSB|Tsurugi:DBS'
+ +'|Toki (Armed):ABC|Mine (Pop Idol):BBB|Konoka:SBD|Natsu:DBS|Akane:AAD|Kotama:ACB|Shigure (Hot Spring):BDS|Noa:DBS|Kaede:SDB|Saki:SDB|Miyo:SDB|Reisa:DBS|Neru:DSB'
+ +'|Miyako:SDB|Miyako (Swimsuit):DBS|Hinata:DSB|Tsukuyo:BDS|Kazusa:SDB|Natsu (Band):BSD|Juri (Part-Timer):BSD|Asuna (School):BSD|Rabu:ABC|Ui (Swimsuit):BDS'
+ +'|Saki (Swimsuit):DBS|Eimi (Swimsuit):DSB|Chinatsu (Hot Spring):DBS|Serina (Christmas):DSB|Nodoka (Hot Spring):BDS|Shizuko (Swimsuit):BBB|Atsuko (Swimsuit):BBB'
+ +'|Ayane (Swimsuit):CAB|Akari (New Year):BSD|Kirino (Swimsuit):BBB|Karin (School):BAC|Akane (School):SBD|Ichika (Swimsuit):ABC|Erika:SBD|Tomoe (Qipao):DBS|Saya (Casual):DSB'
+ +'|Hasumi (Track):BCA|Hifumi:DSB|Mutsuki:AAD|Midori:BSD|Haruka:CBA|Kayoko:ADA|Junko:BAB|Azusa:BDS|Airi:ADA|Yoshimi:BBB|Momiji:AAD|Pina:ABC|Chinatsu:BBB|Chise:ADA'
+ +'|Hina:SCC|Hasumi:BAB|Akari:ABB|Fuuka:AAD|Ayane:DAA|Hanae:ADA|Shizuko:AAB|Suzumi:BBB|Sumire:BDS|Serika:ADA|Asuna (Bunny):DBS|Kotori:BBB|Shimiko:CAB|Haruna:SDB'
+ +'|Hoshino:DSB|Izuna:SBD|Shun (Small):SDB|Aoba:BCA|Kirino:DAA|Nonomi:AAD|Mimori:SDB|Airi (Band):BAD|Shiroko:SBD|Asuna:BBB|Saori (Swimsuit):DSB|Sena:BSD|Juri:CBA'
+ +'|Hare:ABB|Mashiro:BSD|Renge:SBD|Kanna:SDB|Chiaki:SDB|Reijo:DSB|Meru:BSD|Mina:DBS|Rumi:CCS|Nonomi (Swimsuit):SDB|Ichika:SBD|Megu:DSB|Miyu:SBD'
+ +'|Kotori (Cheer Squad):DBS|Haruna (Track):SBD|Wakamo (Swimsuit):SDB|Miyu (Swimsuit):CBA|Akane (Bunny):BDS|Izumi:SDB|Junko (New Year):BBB|Kaho:BSD'
+ +'|Hiyori (Swimsuit):DSB|Hifumi (Swimsuit):DBS|Toki (Bunny):BSD|Kotama (Camp):BSD|Sakurako:DSB|Nodoka:BBB|Shigure:DSB|Serika (New Year):CCS|Hiyori:BDS'
+ +'|Yuzu (Maid):BCA|Saori:BDS|Umika:BSD|Yuzu:SBD|Mimori (Swimsuit):BDS|Saya:BDS|Karin:DSB|Misaki:BDS|Momoi (Maid):DSB|Moe:DBS|Serika (Swimsuit):DBS|Yukari:SBD'
+ +'|Tsubaki (Guide):DSB|Saori (Dress):DBS|Shiroko (Cycling):SBD|Aris:BDS|Chihiro:SDB|Yukari (Swimsuit):DBS|Moe (Swimsuit):DBS|Kasumi:SBD|Nagusa:SBD|Koyuki:SDB'
+ +'|Utaha (Cheer Squad):DBS|Izumi (Swimsuit):BAC|Tsurugi (Swimsuit):BCA|Tomoe:CBA|Fubuki:ABC|Michiru:BBB|Renge (Swimsuit):ABC|Chiaki (Swimsuit):BAC|Otogi:BBB')
+ .split('|').forEach(p=>{const i=p.lastIndexOf(':');JTR[p.slice(0,i)]=p.slice(i+1);});
+const JGI={urban:0,outdoor:1,indoor:2},JGR={S:4,A:3,B:2,C:1,D:0},JGE={indoor:'🌙',outdoor:'☀',urban:'🌐'};
+// the 4 exercise types (wiki "Exercises" section): [name, Vietnamese name, how it plays]
+const JTYPE=[['Shooting','Bắn bia','3 boss xuất hiện lần lượt; hạ con trước mới tới con sau. Cần DPS đơn mục tiêu mạnh.'],
+ ['Defense','Phòng thủ','Địch tràn theo từng đợt như màn Ruins của Commissions. Đợt mới tới khi số địch còn ≤ 128, 120, 102, 82, 62 và 40: cần AoE dọn nhanh.'],
+ ['Assault','Đột phá','3 đợt địch, mỗi đợt có 1 totem. Hồi máu cho totem để chồng debuff "nhận thêm damage" lên toàn bộ địch (tối đa 10 tầng): cần healer.'],
+ ['Escort','Hộ tống','1 đợt địch nhắm vào Avant Garde-kun (robot phe mình). Avant Garde-kun gục là thua màn: cần giữ nó sống và hạ địch thật nhanh.']];
+// reward milestones (wiki table): score reached -> coins added; the running total is worked out below
+const JRW=[[0,40],[5500,10],[20300,5],[35100,5],[49900,5],[64700,5],[79500,5],[94300,5],[104950,5],[123900,5],[138700,5],[153500,5],[167570,5],
+ [170250,5],[197900,5],[212700,5],[227500,5],[236500,5],[239000,5],[241500,5]];
+// ammo that hits the season's armor for 200% (Corrosive left out: no student uses it yet)
+const jAmmo=a=>Object.keys(MTX).find(k=>k!=='C'&&MTX[k][a]===200);
+// suggested team (under the season card): the 6 best roster students per group with grade S / A on the season's terrain; damage dealers and supports must use
+// the ammo that counters the armor, tanks / healers only need the terrain. Sorted by grade, then by the season's school bonus.
+function jfdTeam(b,am){const gi=JGI[b.g],grade=n=>(JTR[n]||'')[gi]||'',sc=n=>JGR[grade(n)]??-1;
+ const sch=n=>{const x=BIO[n.replace(/ \(.*\)$/,'')];return !!(b.sch&&x&&b.sch.includes(x[2]));};
+ const L=Object.keys(STAT).filter(n=>n in OWN&&sc(n)>=3),srt=f=>L.filter(f).sort((x,y)=>sc(y)-sc(x)||sch(y)-sch(x)||x.localeCompare(y)).slice(0,6);
+ const chip=n=>`<span class="jc">${pnm(n)}<i class="jgr g${grade(n)}" title="Địa hình ${JFDG[b.g]}: ${grade(n)}">${grade(n)}</i>${sch(n)?'<i class="jsb" title="Được buff Mystic ở phase 3–4">+100%</i>':''}</span>`;
+ const G=[[`Striker gây damage · <span class="tag ${AM[am][0]}">${AM[am][1]}</span>`,n=>STAT[n].a===am&&STAT[n].k&&STAT[n].r==='A'],
+  [`Special gây damage · <span class="tag ${AM[am][0]}">${AM[am][1]}</span>`,n=>STAT[n].a===am&&!STAT[n].k&&STAT[n].r==='A'],
+  [`Hỗ trợ cùng hệ · <span class="tag ${AM[am][0]}">${AM[am][1]}</span>`,n=>STAT[n].a===am&&'SX'.includes(STAT[n].r)],
+  ['Tank &amp; healer hợp địa hình (mọi hệ đạn)',n=>'TH'.includes(STAT[n].r)]];
+ return `<div class="jgrid">${G.map(([h,f])=>{const X=srt(f);return `<div class="jk"><h4>${h}</h4><div class="chips">${X.length?X.map(chip).join(''):'<span class="lnote">Roster chưa có ai hợp.</span>'}</div></div>`;}).join('')}</div>
+  <p class="lnote">Lọc tự động từ roster và bảng địa hình của wiki, chưa phải đội đã có người kiểm chứng.${b.u?' Giáp và địa hình của đợt này lấy từ ghi chú bàn giao, chưa kiểm tra: xem lại trong game trước khi xếp đội.':''}</p>`;}
+// fills the tabs that depend on the season (on = a season is running, else b = the next one). "Mùa này" = the season card
+// (armor, terrain, ammo to bring, phase rules, time limits) with the suggested team right under it
+function jfdFill(b,on){const $=id=>document.getElementById(id),am=jAmmo(b.a);
+ $('jfdType').innerHTML=JTYPE.map(([k,v,d])=>`<div class="jk${k===b.t?' now':''}"><h4>${k} Exercise · ${v}${k===b.t?` <span class="st ${on?'on':'soon'}">${on?'Đang mở':'Đợt sau'}</span>`:''}</h4><p>${d}</p></div>`).join('')
+  +'<div class="jk"><h4>📜 Luật chung</h4><ul><li>Mỗi đợt cố định <b>1 địa hình</b> và <b>1 loại giáp địch</b>.</li><li>Phase càng cao càng có thêm luật đặc biệt (tối đa 2 luật), có thể buff hoặc phạt đội bạn.</li></ul></div>';
+ $('jfdNow').innerHTML=`<div class="jk now"><h4>${JGE[b.g]} ${on?'Đang mở':'Đợt sau'}: ${b.t} Exercise${b.n?' '+b.n:''} · <span class="ar ${AR[b.a][0]}">${AR[b.a][1]}</span> · ${JFDG[b.g]}</h4>
+   <p>Mang đạn <span class="tag ${AM[am][0]}">${AM[am][1]}</span> (200% lên giáp ${AR[b.a][1].replace('Giáp ','')}) và học sinh bậc <b>S / A</b> ở địa hình ${JFDG[b.g].toLowerCase()}. Cần <b>3 đội riêng</b> cho 3 màn, nên chia đều người mạnh ra 3 đội.</p>
+   ${b.r?`<ul>${b.r.map(x=>`<li>${x}</li>`).join('')}</ul>${b.tm?`<p>Giới hạn giờ: phase 1–4 lần lượt <b>${b.tm.join(' · ')}</b>.</p>`:''}`:'<p>Chưa có luật chi tiết của đợt này trên wiki.</p>'}
+   ${b.sch?`<p>Ô hồng <i class="jsb">+100%</i> trong đội gợi ý = học sinh ${b.sch.join(' / ')}, được buff Mystic ở phase 3–4.</p>`:''}</div>`;
+ $('jfdTeam').innerHTML=on?jfdTeam(b,am):`<div class="jk"><h4>🔒 Chưa có đợt mở</h4><p>Đội gợi ý chỉ hiện khi có đợt đang mở. Đợt sau mở ${VN(b.S)} (giờ VN)${b.p?', dự đoán theo lịch JP':''}.</p></div>`;
+ let sum=0;$('jfdRw').innerHTML=`<div class="jgrid"><div class="jk"><h4>🪙 Nhận gì</h4><p>Xong một lượt là nhận <b>Firepower Exercise Coin</b> theo tổng điểm: xong lượt là có ít nhất 40 coin, tối đa <b>140 coin</b> ở 241.500 điểm.</p></div>
+  <div class="jk"><h4>🛒 Shop</h4><p>Coin đổi được <b>mảnh (Eleph) của một số học sinh</b>, <b>Tailor Stone</b> và nguyên liệu kỹ năng. Hàng trong shop làm mới mỗi tháng; xem shop trong game để biết học sinh nào đang bán.</p></div></div>
+  <div class="jk"><h4>📈 Mốc điểm</h4><div class="tbl-wrap"><table class="jrw"><thead><tr><th>Điểm</th><th>Coin thêm</th><th>Cộng dồn</th></tr></thead><tbody>
+   ${JRW.map(([s,c])=>`<tr><td>${fmt(s)}</td><td>+${c}</td><td><b>${sum+=c}</b></td></tr>`).join('')}</tbody></table></div></div>`;}
+// the screen: rebuilt when the season or its state changes, the line under the title ticks every second while it is open
+const jfdScr=(()=>{const s=document.getElementById('s-jfd');if(!s)return ()=>{};const cd=document.getElementById('jfdCd');let key='';
+ const tabs=document.getElementById('jfdTabs'),P=[...s.querySelectorAll('.jp')];
+ tabs.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+  tabs.querySelectorAll('button').forEach(x=>{x.classList.toggle('on',x===t);x.setAttribute('aria-selected',x===t);});
+  P.forEach(p=>p.hidden=p.dataset.p!==t.dataset.p);});
+ return ()=>{const now=new Date(),b=pick('JFD',now,JFD),on=now>=b.S&&now<=b.E,k=b.s+on;
+  if(k!==key){key=k;s.dataset.g=b.g;jfdFill(b,on);}
+  const v=on?`${b.t} Exercise đang mở · còn ${left(b.E-now)} · đóng ${VN(b.E)} (giờ VN)`:now<b.S?`Đợt sau: ${b.t} Exercise · mở ${VN(b.S)} (giờ VN) · còn ${days(b.S-now)} ngày`:'Chưa có lịch đợt mới';
+  if(cd.textContent!==v)cd.textContent=v;};})();
+jfdScr();
+setInterval(()=>{if(document.hidden)return;if(document.querySelector('#home.on'))jfdTile();else if(document.querySelector('#s-jfd.on'))jfdScr();},1000);
 route();
 
 // ===== lobby student you can touch (static image, so the "pinch" is a squash-and-stretch, not a real Live2D mesh) =====
@@ -3244,6 +3420,9 @@ function drawGrid(FX,cast,el,g){if(!g||!el)return;const r=el.getBoundingClientRe
  function remind(){const now=new Date(),out=[],ta=pick('TA',now);
   if(now>=ta.S&&now<=ta.E)out.push(`Total Assault ${ta.n} còn ${days(ta.E-now)} ngày. Sensei đánh chưa? Cơ chế boss em ghi sẵn trong mục Cơ chế boss rồi.`);
   else if(now<ta.S)out.push(`Total Assault ${ta.n} mở sau ${days(ta.S-now)} ngày. Chuẩn bị đội hình từ bây giờ nhé, Sensei.`);
+  // Joint Firing Drill: only while a season is open (before it opens, the "prep" task in Nhiệm vụ does the reminding)
+  const jf=pick('JFD',now,JFD);
+  if(now>=jf.S&&now<=jf.E)out.push(`Joint Firing Drill ${jf.t} Exercise còn ${days(jf.E-now)} ngày, Sensei. Giáp ${AR[jf.a][1].replace('Giáp ','')} nên mang đạn ${AR[jf.a][3]}; đội gợi ý em xếp sẵn trong ô Joint Firing Drill rồi.`);
   const nb=BAN.flatMap(x=>x.E>=now?x.st.filter(s=>!(s[0] in OWN)&&s[7]==='go').map(s=>[s[0],x]):[])[0];
   if(nb)out.push(`Banner có ${nb[0]} mở ngày ${dshort(nb[1].S)}. Sensei nhớ để dành pyroxene nhé.`);
   const e=+(document.getElementById('eli')||{}).value||0;
@@ -3887,10 +4066,11 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   's-banner':['Banner Global','Chọn tuần ở hàng nút trên cùng; tuần đã qua mờ đi.|Mỗi học sinh ghi đạn, giáp, tier và đánh giá có nên quay theo roster của bạn.|Lịch Global là dự đoán theo JP, có thể bị gộp hoặc rút ngắn.'],
   's-pvp':['Tactical Challenge · PvP','Đồng hồ mùa tính theo giờ Việt Nam; 🔄 Refresh tính lại theo đồng hồ máy.|Meta và đội gợi ý lấy từ tổng kết mùa của người chơi JP, vì Global đang chạy đúng luật mùa JP đã chơi xong.|Bấm khung hội thoại để Momoka nhắc vé PvP, Truy nã và Ủy thác hôm nay còn chưa đánh.'],
   's-ue':['Kế hoạch UE','Nhập Eligma đang có vào máy tính: kế hoạch tự xếp lại và ghi khoản nào đủ, khoản nào thiếu.|Bấm thẻ học sinh ở màn Học sinh để cập nhật mốc UE vừa nâng; trang tự lưu trên trình duyệt.|Bấm khung hội thoại để Aoi quyết toán số dư; chạm Aoi như ở sảnh.'],
-  's-task':['Nhiệm vụ','Danh sách tự lập từ lịch TA/GA, banner và kế hoạch UE; tab trên cùng lọc theo loại.|Bấm vòng tròn ✓ để đánh dấu xong, bấm lại để bỏ. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam.|Tích một bước UE là ghi luôn mốc UE mới vào roster, rồi cả report tính lại.|Nút vàng hoàn thành mọi việc đang hiện, trừ các bước UE. Ô 📋 trên thanh trên cùng luôn cho biết còn bao nhiêu việc.'],
+  's-task':['Nhiệm vụ','Danh sách tự lập từ lịch TA/GA, Joint Firing Drill, banner và kế hoạch UE; tab trên cùng lọc theo loại.|Bấm vòng tròn ✓ để đánh dấu xong, bấm lại để bỏ. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam.|Tích một bước UE là ghi luôn mốc UE mới vào roster, rồi cả report tính lại.|Nút vàng hoàn thành mọi việc đang hiện, trừ các bước UE. Ô 📋 trên thanh trên cùng luôn cho biết còn bao nhiêu việc.'],
   's-stu':['Học sinh','Tab SS+ · SS · S · A · B–C lọc theo tier; ô tìm kiếm lọc theo tên.|Góc thẻ là màu hệ đạn, ★ là số mốc UE.|Bấm thẻ để mở hồ sơ: thông tin cơ bản và thứ tự nâng kỹ năng, trang bị.'],
   's-boss':['Cơ chế boss · Đội hình','Bảng khắc hệ dùng hai chiều: hàng đạn của DPS khi bạn đánh, hàng đạn của boss khi boss đánh bạn.|Chọn boss bằng tên hoặc nút Boss trước / Boss sau; lọc theo giáp ở hàng nút trên.|Đỏ = Bắt buộc, cam = Cẩn thận, xanh = Mẹo. Chip viền nét đứt là học sinh cần mượn.'],
-  's-srv':['JP · KR · Global','So sánh tier giữa ba server và danh sách nguồn đầy đủ.|Nhóm cả ba server cùng xếp top là chỗ an toàn nhất để dồn tài nguyên.']};
+  's-srv':['JP · KR · Global','So sánh tier giữa ba server và danh sách nguồn đầy đủ.|Nhóm cả ba server cùng xếp top là chỗ an toàn nhất để dồn tài nguyên.'],
+  's-jfd':['Joint Firing Drill','Tab "Mùa này" mở sẵn: giáp, địa hình, luật từng phase của đợt đang mở và đội gợi ý ngay bên dưới. Các tab sau: Cách chơi, Kiểu đề, Thưởng.|Dòng dưới tiêu đề đếm giờ đợt đang mở (hoặc ngày mở đợt sau) theo giờ Việt Nam; nền đổi theo địa hình của đợt.|Đội gợi ý lọc từ roster của bạn: đúng hệ đạn khắc giáp địch và bậc địa hình S / A, 6 người mỗi nhóm, chỉ hiện khi có đợt đang mở.']};
  const cur=()=>{const s=document.querySelector('.screen.on');return s?s.id:'home';};
  const close=()=>{pop.classList.remove('on');btn.setAttribute('aria-expanded','false');};
  btn.addEventListener('click',e=>{e.stopPropagation();if(pop.classList.contains('on'))return close();
@@ -4072,7 +4252,8 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   {sel:'.topbar .tb-res',test:over,
    tip:el=>el.querySelectorAll('.res').forEach(a=>{if(a.dataset.t==null)a.dataset.t=a.title||'';
     const v=[...a.querySelectorAll('b,small')].map(txt).join(' ');a.title=a.dataset.t?`${a.dataset.t}: ${v}`:v;})},
-  // lobby cards (not the locked one): title or sub line cut, or the text taller than the card -> the card's icon in a circle
+  // lobby cards (not Joint Firing Drill: its short centred title + time line must stay as text, no icon swap): title or sub
+  // line cut, or the text taller than the card -> the card's icon in a circle
   {sel:'#home .tile:not(#tLock)',test:t=>{const l=t.querySelector('.tlab');if(!l||!shown(t))return false;
     const cs=getComputedStyle(t),room=t.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
     return [...l.children].some(over)||l.offsetHeight>room+1;},
