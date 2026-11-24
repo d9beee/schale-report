@@ -1413,6 +1413,11 @@ html,body{overflow-x:clip}
 .lgrid.pg{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))!important}
 .pane :is(.card,.lc,.block,.boss,.tasks,.tk,.lprep,.ls,.pair,.metric){min-width:0;overflow-wrap:anywhere}
 .pane :is(img,video,canvas,svg,table){max-width:100%}
+/* tables wrap between words only: the "anywhere" rule above let the table squeeze a column down to one letter
+   ("Mi ễn ph í"); a table still too wide for the window scrolls sideways inside its frame */
+.pane table{overflow-wrap:normal}
+.pane .tbl-wrap{overflow-x:auto}
+.pane td .ue{white-space:nowrap}
 @media (min-width:901px){
  #s-raid .lsched .lsg{max-height:22vh;overflow-y:auto!important;scrollbar-width:thin}
  .screen.on:not(#home)>.pane{min-height:calc(100vh - var(--tb));min-height:calc(100dvh - var(--tb));display:flex;flex-direction:column;padding-bottom:18px}
@@ -1462,6 +1467,9 @@ html[data-theme=dark] .screen.zmove{background-color:#0e0f1d}
 .gm .grab:active{cursor:grabbing}
 html[data-theme=dark] .gm .grab i{background:rgba(231,233,251,.5);box-shadow:none}
 @media (max-width:760px){.gm .gbox .gl{touch-action:none}}
+/* while a sheet is open every swipe stays inside it: the student list behind never scrolls */
+.gm,.gm .gpane{overscroll-behavior:contain}
+html:has(.gm.on){overflow:hidden}
 .dock{display:none}
 /* ===== PHONE LAYOUT (≤900px), one block: student band, room pictures, Dock =====
    Student band: same room pictures and students, only panels and tiles move; the student stands in a band at the top (head to
@@ -4200,6 +4208,17 @@ stageTalk({sc:'.screen[data-cast="pvp"]',cast:'pvp',ch:'Momoka',rd:'Spine/ws_295
   // scrolling the text up from the top of a half sheet expands it, like Apple Maps
   const gp=box.querySelector('.gpane');
   if(gp)gp.addEventListener('wheel',e=>{if(!box.classList.contains('full')&&e.deltaY>0&&gp.scrollTop<=0&&gp.scrollHeight>gp.clientHeight+40)settle(true);},{passive:true});
+  // pulling the text DOWN while it is already at its top drags the sheet itself (full -> half, half -> close), like iOS.
+  // Touch events, because the browser owns vertical panning on the text and would cancel pointer events; same move / up as the bar.
+  if(gp){let t=null;
+   gp.addEventListener('touchstart',e=>{t=e.touches.length===1&&gp.scrollTop<=0?{y:e.touches[0].clientY,on:false}:null;},{passive:true});
+   gp.addEventListener('touchmove',e=>{if(!t)return;const y=e.touches[0].clientY;
+    if(!t.on){if(y-t.y<6){if(t.y-y>6)t=null;return;}   // moved up first = normal text scroll, let it go
+     const S=stops(),full=box.classList.contains('full');t.on=true;
+     d={y0:y,y,t:performance.now(),v:0,id:'tp',el:gp,moved:true,full,S,h0:full?S.full:S.half};}
+    e.preventDefault();move({clientY:y,pointerId:'tp'});},{passive:false});
+   const end=e=>{if(t&&t.on)up({type:e.type==='touchcancel'?'pointercancel':'pointerup',pointerId:'tp'});t=null;};
+   gp.addEventListener('touchend',end);gp.addEventListener('touchcancel',end);}
   // collapsing header: how far the text pane has scrolled (0..1 over the first 140px) drives the portrait band height
   if(gp){let q=0;const sh=()=>{q=0;box.style.setProperty('--sh',Math.min(1,gp.scrollTop/140).toFixed(3));};
    gp.addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(sh);if(!box.classList.contains('full')&&gp.scrollTop>60)settle(true);},{passive:true});
