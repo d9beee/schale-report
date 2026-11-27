@@ -3010,15 +3010,6 @@ try{const y=sessionStorage.getItem('ba_y');if(y!==null){sessionStorage.removeIte
 // a link inside the student sheet (e.g. "sửa trong Roster") opens another screen: the sheet must not stay on top of it
 addEventListener('hashchange',()=>GM.classList.remove('on'));
 
-// ===== PHONE LOBBY FADE: scrolling down the lobby (≤900px) keeps the room in view and blurs / dims it step by step,
-// so the tiles slide over a frosted room instead of a bare sky. Only transform + filter change (no re-layout), one rAF per frame.
-(()=>{const mq=matchMedia('(max-width:900px)');let q=0;
- const run=()=>{q=0;const c=document.getElementById('lobbyCast'),h=document.getElementById('home');if(!c)return;
-  if(!mq.matches||!h.classList.contains('on')){c.style.transform=c.style.filter='';return;}
-  const y=Math.max(0,scrollY),p=Math.min(1,y/(innerHeight*.3));
-  c.style.transform=`translateY(${y}px)`;c.style.filter=p?`blur(${(p*18).toFixed(1)}px) brightness(${(1-p*.35).toFixed(2)})`:'';};
- const ask=()=>{if(!q)q=requestAnimationFrame(run);};
- addEventListener('scroll',ask,{passive:true});addEventListener('resize',ask);addEventListener('hashchange',ask);mq.addEventListener('change',ask);})();
 // ===== ROSTER screen (#roster): edit owned / stars / UE / level / skills of the 215 default students, then Save = reload =====
 // D = the working copy (one entry per student, every field filled); only Save / Import write it to the browser.
 (function(){const L=document.getElementById('rlist');if(!L)return;
