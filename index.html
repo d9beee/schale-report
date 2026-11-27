@@ -24,7 +24,7 @@
   --font: "Segoe UI Variable Display","Segoe UI","Yu Gothic UI","Hiragino Sans","Noto Sans",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;
   background-image:
     linear-gradient(rgba(21,151,240,.05) 1px,transparent 1px),
@@ -397,454 +397,6 @@ html[data-theme=dark] :is(.scard,.sc,.chip,.lc,.bs,.tile):has(img[role=button]:f
 .scard .ph .am.ai{width:22px!important;height:22px!important;border:0!important;border-radius:var(--icr)!important;
  background:var(--ic) center/116% no-repeat!important;box-shadow:0 1px 3px rgba(0,0,0,.35)!important}
 .scard .ph .am.ai::before,.scard .ph .am.ai::after{content:none!important}
-</style>
-</head>
-<body>
-
-<header class="topbar" id="topbar">
-  <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>
-  <img class="tb-logo" src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()">
-  <h1 class="tb-title" id="tbTitle">Schale Report</h1>
-  <button class="tb-help" id="tbHelp" type="button" aria-label="Hướng dẫn màn này" aria-expanded="false" aria-controls="hpop">?</button>
-  <div class="tb-res">
-    <a class="res" href="#tasks" title="Nhiệm vụ cần làm"><i>📋</i><b id="rTask">0/0</b><small>nhiệm vụ</small></a>
-    <a class="res" href="#tier" title="Học sinh trong roster"><i>👥</i><b id="rStu">215</b><small>học sinh</small></a>
-    <a class="res" href="#calc" title="Eligma đang có (sửa trong Kế hoạch UE)"><i>💠</i><b id="rEli">2.595</b><small>Eligma</small></a>
-    <a class="res" href="#live" title="Total Assault"><i>⚔️</i><b id="rTA">TA</b></a>
-    <a class="res" href="#banners" title="Banner nên quay tiếp theo"><i>🎟️</i><b id="rBan">Banner</b></a>
-  </div>
-  <button class="tb-ic" id="thm" type="button" aria-label="Đổi giao diện sáng/tối">
-    <svg class="vi i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z" fill="currentColor"/><path d="M17 3.5l.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5z" fill="currentColor" opacity=".7"/></svg>
-    <svg class="vi i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.55 1.55M17.15 17.15l1.55 1.55M5.3 18.7l1.55-1.55M17.15 6.85l1.55-1.55"/></g></svg>
-  </button>
-  <a class="tb-ic" href="#home" aria-label="Về sảnh" title="Về sảnh">🏠</a>
-</header>
-<nav class="dock" id="dock" aria-label="Chuyển màn nhanh">
-  <a href="#home"><i>🏠</i><span>Sảnh</span></a>
-  <a href="#live"><i>⚔️</i><span>TA/GA</span><b class="bd" id="dTA"></b></a>
-  <a href="#banners"><i>🎟️</i><span>Banner</span><b class="bd" id="dBan"></b></a>
-  <a href="#tier"><i>👥</i><span>Học sinh</span><b class="bd info" id="dStu"></b></a>
-  <a href="#tasks"><i>📋</i><span>Nhiệm vụ</span><b class="bd" id="dTask"></b></a>
-</nav>
-
-<main id="app">
-
-<div class="screen" id="home" data-title="Schale Report">
-  <aside class="cast lobby" id="lobbyCast"></aside>
-  <div class="pane">
-    <div class="tiles">
-      <a class="tile big" href="#live" id="tRaid" data-ic="⚔️"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Total Assault · Grand Assault</b><small></small></span></a>
-      <a class="tile wide" href="#banners" id="tBan" data-ic="🎟️"><div class="tbg"></div><span class="ttag pink"></span><span class="tlab"><b>Banner Global</b><small></small></span></a>
-      <a class="tile" href="#pvp" id="tPvp" data-ic="🏆"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Tactical Challenge</b><small>PvP · đồng hồ, meta, đội</small></span></a>
-      <a class="tile" href="#tier" id="tStu" data-ic="👥"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Học sinh</b><small>Tier list roster</small></span></a>
-      <a class="tile" href="#ue" id="tUe" data-ic="💠"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Kế hoạch UE</b><small>Máy tính Eligma · thứ tự nâng</small></span></a>
-      <a class="tile" href="#teams" id="tBoss" data-ic="🎯"><div class="tbg"></div><span class="tlab"><b>Cơ chế boss</b><small>15 boss · khắc hệ · đội hình</small></span></a>
-      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX</b><small>Cách xếp đội vào trận</small></span></a>
-      <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></span></a>
-      <!-- Roster (the former empty slot; id tSrv kept so the grid rules of that cell stay as they are) -->
-      <a class="tile flat" href="#roster" id="tSrv" data-ic="🧩"><div class="tbg"></div><span class="tlab"><b>Roster</b><small>Sửa học sinh, UE, level</small></span></a>
-      <a class="tile lock" href="#jfd" id="tLock" title="Joint Firing Drill"><div class="tbg"></div><span class="ttag"></span>
-        <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/><circle cx="12" cy="15.5" r="1.8" fill="#5b6b82"/></svg>
-        <span class="tlab"><b>Joint Firing Drill</b><small></small></span></a>
-    </div>
-    <section class="notice">
-      <div class="nhead"><span class="ntag">Thông báo</span><span class="kicker">Schale Tactical Report · 17/11/2026</span></div>
-      <h2>215 học sinh, đủ <em>17/17 SS+</em>. Giờ chỉ cần tiêu Eligma cho đúng.</h2>
-      <p class="lede"><strong>Bạn không cần quay gacha thêm. Bạn đã nâng xong Shiroko (Swimsuit), Michiru (Dress), Iroha (Swimsuit), Satsuki (Swimsuit) lên UE 2★ và Hare (Camp) lên UE 1★.</strong> Với 2.595 Eligma còn lại, nên chi theo đúng lịch raid sắp tới: Seia UE 1★ trước Grand Assault Binah (1/12), Kayoko (New Year) UE 1★ trước Perorodzilla (15/12), rồi Kokona UE 2★. Buffer Special như Ibuki (Swimsuit), Ako, Himari không cần UE.</p>
-      <div class="metrics">
-        <div class="metric"><b>17/17</b><span>SS+ đã sở hữu</span><small id="m1">16 em đã có UE 2★ trở lên</small></div>
-        <div class="metric"><b id="m2">9</b><span>SS+/SS chưa mở UE</span><small>chưa lên 5★</small></div>
-        <div class="metric"><b id="m3">2.595</b><span>Eligma còn lại</span><small id="m3s">đủ cho 3 bước ở mục ②, dư khoảng 195</small></div>
-        <div class="metric"><b>4/4</b><span>Loại giáp raid</span><small>có sẵn đội cho mỗi loại</small></div>
-      </div>
-      <p class="meta-line">Tier theo Game8 JP (17/11/2026), đối chiếu BlueStacks KR (11/2026) và gacha.gg Global (12/11/2026). Nguồn đầy đủ ở cuối màn Học sinh.</p>
-    </section>
-  </div>
-</div>
-
-<div class="screen" id="s-raid" data-title="Total Assault · Grand Assault" data-cast="raid">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="live block" id="live">
-    <div class="live-top">
-      <div><h2>⓪ Boss TA / GA đang mở · Global</h2><small id="lupd">Giờ Việt Nam (UTC+7)</small></div>
-      <button class="rf" id="lrf">🔄 Refresh: tìm boss hôm nay</button>
-    </div>
-    <div class="lgrid" id="lgrid"></div>
-    <div class="lsched" id="lsched"></div>
-    <p class="lnote">Lịch Global lấy từ <a href="https://bluearchive.wiki/wiki/Total_Assault" target="_blank" rel="noopener">bluearchive.wiki</a> và <a href="https://ba.joexyz.online/global/roadmap" target="_blank" rel="noopener">Joe's Blue Archive Tools</a> (17/11/2026), giờ server UTC+9 đã đổi sang giờ VN. Refresh tính lại theo giờ máy bạn trên lịch đã lưu sẵn, không tải dữ liệu mới. Nếu game có thông báo đổi lịch, hãy theo thông báo trong game.</p>
-  </section>
-  </div>
-</div>
-
-<div class="screen" id="s-banner" data-title="Banner Global" data-cast="banner">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="live bn block" id="banners">
-    <div class="live-top">
-      <div><h2>🎟️ Upcoming Global Banners</h2><small id="bupd">Banner kế tiếp: ai, đạn gì, giáp gì, có nên quay</small></div>
-    </div>
-    <div class="bw" id="bw"></div>
-    <div class="bcard" id="bcard"></div>
-    <div class="bpick"><b>Đáng dành pyroxene nhất:</b> <span id="bpick"></span></div>
-    <p class="lnote">Lịch: <a href="https://ba.joexyz.online/global/banners" target="_blank" rel="noopener">Joe's Blue Archive Tools</a>, dự đoán theo lịch JP. Global đang chạy nhanh để đuổi kịp JP nên banner có thể bị gộp, rút ngắn hoặc bỏ qua. Đạn và giáp lấy từ <a href="https://bluearchive.wiki/wiki/Characters" target="_blank" rel="noopener">Blue Archive Wiki</a>; tier theo <a href="https://game8.jp/blue-archive/635287" target="_blank" rel="noopener">Game8 JP</a> (17/11/2026). Đánh giá "nên quay" là mình xét theo roster của bạn.</p>
-  </section>
-  </div>
-</div>
-
-<div class="screen" id="s-pvp" data-title="Tactical Challenge · PvP" data-cast="pvp">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="live pv block" id="pvp">
-    <div class="live-top">
-      <div><h2>⚔️ PvP · Tactical Challenge Global</h2><small id="pupd">Giờ Việt Nam (UTC+7)</small></div>
-      <button class="rf" id="prf">🔄 Refresh đồng hồ</button>
-    </div>
-    <div class="lgrid pg" id="pgrid"></div>
-    <div class="pmeta" id="pmeta"></div>
-    <p class="lnote">Lịch mùa và luật: <a href="https://bluearchive.wiki/wiki/Tactical_Challenge" target="_blank" rel="noopener">Blue Archive Wiki</a>, <a href="https://bluearchive.wikiru.jp/?%E6%88%A6%E8%A1%93%E5%AF%BE%E6%8A%97%E6%88%A6%E3%82%B7%E3%83%BC%E3%82%BA%E3%83%B311" target="_blank" rel="noopener">wikiru JP (S11)</a>, patch Global 8/9/2026. Meta S11 lấy từ tổng kết mùa của người chơi JP (<a href="https://note.com/yuzuhaccc/n/naef95d5b3621" target="_blank" rel="noopener">ろすと</a>, <a href="https://note.com/maple_blue/n/n50d2ce16180a" target="_blank" rel="noopener">Maple</a>), vì Global đang chạy đúng luật S11 mà JP đã chơi xong. Xem trước S12 theo <a href="https://game8.jp/blue-archive/650136" target="_blank" rel="noopener">Game8</a> (16/11/2026). Cập nhật 19/11/2026: muốn làm mới meta, nhắn Dia.</p>
-  </section>
-  </div>
-</div>
-
-<div class="screen" id="s-ue" data-title="Kế hoạch UE" data-cast="ue">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <!-- I -->
-  <section class="block" id="ue">
-    <div class="sec-head"><div class="sec-num">1</div><div><h2>Đầu tư UE thế nào cho đúng</h2><p>UE chỉ mở khi học sinh đạt 5★; mọi mốc sau đó tốn eleph của chính học sinh đó.</p></div></div>
-
-    <div class="card">
-      <h3>Mỗi mốc UE cho gì, tốn bao nhiêu</h3>
-      <div class="tbl-wrap"><table>
-        <thead><tr><th>Mốc</th><th>Eleph thêm</th><th>Eligma (cộng dồn từ 3★)</th><th>Nhận được</th></tr></thead>
-        <tbody>
-          <tr><td><span class="ue u0">Not Equipped</span></td><td>—</td><td>—</td><td>Chưa tới 5★ nên chưa có UE</td></tr>
-          <tr><td><span class="ue u1">UE 1★</span></td><td>Miễn phí khi lên 5★</td><td><b>900</b></td><td>Cộng ATK / HP / hồi máu</td></tr>
-          <tr><td><span class="ue u2">UE 2★</span></td><td>120</td><td><b>1.500</b> (+600)</td><td><b>Passive+</b>: cộng thêm chỉ số vào passive</td></tr>
-          <tr><td><span class="ue u3">UE 3★</span></td><td>180</td><td><b>2.400</b> (+900)</td><td><b>Tăng địa hình</b>: +1 bậc ở 1 trong 3 địa hình</td></tr>
-          <tr><td><span class="ue u3">UE 4★</span></td><td>200</td><td><b>3.400</b> (+1.000)</td><td>Striker: +10% hiệu quả khắc hệ · Special: +0.5 cost tối đa</td></tr>
-        </tbody>
-      </table></div>
-      <div class="note">Giá eleph bắt đầu từ 1 Eligma, tăng 1 sau mỗi 20 mảnh mua cho cùng một học sinh, tối đa 5 Eligma/mảnh. Một số học sinh có eleph trong shop Total Assault, Grand Assault, PvP: lấy ở đó trước. Wiki ghi UE 4★ là mốc cao nhất hiện tại; nếu server của bạn chưa có thì bỏ qua.</div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <h3>Bốn quy tắc chi Eligma</h3>
-        <ul>
-          <li><b>UE chỉ đáng tiền khi sức mạnh tăng theo chỉ số:</b> DPS, healer, tank và mọi Striker (đứng trên sân nên cần HP). Buffer Special buff theo %, không cần UE.</li>
-          <li><b>Buffer Striker: mở UE 1★ rồi dừng.</b> 5★ đã đủ HP để trụ ở Torment.</li>
-          <li><b>UE 3★/4★ chỉ cho DPS chủ lực.</b> UE 3★ khi raid đúng địa hình; UE 4★ cộng thẳng +10% damage.</li>
-          <li><b>DPS chỉ dùng cho một boss: mượn thay vì nâng.</b> Mượn bản max UE của bạn bè hoặc club vào đúng tuần đó. Không đổ thêm cho Hasumi (Track) (tier B).</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Điểm dừng cho từng học sinh</h3>
-        <div class="lanes">
-          <div class="lane"><div class="lab">Không cần UE<small>buffer Special</small></div><div class="names"><span class="nm">Ibuki (Swimsuit)</span><span class="nm">Ako</span><span class="nm">Himari</span><span class="nm">Fuuka (New Year)</span><span class="nm">Reisa (Magical)</span></div></div>
-          <div class="lane" data-t="1"><div class="lab">UE 1★ rồi dừng<small>900 Eligma</small></div><div class="names"><span class="nm">Hare (Camp)</span><span class="nm">Seia</span><span class="nm">Kayoko (New Year)</span><span class="nm">Aru (Dress)</span><span class="nm">Seia (Swimsuit)</span><span class="nm">Hikari</span></div></div>
-          <div class="lane" data-t="2"><div class="lab">Lên UE 2★<small>+600 Eligma</small></div><div class="names"><span class="nm">Kokona</span></div></div>
-          <div class="lane" data-t="2"><div class="lab">Dừng ở UE 2★<small>đã đủ</small></div><div class="names"><span class="nm">Shiroko (Swimsuit)</span><span class="nm">Michiru (Dress)</span><span class="nm">Iroha (Swimsuit)</span><span class="nm">Satsuki (Swimsuit)</span><span class="nm">Kisaki</span><span class="nm">Rio</span><span class="nm">Nagisa (Swimsuit)</span><span class="nm">Kei</span><span class="nm">Hoshino (Swimsuit)</span><span class="nm">Mari (Pop Idol)</span><span class="nm">Himari (Armed)</span></div></div>
-          <div class="lane" data-t="3"><div class="lab">UE 3★ khi đúng địa hình<small>+900 Eligma</small></div><div class="names"><span class="nm">Mika (Swimsuit)</span><span class="nm">Aris (Armed)</span><span class="nm">Hoshino (Armed)</span><span class="nm">Shiroko*Terror</span><span class="nm">Wakamo</span></div></div>
-          <div class="lane" data-t="4"><div class="lab">UE 4★<small>+1.000 Eligma</small></div><div class="names"><span class="nm">Hina (Dress)</span><span class="nm">Hanako (Swimsuit)</span><span class="nm">Neru (School)</span><span class="nm">Mika</span></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- II -->
-  <section class="block" id="steps">
-    <div class="sec-head"><div class="sec-num">2</div><div><h2>Thứ tự nâng UE cho roster của bạn</h2><p>Ngân sách: <b>2.595 Eligma</b>. Bước 1–3 tốn tối đa 2.400, xếp theo lịch raid sắp tới.</p></div></div>
-    <div class="card calc" id="calc">
-      <h3>🧮 Máy tính Eligma &amp; pyroxene</h3>
-      <div class="calc-in">
-        <label>Eligma đang có<input id="eli" type="number" min="0" step="1" inputmode="numeric"></label>
-        <label>Pyroxene đang có<input id="pyr" type="number" min="0" step="1" inputmode="numeric" placeholder="ví dụ 24000"></label>
-      </div>
-      <div id="cplan"></div>
-      <p class="sum" id="csum"></p>
-      <p class="sum" id="cpyro"></p>
-      <div class="note">Bấm vào thẻ học sinh tier SS+, SS, S để cập nhật mốc UE bạn vừa nâng. Trang tự lưu trên trình duyệt này, rồi tính lại mọi số liệu. <span id="cstore"></span> <button class="linkbtn" id="ureset" type="button">Khôi phục roster gốc</button></div>
-    </div>
-    <div class="steps">
-      <div class="step card done"><div class="dot">✓</div>
-        <div class="step-top"><h3>Đã xong: Shiroko (Swimsuit), Michiru (Dress), Iroha (Swimsuit), Satsuki (Swimsuit) lên UE 2★ · Hare (Camp) lên UE 1★</h3><span class="pill">Hoàn thành</span></div>
-        <p>Mấy em này đã tới điểm dừng hợp lý, không cần đổ thêm Eligma. Hare (Camp) là buffer Striker nên dừng ở UE 1★.</p>
-      </div>
-      <div class="step card"><div class="dot">1</div>
-        <div class="step-top"><h3>Seia: mở UE 1★</h3><span class="pill">Trước 1/12 · tối đa 900</span></div>
-        <p>Grand Assault Binah (1/12) có giáp Heavy. Seia buff Piercing và giảm cost cho Mika, Neru (School), lại đứng slot Striker nên cần HP từ UE để trụ ở Torment.</p>
-        <ul><li>Còn lại sau bước này: khoảng 1.695 Eligma.</li></ul>
-      </div>
-      <div class="step card"><div class="dot">2</div>
-        <div class="step-top"><h3>Kayoko (New Year): mở UE 1★</h3><span class="pill">Trước 15/12 · tối đa 900</span></div>
-        <p>Total Assault Perorodzilla (15/12) có giáp Special. Kayoko (New Year) buff Mystic cho Aris (Armed), Hoshino (Armed), Kei.</p>
-        <ul><li>Còn lại: khoảng 795 Eligma.</li></ul>
-      </div>
-      <div class="step card"><div class="dot">3</div>
-        <div class="step-top"><h3>Kokona: UE 1★ → 2★</h3><span class="pill">Sau đó · +600</span></div>
-        <p>Healer Striker tier SS, chìa khóa ở Hieronymus và Kurokage. Nâng xong là healer chính của bạn đều đã ở UE 2★.</p>
-        <ul><li>Còn lại: khoảng 195 Eligma. Để dành, không chi lẻ.</li></ul>
-      </div>
-      <div class="step card"><div class="dot">4</div>
-        <div class="step-top"><h3>UE 4★ cho DPS chủ lực</h3><span class="pill">Khi tích lại đủ 1.000</span></div>
-        <p>Hina (Dress), Hanako (Swimsuit), Neru (School), Mika đã UE 3★. Mốc tiếp theo là UE 4★ (+1.000): +10% hiệu quả khắc hệ, cộng thẳng vào damage. Mika (Swimsuit), Aris (Armed), Hoshino (Armed) chỉ lên UE 3★ (+900) khi raid rơi đúng địa hình được cộng.</p>
-        <ul><li>Nếu bạn muốn đánh Binah hạng cao hơn thay vì nâng Kokona: dùng 1.000 cho UE 4★ của Neru (School) hoặc Hina (Dress) sau bước 1. Khi đó Kayoko (New Year) phải chờ Eligma của tháng sau.</li><li>Để sau: Aru (Dress), Seia (Swimsuit), mỗi em cũng chỉ cần UE 1★.</li></ul>
-      </div>
-      <div class="step card"><div class="dot">5</div>
-        <div class="step-top"><h3>Học sinh chỉ dùng cho một boss</h3><span class="pill">Khi cần</span></div>
-        <p>Suzumi (Magical), Yuuka (Track), Kanoe, Sena (Casual) là Striker: mở UE 1★ khi lịch raid ra đúng boss. Reisa (Magical) là Special, dùng luôn. Với DPS chỉ mạnh ở một boss, mượn bản max UE thường lời hơn tự nâng.</p>
-      </div>
-      <div class="note">Số Eligma ở trên là mức tối đa, tính khi phải mua toàn bộ eleph bằng Eligma. Học sinh nào đã có sẵn eleph, hoặc mua được eleph trong shop Total Assault / Grand Assault / PvP, sẽ tốn ít hơn.</div>
-    </div>
-  </section>
-
-  </div>
-</div>
-
-<div class="screen" id="s-task" data-title="Nhiệm vụ" data-cast="tasks">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="block tasks" id="tasks">
-    <div class="tk-top">
-      <div class="ttabs" id="tkTabs"><button type="button" class="on" data-c="all">Tất cả</button><button type="button" data-c="daily">Hằng ngày</button><button type="button" data-c="raid">Raid</button><button type="button" data-c="banner">Banner</button><button type="button" data-c="ue">Kế hoạch UE</button><button type="button" data-c="jfd">Joint Firing Drill</button></div>
-      <div class="tk-prog"><b id="tkCnt">0/0</b><small>việc đã xong</small><div class="pbar"><i id="tkBar"></i></div></div>
-    </div>
-    <div class="tk-list" id="tkList"></div>
-    <div class="tk-foot"><p class="lnote" id="tkNote">Danh sách tự lập từ lịch TA/GA, Joint Firing Drill, banner và kế hoạch UE trong report. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam. Dấu tích lưu trên trình duyệt này.</p>
-      <button class="go tk-all" id="tkAll" type="button">✓ Hoàn thành tất cả</button></div>
-  </section>
-  </div>
-</div>
-
-<div class="screen" id="s-stu" data-title="Học sinh" data-cast="students">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <!-- III -->
-  <section class="block" id="tier">
-    <div class="sec-head"><div class="sec-num">3</div><div><h2>Tier list roster của bạn</h2><p>215 học sinh, kèm mốc UE hiện tại. Tier S trở lên lấy trực tiếp từ Game8 JP; A và B–C là tổng hợp từ cả 3 nguồn.</p></div></div>
-
-    <div class="card">
-      <h3>Phân bố tier × UE</h3>
-      <div class="chart-box"><canvas id="dist"></canvas></div>
-      <div class="note">Các tier cao gần như đã có UE hết. <span id="m4">130 em chưa mở UE (60% roster)</span> dồn chủ yếu ở tier A và B–C, phần lớn không cần đụng tới.</div>
-    </div>
-
-    <div class="tools">
-      <div class="ttabs" id="ttabs"><button type="button" class="on" data-t="all">Tất cả</button><button type="button" data-t="0">SS+</button><button type="button" data-t="1">SS</button><button type="button" data-t="2">S</button><button type="button" data-t="3">A</button><button type="button" data-t="4">B–C</button></div>
-      <input id="q" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit, Kayoko)">
-      <div class="legend">
-        <span class="tag t-exp">Explosive</span><span class="tag t-pie">Piercing</span><span class="tag t-mys">Mystic</span><span class="tag t-son">Sonic</span><span class="tag t-cor">Corrosive</span>        <span>· icon góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
-      </div>
-      <div class="sfil" id="sfil">
-        <div class="fr"><b>Vai trò</b><button type="button" class="fb" data-g="r" data-v="T" title="Tank" aria-label="Tank"><img class="rlic" src="Icons/role-tank.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="A" title="Dealer" aria-label="Dealer"><img class="rlic" src="Icons/role-dealer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="H" title="Healer" aria-label="Healer"><img class="rlic" src="Icons/role-healer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="S" title="Support" aria-label="Support"><img class="rlic" src="Icons/role-support.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="X" title="Tactical Support (T.S.)" aria-label="Tactical Support"><img class="rlic" src="Icons/role-tactical-support.png" alt=""></button></div>
-        <div class="fr"><b>Hệ đạn</b><button type="button" class="fb" data-g="a" data-v="E"><span class="tag t-exp">Explosive</span></button><button type="button" class="fb" data-g="a" data-v="P"><span class="tag t-pie">Piercing</span></button><button type="button" class="fb" data-g="a" data-v="M"><span class="tag t-mys">Mystic</span></button><button type="button" class="fb" data-g="a" data-v="S"><span class="tag t-son">Sonic</span></button><button type="button" class="fb" data-g="a" data-v="C"><span class="tag t-cor">Corrosive</span></button></div>
-        <div class="fr"><b>Giáp</b><button type="button" class="fb" data-g="m" data-v="l"><span class="ar ar-light">Light</span></button><button type="button" class="fb" data-g="m" data-v="h"><span class="ar ar-heavy">Heavy</span></button><button type="button" class="fb" data-g="m" data-v="s"><span class="ar ar-special">Special</span></button><button type="button" class="fb" data-g="m" data-v="e"><span class="ar ar-elastic">Elastic</span></button><button type="button" class="fb" data-g="m" data-v="c"><span class="ar ar-comp">Composite</span></button></div>
-        <div class="fr"><b>Loại</b><button type="button" class="fb" data-g="k" data-v="1">STRIKER</button><button type="button" class="fb" data-g="k" data-v="0">SPECIAL</button></div>
-        <div class="fr"><b>Vị trí</b><button type="button" class="fb" data-g="p" data-v="F" title="Front" aria-label="Front"><img class="psic" src="Icons/pos-front.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="M" title="Middle" aria-label="Middle"><img class="psic" src="Icons/pos-middle.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="B" title="Back" aria-label="Back"><img class="psic" src="Icons/pos-back.png" alt=""></button>
-          <span class="fcnt" id="fcnt"></span><button type="button" class="fclr" id="fclr" hidden>✕ Xóa lọc</button></div>
-      </div>
-    </div>
-
-    <div class="tier"><div class="tier-badge tb-ssp">SS+<small>17 em</small></div>
-      <div class="tier-body"><p class="desc">Tier 1 JP. Nhóm dùng được ở gần như mọi nội dung endgame.</p><div class="cards" id="ssp"></div></div></div>
-
-    <div class="tier"><div class="tier-badge tb-ss">SS<small>16 em</small></div>
-      <div class="tier-body"><p class="desc">Tier 2 JP. Chủ lực theo từng loại giáp hoặc buffer khó thay.</p><div class="cards" id="ss"></div></div></div>
-
-    <div class="tier"><div class="tier-badge tb-s">S<small>28 em</small></div>
-      <div class="tier-body"><p class="desc">Tier 3 JP. Mạnh theo boss hoặc cơ chế cụ thể. Theo Game8: Yuuka (Track) cho Goz / Shiro &amp; Kuro, Kanoe cho Perorodzilla, Sena (Casual) cho Kurokage, Haruka (Dress) cho Drum Crab.</p><div class="chips" id="s"></div></div></div>
-
-    <div class="tier"><div class="tier-badge tb-a">A<small>52 em</small></div>
-      <div class="tier-body"><p class="desc">Có công dụng rõ nhưng có bản thay thế tốt hơn. Đáng chú ý: Atsuko (Swimsuit) được Game8 xếp tier S cho healer, mission và PvP.</p><div class="chips" id="a"></div></div></div>
-
-    <div class="tier"><div class="tier-badge tb-bc">B–C<small>102 em</small></div>
-      <div class="tier-body"><p class="desc">Không có tên trong top của 3 nguồn, nuôi theo sở thích. Ngoại lệ PvP: Game8 xếp Hiyori (Swimsuit), Renge (Swimsuit), Midori, Hoshino ở tier S cho PvP.</p><div class="chips" id="bc"></div></div></div>
-  </section>
-
-  <!-- sources of the whole report + footer (moved here from the removed JP · KR · Global screen; the footer also gets the SS+ avatar row from JS) -->
-  <section class="block sources" id="sources">
-    <div class="card">
-      <h3>Nguồn</h3>
-      <ol>
-        <li><a href="https://game8.jp/blue-archive/635287" target="_blank" rel="noopener">Game8 JP: 最強キャラランキング (cập nhật 17/11/2026)</a></li>
-        <li><a href="https://www.bluestacks.com/ko/blog/game-guides/blue-archive/ba-tier-list-ko.html" target="_blank" rel="noopener">BlueStacks KR: 블루 아카이브 티어 리스트 (11/2026)</a></li>
-        <li><a href="https://www.gacha.gg/blue-archive/tier-list" target="_blank" rel="noopener">gacha.gg: Blue Archive tier list (12/11/2026)</a></li>
-        <li><a href="https://www.gamsgo.com/ja/blog/blue-archive-character-tier-list" target="_blank" rel="noopener">GamsGo JP: ブルアカ最強キャラTier表 2026</a></li>
-        <li><a href="https://mollulog.net/raids" target="_blank" rel="noopener">mollulog: Total / Grand Assault</a></li>
-        <li><a href="https://bluearchive.wiki/wiki/Unique_weapons" target="_blank" rel="noopener">Blue Archive Wiki: Unique weapons</a></li>
-        <li><a href="https://bluearchive.wiki/wiki/Shop" target="_blank" rel="noopener">Blue Archive Wiki: Shop (Eligma)</a></li>
-        <li><a href="https://kamigame.jp/bluearchive/page/142954441589444800.html" target="_blank" rel="noopener">Kamigame: 総力戦のボス一覧 (cập nhật 10/11/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/774215" target="_blank" rel="noopener">Game8: Goz Torment (né đoàn tàu bằng Yuuka (Track))</a></li>
-        <li><a href="https://game8.jp/blue-archive/812580" target="_blank" rel="noopener">Game8: Perorodzilla trong nhà (9/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/675587" target="_blank" rel="noopener">Game8: Shiro &amp; Kuro trong nhà</a></li>
-        <li><a href="https://bluearchive.wiki/wiki/Total_Assault" target="_blank" rel="noopener">Blue Archive Wiki: skill chi tiết của 15 boss Total Assault</a></li>
-        <li><a href="https://game8.jp/blue-archive/733809" target="_blank" rel="noopener">Game8: Yesod</a></li>
-        <li><a href="https://game8.jp/blue-archive/675588" target="_blank" rel="noopener">Game8: Hieronymus đô thị (8/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/670832" target="_blank" rel="noopener">Game8: Kurokage, Grand Assault (5/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/829987" target="_blank" rel="noopener">Game8: Geburah, Grand Assault (10/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/685890" target="_blank" rel="noopener">Game8: Gregorius Torment (7/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/786114" target="_blank" rel="noopener">Game8: Drum Crab (9/2026)</a></li>
-        <li><a href="https://bluearchive.wiki/wiki/Combat_basics" target="_blank" rel="noopener">Blue Archive Wiki: bảng khắc hệ (có Corrosive / Composite)</a></li>
-        <li><a href="https://kamigame.jp/bluearchive/page/142824712756579518.html" target="_blank" rel="noopener">Kamigame: thêm Corrosive và Composite (1/2026)</a></li>
-        <li><a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12327576267" target="_blank" rel="noopener">Yahoo! 知恵袋: chưa có học sinh / boss Corrosive (4/2026)</a></li>
-        <li><a href="https://game8.jp/blue-archive/699441" target="_blank" rel="noopener">Game8: Kei (Mystic, giáp Composite)</a></li>
-      </ol>
-    </div>
-  </section>
-
-  <footer><div class="flogo"><img src="Icons/schale.png" alt="SCHALE" onerror="this.remove()"><img src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()"></div>Schale Tactical Report · Soạn cho roster 215 học sinh của bạn<br><small>Logo, icon và hình học sinh © NEXON Games / Yostar · Blue Archive. Trang fan phi thương mại.</small></footer>
-  </div>
-</div>
-
-<!-- Roster: the player's own students (this browser only); rows are built by the ROSTER script -->
-<div class="screen" id="s-roster" data-title="Roster của tôi" data-cast="roster">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="block" id="roster">
-    <div class="sec-head"><div><h2>Roster của tôi</h2><p>Sửa học sinh đang có, số sao, mốc UE, level và cấp kỹ năng. Bấm Lưu là cả report tính lại theo roster này. Dữ liệu chỉ nằm trên trình duyệt này: muốn sang máy khác thì Xuất file rồi Nhập file ở máy kia.</p></div></div>
-    <div class="tools">
-      <input id="rq" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit)">
-      <div class="filters" id="rfil"><button type="button" class="on" data-f="all">Tất cả</button><button type="button" data-f="no">Chưa có</button><button type="button" data-f="noue">Chưa UE</button><button type="button" data-f="ed">Đã sửa</button></div>
-    </div>
-    <div class="bnav rbar"><span id="rcnt"></span><button type="button" class="go" id="rsave" disabled>Lưu</button><button type="button" id="rexp">Xuất file</button><button type="button" id="rimp">Nhập file</button><button type="button" id="rreset">Về mặc định</button>
-      <input type="file" id="rfile" accept=".json,application/json" hidden></div>
-    <p class="lnote">Mặc định mỗi em: Lv 90 · 5★ · kỹ năng EX 5, Normal / Passive / Sub 10. UE cần 5★, nên chọn dưới 5★ thì mốc UE tự về "Chưa UE". Bỏ dấu "Có" là em đó rời khỏi Tier list và hiện "chưa có · mượn" trong đội hình boss.</p>
-    <div class="rlist" id="rlist"></div>
-  </section>
-  </div>
-</div>
-
-<div class="screen" id="s-boss" data-title="Cơ chế boss · Đội hình" data-cast="boss">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <!-- IV -->
-  <section class="block" id="teams">
-    <div class="sec-head"><div class="sec-num">4</div><div><h2>BOSS và ĐỘI HÌNH</h2><p>Dấu * = học sinh chưa mở UE. Đội vẫn chạy được, nhưng có UE sẽ trụ lâu hơn và gây nhiều damage hơn.</p></div></div>
-
-    <div class="card">
-      <h3>Đạn nào khắc giáp nào</h3>
-      <div class="pairs">
-        <div class="pair"><div class="big"><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Light</span></div><small>Kiếm đỏ khắc khiên đỏ</small></div>
-        <div class="pair"><div class="big"><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Heavy</span></div><small>Kiếm vàng khắc khiên vàng</small></div>
-        <div class="pair"><div class="big"><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Special</span></div><small>Kiếm xanh khắc khiên xanh</small></div>
-        <div class="pair"><div class="big"><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Elastic</span></div><small>Kiếm tím khắc khiên tím</small></div>
-        <div class="pair" style="border-color:#9fdcbc"><div class="big"><span class="tag t-cor">Corrosive</span><span class="arrow">➜</span><span class="ar ar-comp">Composite</span></div><small>Xanh lá đậm khắc xanh lá nhạt · mới</small></div>
-      </div>
-      <div class="note">Cùng màu là khắc nhau: icon kiếm là đạn của học sinh, icon khiên là giáp của boss. Đánh đúng hệ thì damage được nhân lên rất nhiều so với đánh sai hệ.</div>
-
-      <div class="tbl-wrap" style="margin-top:14px"><table class="mtx">
-        <thead><tr><th>Đạn ↓ · Giáp →</th><th><span class="ar ar-light">Light</span></th><th><span class="ar ar-heavy">Heavy</span></th><th><span class="ar ar-special">Special</span></th><th><span class="ar ar-elastic">Elastic</span></th><th><span class="ar ar-comp">Composite</span></th></tr></thead>
-        <tbody>
-          <tr><td><span class="tag t-exp">Explosive</span></td><td class="w">200%</td><td class="n">100%</td><td class="r">50%</td><td class="r">50%</td><td class="n">100%</td></tr>
-          <tr><td><span class="tag t-pie">Piercing</span></td><td class="r">50%</td><td class="w">200%</td><td class="n">100%</td><td class="n">100%</td><td class="n">100%</td></tr>
-          <tr><td><span class="tag t-mys">Mystic</span></td><td class="n">100%</td><td class="r">50%</td><td class="w">200%</td><td class="n">100%</td><td class="r">50%</td></tr>
-          <tr><td><span class="tag t-son">Sonic</span></td><td class="n">100%</td><td class="r">50%</td><td class="e">150%</td><td class="w">200%</td><td class="r">50%</td></tr>
-          <tr><td><span class="tag t-cor">Corrosive</span></td><td class="r">50%</td><td class="e">150%</td><td class="n">100%</td><td class="n">100%</td><td class="w">200%</td></tr>
-        </tbody>
-      </table></div>
-      <div class="note">Bảng này dùng được cả hai chiều. Khi bạn đánh boss: tìm hàng đạn của DPS. Khi boss đánh bạn: tìm hàng đạn của boss để biết Striker giáp nào chỉ nhận 50% (ô đỏ). Mỗi thẻ boss bên dưới đã ghi sẵn “Boss bắn” và “Striker chịu tốt”.</div>
-
-      <!-- the "Đạn Corrosive và giáp Composite" box that sat here was removed (copy in _old/boss_newtype_corrosive.html) -->
-    </div>
-
-    <div class="grid2" style="margin-bottom:14px">
-      <div class="armor" style="--c:var(--exp)"><h4><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Giáp Light</span></h4>
-        <div class="k">DPS</div><div class="v">Hina (Dress), Iroha (Swimsuit)</div>
-        <div class="k">Support / Special</div><div class="v">Hoshino (Swimsuit), Mari (Pop Idol); Kisaki, Ibuki (Swimsuit)*, Nagisa (Swimsuit)</div></div>
-      <div class="armor" style="--c:var(--pie)"><h4><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Giáp Heavy</span></h4>
-        <div class="k">DPS</div><div class="v">Neru (School), Mika</div>
-        <div class="k">Support / Special</div><div class="v">Seia*; Himari (Armed), Kisaki, Rio</div></div>
-      <div class="armor" style="--c:var(--mys)"><h4><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Giáp Special</span></h4>
-        <div class="k">DPS</div><div class="v">Aris (Armed), Hoshino (Armed), Shiroko*Terror, Wakamo, Makoto (Swimsuit)</div>
-        <div class="k">Support / Special</div><div class="v">Kei, Kayoko (New Year)*; Rio, Shiroko (Swimsuit)</div></div>
-      <div class="armor" style="--c:var(--son)"><h4><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Giáp Elastic</span></h4>
-        <div class="k">DPS</div><div class="v">Mika (Swimsuit) đơn mục tiêu, Hanako (Swimsuit) AoE</div>
-        <div class="k">Support / Special</div><div class="v">Hikari; Kisaki, Nagisa (Swimsuit)</div></div>
-    </div>
-
-    <div class="card" id="order">
-      <h3>Xếp đội và thẻ EX mở đầu</h3>
-      <div class="grid2">
-        <ul style="margin:0">
-          <li><b>Thứ tự ô trong đội hình = chỗ đứng khi vào trận.</b> Người đứng gần boss ăn các đòn nhắm "người gần nhất", ví dụ Binah dồn đòn lên 4 Striker gần nhất. Đặt tank vào ô đứng trước, DPS xa ra.</li>
-          <li><b>Không cài gì thì 3 thẻ đầu tiên trên tay là ngẫu nhiên.</b> Vì vậy người chơi raid hay thoát ra vào lại tới khi được thẻ đúng.</li>
-          <li><b>Cài thẻ mở đầu</b> trong màn chọn đội (raid, drill…; không áp dụng cho PvP và cốt truyện chính). JP từ 27/5/2026 cài được <b>5 thẻ</b> (Unrestricted Battle 9). Bản Global của bạn có thể vẫn là 3.</li>
-          <li>Theo Game8: cài A B C D E thì <b>A, B, C có sẵn trên tay</b>, dùng xong mới tới D rồi E. Họ cũng nhắc là thứ tự thẻ mở đầu <b>phụ thuộc vị trí xếp đội</b>. Đây là cách hiểu của họ, chưa phải thông báo chính thức.</li>
-          <li><b>Thẻ đã lên tay thì bấm thẻ nào trước cũng được</b>, miễn đủ cost.</li>
-        </ul>
-        <ul class="mx" style="margin:0">
-          <li class="must"><span class="lab">Quy tắc</span>Xếp thẻ mở đầu theo thứ tự: <b>① debuff boss</b> (giảm DEF: Kanna (Swimsuit), Mine) → <b>② buff lên DPS</b> (Kisaki, Aru (Dress), Hoshino (Swimsuit), Hare (Camp), Fuuka (New Year) giảm cost cho DPS) → <b>③ EX của DPS</b> → <b>④ thẻ chép EX</b> (Rio) ngay sau EX của DPS.</li>
-          <li class="warn"><span class="lab">Cẩn thận</span>Buff có thời hạn. Đừng tung buff quá sớm khi chưa đủ cost cho EX của DPS ngay sau đó.</li>
-          <li class="tip"><span class="lab">Mẹo</span>Thử thứ tự thẻ và chỗ đứng ở <b>chế độ luyện tập (không tốn vé)</b> trước khi đánh thật. Nếu Global chỉ cài được 3 thẻ, bỏ qua thẻ thứ 4–5 (số viền nét đứt) trong gợi ý bên dưới.</li>
-        </ul>
-      </div>
-      <div class="note">Thứ tự "Thẻ mở đầu gợi ý" ở từng boss là mình suy ra theo quy tắc trên và vai trò của từng học sinh, <b>không phải timeline (TL) có sẵn</b>. Muốn leo hạng cao thì làm theo TL top của mùa đó. Nguồn: <a href="https://x.com/BlueArchive_kg2/status/2059154172373836095" target="_blank" rel="noopener">Game8 (X, 26/5/2026)</a>, <a href="https://game8.jp/blue-archive/642762" target="_blank" rel="noopener">Game8: cách xếp đội hình</a>.</div>
-    </div>
-
-    <div class="card">
-      <h3>15 boss: chọn 1 boss để xem cơ chế, khắc hệ và đội hình</h3>
-      <p class="sub" style="color:var(--muted);font-size:13px;margin-bottom:6px">Mỗi trang hiện 1 boss: bên trái là từng skill và cách xử lý, bên phải là khắc hệ hai chiều, diễn biến trận, vai trò từng học sinh và checklist. Bấm tên boss hoặc dùng nút Boss trước / Boss sau.</p>
-      <p class="sub" style="color:var(--muted);font-size:13px;margin-bottom:10px">Mỗi thẻ boss liệt kê từng skill theo tên gốc (EN · JP): skill đó làm gì, số liệu theo độ khó, và <b>cách xử lý</b>. Chữ tô đậm là chỗ cần chú ý. Chip viền nét đứt là học sinh bạn chưa có, cần mượn của bạn bè hoặc club. Số liệu skill lấy từ Blue Archive Wiki (bản Total Assault); giáp, đội mẫu và độ khó theo Kamigame (10/11/2026) và Game8. Grand Assault mỗi mùa có 3 giáp khác nhau nhưng cơ chế giữ nguyên.</p>
-      <div class="legend3"><span class="must"><b>BẮT BUỘC</b>: làm sai là gần như thua</span><span class="warn"><b>CẨN THẬN</b>: bẫy dễ dính</span><span class="tip"><b>MẸO</b>: tăng điểm, tối ưu</span></div>
-      <div class="filters" id="bf">
-        <button class="on" data-a="all">Tất cả</button>
-        <button data-a="light">Giáp Light</button>
-        <button data-a="heavy">Giáp Heavy</button>
-        <button data-a="special">Giáp Special</button>
-        <button data-a="elastic">Giáp Elastic</button>
-      </div>
-      <div class="bsel" id="bsel"></div>
-      <div id="bosses"></div>
-      <div class="bnav"><button id="bprev">← Boss trước</button><span id="bcnt"></span><button id="bnext">Boss sau →</button></div>
-      <div class="note">Theo mollulog, sắp tới là Grand Assault Binah (1/12, ngoài trời, giáp Light / Heavy / Elastic) và Total Assault Perorodzilla (15/12, trong nhà, giáp Special). Lịch có thể lệch theo server. Riêng Tiphareth (FRR): Game8 chọn Nozomi là DPS Sonic chí mạng tốt nhất.</div>
-    </div>
-    <!-- the PvP and Map / Mission / Hard cards that sat here were removed (copy in _old/boss_pvp_map_cards.html) -->
-  </section>
-
-  </div>
-</div>
-
-<!-- the "JP · KR · Global" screen was removed (copy in _old/servers_screen.html); its sources list + footer now close the Học sinh screen -->
-
-<!-- Joint Firing Drill guide: opened from the lobby card, no student on duty (full-width panel), 4 tabs. The first one ("Mùa này")
-     shows the running season's rules + the suggested team at once; it, the types and rewards tabs and the season line are filled
-     by JS from the JFD schedule; the room picture follows the season's terrain (data-g). -->
-<div class="screen" id="s-jfd" data-title="Joint Firing Drill" data-cast="jfd">
-  <aside class="cast"></aside>
-  <div class="pane">
-  <section class="block" id="jfd">
-    <div class="sec-head"><div class="sec-num">J</div><div><h2>Joint Firing Drill · cho người mới</h2><p id="jfdCd"></p></div></div>
-    <div class="ttabs" id="jfdTabs" role="tablist"><button type="button" role="tab" data-p="s" class="on">Mùa này</button><button type="button" role="tab" data-p="a">Cách chơi</button><button type="button" role="tab" data-p="b">Kiểu đề</button><button type="button" role="tab" data-p="d">Thưởng</button></div>
-    <div class="jp" data-p="s"><div id="jfdNow"></div><div id="jfdTeam"></div></div>
-    <div class="jp" data-p="a" hidden><div class="jgrid">
-      <div class="jk"><h4>🔓 Mở khóa</h4><p>Xong <b>Mission 5 Act 3</b> (Chương 5, màn 3) là vào được. Mỗi đợt mở <b>1 tuần</b>, giữa các đợt có vài tuần nghỉ.</p></div>
-      <div class="jk"><h4>🎫 Vé</h4><p>Mỗi ngày nhận <b>3 vé</b> lúc reset server; vé chưa dùng được giữ lại, tối đa <b>6 vé</b>. Chạy thử (nút xanh) <b>không tốn vé</b>.</p></div>
-      <div class="jk"><h4>📶 Chọn độ khó</h4><p>Có <b>4 phase</b> (địch Lv 25 · 40 · 65 · 78). Phase cao điểm cao hơn nhưng có thêm luật đặc biệt. Mẹo: chạy thử phase định đánh trước để xem đội có kịp giờ không.</p></div>
-      <div class="jk"><h4>👥 3 màn, 3 đội riêng</h4><p>Một lượt gồm <b>3 màn</b>, mỗi màn một đội. Học sinh đã ra trận ở màn trước <b>không dùng lại</b> được trong cùng lượt, nên cần đủ người cho 3 đội. Đánh thua thì học sinh vẫn dùng lại được.</p></div>
-      <div class="jk"><h4>⏱ Tính điểm</h4><p>Điểm mỗi màn theo <b>thời gian còn lại</b> và độ khó; cộng 3 màn thành tổng điểm. Điểm càng cao, càng nhiều coin.</p></div>
-      <div class="jk"><h4>🤝 Mượn &amp; quét</h4><p>Mượn học sinh của bạn trong club như ở raid. Đánh xong 1 lượt, các vé còn lại dùng để <b>quét</b> (sweep) mà không cần đánh lại.</p></div>
-    </div></div>
-    <div class="jp" data-p="b" hidden><div class="jgrid" id="jfdType"></div></div>
-    <div class="jp" data-p="d" hidden><div id="jfdRw"></div></div>
-    <p class="lnote">Nguồn: <a href="https://bluearchive.wiki/wiki/Joint_Firing_Drill" target="_blank" rel="noopener">Blue Archive Wiki · Joint Firing Drill</a> (luật, lịch Global, mốc thưởng), <a href="https://bluearchive.fandom.com/wiki/Joint_Firepower_Exercise" target="_blank" rel="noopener">Fandom · Joint Firepower Exercise</a> (mở khóa, cấp địch), bảng địa hình ở <a href="https://bluearchive.wiki/wiki/Characters" target="_blank" rel="noopener">Blue Archive Wiki · Characters</a> (đọc 24/11/2026).</p>
-  </section>
-  </div>
-</div>
-
-</main>
-
-<div class="gm" id="gm"><div class="gbox" role="dialog" aria-modal="true" data-t="info">
-  <div class="gl"><img class="gpor" id="gpor" alt="" onerror="this.style.display='none'">
-    <div class="gid"><span class="pin">Hồ sơ học sinh</span><h4 id="gmt"></h4><div class="gstar" id="gstar"></div></div></div>
-  <div class="gr"><div class="gtabs" id="gtabs"><span class="seg"><button type="button" data-t="info" class="on">Thông tin cơ bản</button><button type="button" data-t="grow">Kỹ năng &amp; trang bị</button></span><button id="gmx" type="button" aria-label="Đóng">✕</button></div>
-  <div class="gpane"><div id="gmb"></div>
-  <p class="gsrc"><b>Cách đọc:</b> nâng theo số thứ tự 1 → 2 → 3…, mỗi dòng ghi cấp cần đạt. Skill: EX tối đa Lv5, BS/ES/SS tối đa Lv10. Mức <b>Lv7</b> là điểm dừng trước khi cần sách bậc cao; <b>Lv10</b> cần Secret Note. Từ UE 2★, ES nâng thành <b>ES+</b>. Trang bị tính theo bậc T1–T10.<br>
-  Mức ưu tiên lấy từ <a href="https://game8.jp/blue-archive/669424" target="_blank" rel="noopener">Game8: スキルと装備強化優先度の早見表</a>; mình quy đổi sang cấp như sau: Ưu tiên = Lv5 / Lv10 / T10, Nâng vừa = Lv4 / Lv7 / T9, Để sau = Lv3 / Lv4 / T8. Tác dụng trang bị: <a href="https://bluearchive.wiki/wiki/Equipment" target="_blank" rel="noopener">Blue Archive Wiki</a>.</p>
-  </div></div>
-</div></div>
-<style>
 .grw .stp{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:#1597f0;color:#fff;font-size:11px;font-weight:700}
 .grw .lv{white-space:nowrap;font-weight:700;font-size:13px;padding:2px 8px;border-radius:8px}
 .grw .lv small{font-weight:500;opacity:.7}
@@ -1112,7 +664,9 @@ html[data-theme=dark] .gbox .gl{background:linear-gradient(165deg,#2a2552,#4b3c9
 html[data-theme=dark] .bpick{background:#2e2a17;color:var(--ink)}
 html[data-theme=dark] .lc,html[data-theme=dark] .bcard{border-color:#2c2f52}
 /* soft rounded corners like the game (no cut corners anywhere) */
-body *:not(.zmove){clip-path:none!important}
+/* targeted overrides instead of body *:not(.zmove) to avoid full-DOM style recalc on every zoom toggle */
+.tile,.tile .ttag,.notice,.ntag,.uepick button,.calc-row .i,.av-c,.bico,.lci,.scard,.totop{clip-path:none!important}
+.screen.zmove{clip-path:none}
 .tile{border-radius:16px;box-shadow:0 4px 14px rgba(30,52,86,.18)}
 .notice{border-radius:16px;overflow:hidden}
 .card,.metric,.guide,.calc-row,.sources,.lc,.bcard,.bpick,.sc,.chip{border-radius:12px}
@@ -1932,6 +1486,452 @@ html[data-theme=dark] #home #tBan{--room:url(BG/BG_Convenience_Night.jpg)}
  #home #tLock.open{min-height:84px!important}
 }
 </style>
+</head>
+<body>
+
+<header class="topbar" id="topbar">
+  <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>
+  <img class="tb-logo" src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()">
+  <h1 class="tb-title" id="tbTitle">Schale Report</h1>
+  <button class="tb-help" id="tbHelp" type="button" aria-label="Hướng dẫn màn này" aria-expanded="false" aria-controls="hpop">?</button>
+  <div class="tb-res">
+    <a class="res" href="#tasks" title="Nhiệm vụ cần làm"><i>📋</i><b id="rTask">0/0</b><small>nhiệm vụ</small></a>
+    <a class="res" href="#tier" title="Học sinh trong roster"><i>👥</i><b id="rStu">215</b><small>học sinh</small></a>
+    <a class="res" href="#calc" title="Eligma đang có (sửa trong Kế hoạch UE)"><i>💠</i><b id="rEli">2.595</b><small>Eligma</small></a>
+    <a class="res" href="#live" title="Total Assault"><i>⚔️</i><b id="rTA">TA</b></a>
+    <a class="res" href="#banners" title="Banner nên quay tiếp theo"><i>🎟️</i><b id="rBan">Banner</b></a>
+  </div>
+  <button class="tb-ic" id="thm" type="button" aria-label="Đổi giao diện sáng/tối">
+    <svg class="vi i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z" fill="currentColor"/><path d="M17 3.5l.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5z" fill="currentColor" opacity=".7"/></svg>
+    <svg class="vi i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.55 1.55M17.15 17.15l1.55 1.55M5.3 18.7l1.55-1.55M17.15 6.85l1.55-1.55"/></g></svg>
+  </button>
+  <a class="tb-ic" href="#home" aria-label="Về sảnh" title="Về sảnh">🏠</a>
+</header>
+<nav class="dock" id="dock" aria-label="Chuyển màn nhanh">
+  <a href="#home"><i>🏠</i><span>Sảnh</span></a>
+  <a href="#live"><i>⚔️</i><span>TA/GA</span><b class="bd" id="dTA"></b></a>
+  <a href="#banners"><i>🎟️</i><span>Banner</span><b class="bd" id="dBan"></b></a>
+  <a href="#tier"><i>👥</i><span>Học sinh</span><b class="bd info" id="dStu"></b></a>
+  <a href="#tasks"><i>📋</i><span>Nhiệm vụ</span><b class="bd" id="dTask"></b></a>
+</nav>
+
+<main id="app">
+
+<div class="screen" id="home" data-title="Schale Report">
+  <aside class="cast lobby" id="lobbyCast"></aside>
+  <div class="pane">
+    <div class="tiles">
+      <a class="tile big" href="#live" id="tRaid" data-ic="⚔️"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Total Assault · Grand Assault</b><small></small></span></a>
+      <a class="tile wide" href="#banners" id="tBan" data-ic="🎟️"><div class="tbg"></div><span class="ttag pink"></span><span class="tlab"><b>Banner Global</b><small></small></span></a>
+      <a class="tile" href="#pvp" id="tPvp" data-ic="🏆"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Tactical Challenge</b><small>PvP · đồng hồ, meta, đội</small></span></a>
+      <a class="tile" href="#tier" id="tStu" data-ic="👥"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Học sinh</b><small>Tier list roster</small></span></a>
+      <a class="tile" href="#ue" id="tUe" data-ic="💠"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Kế hoạch UE</b><small>Máy tính Eligma · thứ tự nâng</small></span></a>
+      <a class="tile" href="#teams" id="tBoss" data-ic="🎯"><div class="tbg"></div><span class="tlab"><b>Cơ chế boss</b><small>15 boss · khắc hệ · đội hình</small></span></a>
+      <a class="tile flat" href="#order" id="tOrd" data-ic="🃏"><div class="tbg"></div><span class="tlab"><b>Thẻ EX</b><small>Cách xếp đội vào trận</small></span></a>
+      <a class="tile" href="#tasks" id="tTask" data-ic="📋"><div class="tbg"></div><span class="ttag"></span><span class="tlab"><b>Nhiệm vụ</b><small>Việc cần làm · tích nhanh</small></span></a>
+      <!-- Roster (the former empty slot; id tSrv kept so the grid rules of that cell stay as they are) -->
+      <a class="tile flat" href="#roster" id="tSrv" data-ic="🧩"><div class="tbg"></div><span class="tlab"><b>Roster</b><small>Sửa học sinh, UE, level</small></span></a>
+      <a class="tile lock" href="#jfd" id="tLock" title="Joint Firing Drill"><div class="tbg"></div><span class="ttag"></span>
+        <svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="currentColor"/><circle cx="12" cy="15.5" r="1.8" fill="#5b6b82"/></svg>
+        <span class="tlab"><b>Joint Firing Drill</b><small></small></span></a>
+    </div>
+    <section class="notice">
+      <div class="nhead"><span class="ntag">Thông báo</span><span class="kicker">Schale Tactical Report · 17/11/2026</span></div>
+      <h2>215 học sinh, đủ <em>17/17 SS+</em>. Giờ chỉ cần tiêu Eligma cho đúng.</h2>
+      <p class="lede"><strong>Bạn không cần quay gacha thêm. Bạn đã nâng xong Shiroko (Swimsuit), Michiru (Dress), Iroha (Swimsuit), Satsuki (Swimsuit) lên UE 2★ và Hare (Camp) lên UE 1★.</strong> Với 2.595 Eligma còn lại, nên chi theo đúng lịch raid sắp tới: Seia UE 1★ trước Grand Assault Binah (1/12), Kayoko (New Year) UE 1★ trước Perorodzilla (15/12), rồi Kokona UE 2★. Buffer Special như Ibuki (Swimsuit), Ako, Himari không cần UE.</p>
+      <div class="metrics">
+        <div class="metric"><b>17/17</b><span>SS+ đã sở hữu</span><small id="m1">16 em đã có UE 2★ trở lên</small></div>
+        <div class="metric"><b id="m2">9</b><span>SS+/SS chưa mở UE</span><small>chưa lên 5★</small></div>
+        <div class="metric"><b id="m3">2.595</b><span>Eligma còn lại</span><small id="m3s">đủ cho 3 bước ở mục ②, dư khoảng 195</small></div>
+        <div class="metric"><b>4/4</b><span>Loại giáp raid</span><small>có sẵn đội cho mỗi loại</small></div>
+      </div>
+      <p class="meta-line">Tier theo Game8 JP (17/11/2026), đối chiếu BlueStacks KR (11/2026) và gacha.gg Global (12/11/2026). Nguồn đầy đủ ở cuối màn Học sinh.</p>
+    </section>
+  </div>
+</div>
+
+<div class="screen" id="s-raid" data-title="Total Assault · Grand Assault" data-cast="raid">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="live block" id="live">
+    <div class="live-top">
+      <div><h2>⓪ Boss TA / GA đang mở · Global</h2><small id="lupd">Giờ Việt Nam (UTC+7)</small></div>
+      <button class="rf" id="lrf">🔄 Refresh: tìm boss hôm nay</button>
+    </div>
+    <div class="lgrid" id="lgrid"></div>
+    <div class="lsched" id="lsched"></div>
+    <p class="lnote">Lịch Global lấy từ <a href="https://bluearchive.wiki/wiki/Total_Assault" target="_blank" rel="noopener">bluearchive.wiki</a> và <a href="https://ba.joexyz.online/global/roadmap" target="_blank" rel="noopener">Joe's Blue Archive Tools</a> (17/11/2026), giờ server UTC+9 đã đổi sang giờ VN. Refresh tính lại theo giờ máy bạn trên lịch đã lưu sẵn, không tải dữ liệu mới. Nếu game có thông báo đổi lịch, hãy theo thông báo trong game.</p>
+  </section>
+  </div>
+</div>
+
+<div class="screen" id="s-banner" data-title="Banner Global" data-cast="banner">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="live bn block" id="banners">
+    <div class="live-top">
+      <div><h2>🎟️ Upcoming Global Banners</h2><small id="bupd">Banner kế tiếp: ai, đạn gì, giáp gì, có nên quay</small></div>
+    </div>
+    <div class="bw" id="bw"></div>
+    <div class="bcard" id="bcard"></div>
+    <div class="bpick"><b>Đáng dành pyroxene nhất:</b> <span id="bpick"></span></div>
+    <p class="lnote">Lịch: <a href="https://ba.joexyz.online/global/banners" target="_blank" rel="noopener">Joe's Blue Archive Tools</a>, dự đoán theo lịch JP. Global đang chạy nhanh để đuổi kịp JP nên banner có thể bị gộp, rút ngắn hoặc bỏ qua. Đạn và giáp lấy từ <a href="https://bluearchive.wiki/wiki/Characters" target="_blank" rel="noopener">Blue Archive Wiki</a>; tier theo <a href="https://game8.jp/blue-archive/635287" target="_blank" rel="noopener">Game8 JP</a> (17/11/2026). Đánh giá "nên quay" là mình xét theo roster của bạn.</p>
+  </section>
+  </div>
+</div>
+
+<div class="screen" id="s-pvp" data-title="Tactical Challenge · PvP" data-cast="pvp">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="live pv block" id="pvp">
+    <div class="live-top">
+      <div><h2>⚔️ PvP · Tactical Challenge Global</h2><small id="pupd">Giờ Việt Nam (UTC+7)</small></div>
+      <button class="rf" id="prf">🔄 Refresh đồng hồ</button>
+    </div>
+    <div class="lgrid pg" id="pgrid"></div>
+    <div class="pmeta" id="pmeta"></div>
+    <p class="lnote">Lịch mùa và luật: <a href="https://bluearchive.wiki/wiki/Tactical_Challenge" target="_blank" rel="noopener">Blue Archive Wiki</a>, <a href="https://bluearchive.wikiru.jp/?%E6%88%A6%E8%A1%93%E5%AF%BE%E6%8A%97%E6%88%A6%E3%82%B7%E3%83%BC%E3%82%BA%E3%83%B311" target="_blank" rel="noopener">wikiru JP (S11)</a>, patch Global 8/9/2026. Meta S11 lấy từ tổng kết mùa của người chơi JP (<a href="https://note.com/yuzuhaccc/n/naef95d5b3621" target="_blank" rel="noopener">ろすと</a>, <a href="https://note.com/maple_blue/n/n50d2ce16180a" target="_blank" rel="noopener">Maple</a>), vì Global đang chạy đúng luật S11 mà JP đã chơi xong. Xem trước S12 theo <a href="https://game8.jp/blue-archive/650136" target="_blank" rel="noopener">Game8</a> (16/11/2026). Cập nhật 19/11/2026: muốn làm mới meta, nhắn Dia.</p>
+  </section>
+  </div>
+</div>
+
+<div class="screen" id="s-ue" data-title="Kế hoạch UE" data-cast="ue">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <!-- I -->
+  <section class="block" id="ue">
+    <div class="sec-head"><div class="sec-num">1</div><div><h2>Đầu tư UE thế nào cho đúng</h2><p>UE chỉ mở khi học sinh đạt 5★; mọi mốc sau đó tốn eleph của chính học sinh đó.</p></div></div>
+
+    <div class="card">
+      <h3>Mỗi mốc UE cho gì, tốn bao nhiêu</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Mốc</th><th>Eleph thêm</th><th>Eligma (cộng dồn từ 3★)</th><th>Nhận được</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ue u0">Not Equipped</span></td><td>—</td><td>—</td><td>Chưa tới 5★ nên chưa có UE</td></tr>
+          <tr><td><span class="ue u1">UE 1★</span></td><td>Miễn phí khi lên 5★</td><td><b>900</b></td><td>Cộng ATK / HP / hồi máu</td></tr>
+          <tr><td><span class="ue u2">UE 2★</span></td><td>120</td><td><b>1.500</b> (+600)</td><td><b>Passive+</b>: cộng thêm chỉ số vào passive</td></tr>
+          <tr><td><span class="ue u3">UE 3★</span></td><td>180</td><td><b>2.400</b> (+900)</td><td><b>Tăng địa hình</b>: +1 bậc ở 1 trong 3 địa hình</td></tr>
+          <tr><td><span class="ue u3">UE 4★</span></td><td>200</td><td><b>3.400</b> (+1.000)</td><td>Striker: +10% hiệu quả khắc hệ · Special: +0.5 cost tối đa</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">Giá eleph bắt đầu từ 1 Eligma, tăng 1 sau mỗi 20 mảnh mua cho cùng một học sinh, tối đa 5 Eligma/mảnh. Một số học sinh có eleph trong shop Total Assault, Grand Assault, PvP: lấy ở đó trước. Wiki ghi UE 4★ là mốc cao nhất hiện tại; nếu server của bạn chưa có thì bỏ qua.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Bốn quy tắc chi Eligma</h3>
+        <ul>
+          <li><b>UE chỉ đáng tiền khi sức mạnh tăng theo chỉ số:</b> DPS, healer, tank và mọi Striker (đứng trên sân nên cần HP). Buffer Special buff theo %, không cần UE.</li>
+          <li><b>Buffer Striker: mở UE 1★ rồi dừng.</b> 5★ đã đủ HP để trụ ở Torment.</li>
+          <li><b>UE 3★/4★ chỉ cho DPS chủ lực.</b> UE 3★ khi raid đúng địa hình; UE 4★ cộng thẳng +10% damage.</li>
+          <li><b>DPS chỉ dùng cho một boss: mượn thay vì nâng.</b> Mượn bản max UE của bạn bè hoặc club vào đúng tuần đó. Không đổ thêm cho Hasumi (Track) (tier B).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Điểm dừng cho từng học sinh</h3>
+        <div class="lanes">
+          <div class="lane"><div class="lab">Không cần UE<small>buffer Special</small></div><div class="names"><span class="nm">Ibuki (Swimsuit)</span><span class="nm">Ako</span><span class="nm">Himari</span><span class="nm">Fuuka (New Year)</span><span class="nm">Reisa (Magical)</span></div></div>
+          <div class="lane" data-t="1"><div class="lab">UE 1★ rồi dừng<small>900 Eligma</small></div><div class="names"><span class="nm">Hare (Camp)</span><span class="nm">Seia</span><span class="nm">Kayoko (New Year)</span><span class="nm">Aru (Dress)</span><span class="nm">Seia (Swimsuit)</span><span class="nm">Hikari</span></div></div>
+          <div class="lane" data-t="2"><div class="lab">Lên UE 2★<small>+600 Eligma</small></div><div class="names"><span class="nm">Kokona</span></div></div>
+          <div class="lane" data-t="2"><div class="lab">Dừng ở UE 2★<small>đã đủ</small></div><div class="names"><span class="nm">Shiroko (Swimsuit)</span><span class="nm">Michiru (Dress)</span><span class="nm">Iroha (Swimsuit)</span><span class="nm">Satsuki (Swimsuit)</span><span class="nm">Kisaki</span><span class="nm">Rio</span><span class="nm">Nagisa (Swimsuit)</span><span class="nm">Kei</span><span class="nm">Hoshino (Swimsuit)</span><span class="nm">Mari (Pop Idol)</span><span class="nm">Himari (Armed)</span></div></div>
+          <div class="lane" data-t="3"><div class="lab">UE 3★ khi đúng địa hình<small>+900 Eligma</small></div><div class="names"><span class="nm">Mika (Swimsuit)</span><span class="nm">Aris (Armed)</span><span class="nm">Hoshino (Armed)</span><span class="nm">Shiroko*Terror</span><span class="nm">Wakamo</span></div></div>
+          <div class="lane" data-t="4"><div class="lab">UE 4★<small>+1.000 Eligma</small></div><div class="names"><span class="nm">Hina (Dress)</span><span class="nm">Hanako (Swimsuit)</span><span class="nm">Neru (School)</span><span class="nm">Mika</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- II -->
+  <section class="block" id="steps">
+    <div class="sec-head"><div class="sec-num">2</div><div><h2>Thứ tự nâng UE cho roster của bạn</h2><p>Ngân sách: <b>2.595 Eligma</b>. Bước 1–3 tốn tối đa 2.400, xếp theo lịch raid sắp tới.</p></div></div>
+    <div class="card calc" id="calc">
+      <h3>🧮 Máy tính Eligma &amp; pyroxene</h3>
+      <div class="calc-in">
+        <label>Eligma đang có<input id="eli" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label>Pyroxene đang có<input id="pyr" type="number" min="0" step="1" inputmode="numeric" placeholder="ví dụ 24000"></label>
+      </div>
+      <div id="cplan"></div>
+      <p class="sum" id="csum"></p>
+      <p class="sum" id="cpyro"></p>
+      <div class="note">Bấm vào thẻ học sinh tier SS+, SS, S để cập nhật mốc UE bạn vừa nâng. Trang tự lưu trên trình duyệt này, rồi tính lại mọi số liệu. <span id="cstore"></span> <button class="linkbtn" id="ureset" type="button">Khôi phục roster gốc</button></div>
+    </div>
+    <div class="steps">
+      <div class="step card done"><div class="dot">✓</div>
+        <div class="step-top"><h3>Đã xong: Shiroko (Swimsuit), Michiru (Dress), Iroha (Swimsuit), Satsuki (Swimsuit) lên UE 2★ · Hare (Camp) lên UE 1★</h3><span class="pill">Hoàn thành</span></div>
+        <p>Mấy em này đã tới điểm dừng hợp lý, không cần đổ thêm Eligma. Hare (Camp) là buffer Striker nên dừng ở UE 1★.</p>
+      </div>
+      <div class="step card"><div class="dot">1</div>
+        <div class="step-top"><h3>Seia: mở UE 1★</h3><span class="pill">Trước 1/12 · tối đa 900</span></div>
+        <p>Grand Assault Binah (1/12) có giáp Heavy. Seia buff Piercing và giảm cost cho Mika, Neru (School), lại đứng slot Striker nên cần HP từ UE để trụ ở Torment.</p>
+        <ul><li>Còn lại sau bước này: khoảng 1.695 Eligma.</li></ul>
+      </div>
+      <div class="step card"><div class="dot">2</div>
+        <div class="step-top"><h3>Kayoko (New Year): mở UE 1★</h3><span class="pill">Trước 15/12 · tối đa 900</span></div>
+        <p>Total Assault Perorodzilla (15/12) có giáp Special. Kayoko (New Year) buff Mystic cho Aris (Armed), Hoshino (Armed), Kei.</p>
+        <ul><li>Còn lại: khoảng 795 Eligma.</li></ul>
+      </div>
+      <div class="step card"><div class="dot">3</div>
+        <div class="step-top"><h3>Kokona: UE 1★ → 2★</h3><span class="pill">Sau đó · +600</span></div>
+        <p>Healer Striker tier SS, chìa khóa ở Hieronymus và Kurokage. Nâng xong là healer chính của bạn đều đã ở UE 2★.</p>
+        <ul><li>Còn lại: khoảng 195 Eligma. Để dành, không chi lẻ.</li></ul>
+      </div>
+      <div class="step card"><div class="dot">4</div>
+        <div class="step-top"><h3>UE 4★ cho DPS chủ lực</h3><span class="pill">Khi tích lại đủ 1.000</span></div>
+        <p>Hina (Dress), Hanako (Swimsuit), Neru (School), Mika đã UE 3★. Mốc tiếp theo là UE 4★ (+1.000): +10% hiệu quả khắc hệ, cộng thẳng vào damage. Mika (Swimsuit), Aris (Armed), Hoshino (Armed) chỉ lên UE 3★ (+900) khi raid rơi đúng địa hình được cộng.</p>
+        <ul><li>Nếu bạn muốn đánh Binah hạng cao hơn thay vì nâng Kokona: dùng 1.000 cho UE 4★ của Neru (School) hoặc Hina (Dress) sau bước 1. Khi đó Kayoko (New Year) phải chờ Eligma của tháng sau.</li><li>Để sau: Aru (Dress), Seia (Swimsuit), mỗi em cũng chỉ cần UE 1★.</li></ul>
+      </div>
+      <div class="step card"><div class="dot">5</div>
+        <div class="step-top"><h3>Học sinh chỉ dùng cho một boss</h3><span class="pill">Khi cần</span></div>
+        <p>Suzumi (Magical), Yuuka (Track), Kanoe, Sena (Casual) là Striker: mở UE 1★ khi lịch raid ra đúng boss. Reisa (Magical) là Special, dùng luôn. Với DPS chỉ mạnh ở một boss, mượn bản max UE thường lời hơn tự nâng.</p>
+      </div>
+      <div class="note">Số Eligma ở trên là mức tối đa, tính khi phải mua toàn bộ eleph bằng Eligma. Học sinh nào đã có sẵn eleph, hoặc mua được eleph trong shop Total Assault / Grand Assault / PvP, sẽ tốn ít hơn.</div>
+    </div>
+  </section>
+
+  </div>
+</div>
+
+<div class="screen" id="s-task" data-title="Nhiệm vụ" data-cast="tasks">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="block tasks" id="tasks">
+    <div class="tk-top">
+      <div class="ttabs" id="tkTabs"><button type="button" class="on" data-c="all">Tất cả</button><button type="button" data-c="daily">Hằng ngày</button><button type="button" data-c="raid">Raid</button><button type="button" data-c="banner">Banner</button><button type="button" data-c="ue">Kế hoạch UE</button><button type="button" data-c="jfd">Joint Firing Drill</button></div>
+      <div class="tk-prog"><b id="tkCnt">0/0</b><small>việc đã xong</small><div class="pbar"><i id="tkBar"></i></div></div>
+    </div>
+    <div class="tk-list" id="tkList"></div>
+    <div class="tk-foot"><p class="lnote" id="tkNote">Danh sách tự lập từ lịch TA/GA, Joint Firing Drill, banner và kế hoạch UE trong report. Việc hằng ngày tự làm mới lúc 0:00 giờ Việt Nam. Dấu tích lưu trên trình duyệt này.</p>
+      <button class="go tk-all" id="tkAll" type="button">✓ Hoàn thành tất cả</button></div>
+  </section>
+  </div>
+</div>
+
+<div class="screen" id="s-stu" data-title="Học sinh" data-cast="students">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <!-- III -->
+  <section class="block" id="tier">
+    <div class="sec-head"><div class="sec-num">3</div><div><h2>Tier list roster của bạn</h2><p>215 học sinh, kèm mốc UE hiện tại. Tier S trở lên lấy trực tiếp từ Game8 JP; A và B–C là tổng hợp từ cả 3 nguồn.</p></div></div>
+
+    <div class="card">
+      <h3>Phân bố tier × UE</h3>
+      <div class="chart-box"><canvas id="dist"></canvas></div>
+      <div class="note">Các tier cao gần như đã có UE hết. <span id="m4">130 em chưa mở UE (60% roster)</span> dồn chủ yếu ở tier A và B–C, phần lớn không cần đụng tới.</div>
+    </div>
+
+    <div class="tools">
+      <div class="ttabs" id="ttabs"><button type="button" class="on" data-t="all">Tất cả</button><button type="button" data-t="0">SS+</button><button type="button" data-t="1">SS</button><button type="button" data-t="2">S</button><button type="button" data-t="3">A</button><button type="button" data-t="4">B–C</button></div>
+      <input id="q" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit, Kayoko)">
+      <div class="legend">
+        <span class="tag t-exp">Explosive</span><span class="tag t-pie">Piercing</span><span class="tag t-mys">Mystic</span><span class="tag t-son">Sonic</span><span class="tag t-cor">Corrosive</span>        <span>· icon góc thẻ = hệ đạn · <b style="color:#e8a800">★</b> = số mốc UE</span>
+      </div>
+      <div class="sfil" id="sfil">
+        <div class="fr"><b>Vai trò</b><button type="button" class="fb" data-g="r" data-v="T" title="Tank" aria-label="Tank"><img class="rlic" src="Icons/role-tank.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="A" title="Dealer" aria-label="Dealer"><img class="rlic" src="Icons/role-dealer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="H" title="Healer" aria-label="Healer"><img class="rlic" src="Icons/role-healer.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="S" title="Support" aria-label="Support"><img class="rlic" src="Icons/role-support.png" alt=""></button><button type="button" class="fb" data-g="r" data-v="X" title="Tactical Support (T.S.)" aria-label="Tactical Support"><img class="rlic" src="Icons/role-tactical-support.png" alt=""></button></div>
+        <div class="fr"><b>Hệ đạn</b><button type="button" class="fb" data-g="a" data-v="E"><span class="tag t-exp">Explosive</span></button><button type="button" class="fb" data-g="a" data-v="P"><span class="tag t-pie">Piercing</span></button><button type="button" class="fb" data-g="a" data-v="M"><span class="tag t-mys">Mystic</span></button><button type="button" class="fb" data-g="a" data-v="S"><span class="tag t-son">Sonic</span></button><button type="button" class="fb" data-g="a" data-v="C"><span class="tag t-cor">Corrosive</span></button></div>
+        <div class="fr"><b>Giáp</b><button type="button" class="fb" data-g="m" data-v="l"><span class="ar ar-light">Light</span></button><button type="button" class="fb" data-g="m" data-v="h"><span class="ar ar-heavy">Heavy</span></button><button type="button" class="fb" data-g="m" data-v="s"><span class="ar ar-special">Special</span></button><button type="button" class="fb" data-g="m" data-v="e"><span class="ar ar-elastic">Elastic</span></button><button type="button" class="fb" data-g="m" data-v="c"><span class="ar ar-comp">Composite</span></button></div>
+        <div class="fr"><b>Loại</b><button type="button" class="fb" data-g="k" data-v="1">STRIKER</button><button type="button" class="fb" data-g="k" data-v="0">SPECIAL</button></div>
+        <div class="fr"><b>Vị trí</b><button type="button" class="fb" data-g="p" data-v="F" title="Front" aria-label="Front"><img class="psic" src="Icons/pos-front.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="M" title="Middle" aria-label="Middle"><img class="psic" src="Icons/pos-middle.png" alt=""></button><button type="button" class="fb" data-g="p" data-v="B" title="Back" aria-label="Back"><img class="psic" src="Icons/pos-back.png" alt=""></button>
+          <span class="fcnt" id="fcnt"></span><button type="button" class="fclr" id="fclr" hidden>✕ Xóa lọc</button></div>
+      </div>
+    </div>
+
+    <div class="tier"><div class="tier-badge tb-ssp">SS+<small>17 em</small></div>
+      <div class="tier-body"><p class="desc">Tier 1 JP. Nhóm dùng được ở gần như mọi nội dung endgame.</p><div class="cards" id="ssp"></div></div></div>
+
+    <div class="tier"><div class="tier-badge tb-ss">SS<small>16 em</small></div>
+      <div class="tier-body"><p class="desc">Tier 2 JP. Chủ lực theo từng loại giáp hoặc buffer khó thay.</p><div class="cards" id="ss"></div></div></div>
+
+    <div class="tier"><div class="tier-badge tb-s">S<small>28 em</small></div>
+      <div class="tier-body"><p class="desc">Tier 3 JP. Mạnh theo boss hoặc cơ chế cụ thể. Theo Game8: Yuuka (Track) cho Goz / Shiro &amp; Kuro, Kanoe cho Perorodzilla, Sena (Casual) cho Kurokage, Haruka (Dress) cho Drum Crab.</p><div class="chips" id="s"></div></div></div>
+
+    <div class="tier"><div class="tier-badge tb-a">A<small>52 em</small></div>
+      <div class="tier-body"><p class="desc">Có công dụng rõ nhưng có bản thay thế tốt hơn. Đáng chú ý: Atsuko (Swimsuit) được Game8 xếp tier S cho healer, mission và PvP.</p><div class="chips" id="a"></div></div></div>
+
+    <div class="tier"><div class="tier-badge tb-bc">B–C<small>102 em</small></div>
+      <div class="tier-body"><p class="desc">Không có tên trong top của 3 nguồn, nuôi theo sở thích. Ngoại lệ PvP: Game8 xếp Hiyori (Swimsuit), Renge (Swimsuit), Midori, Hoshino ở tier S cho PvP.</p><div class="chips" id="bc"></div></div></div>
+  </section>
+
+  <!-- sources of the whole report + footer (moved here from the removed JP · KR · Global screen; the footer also gets the SS+ avatar row from JS) -->
+  <section class="block sources" id="sources">
+    <div class="card">
+      <h3>Nguồn</h3>
+      <ol>
+        <li><a href="https://game8.jp/blue-archive/635287" target="_blank" rel="noopener">Game8 JP: 最強キャラランキング (cập nhật 17/11/2026)</a></li>
+        <li><a href="https://www.bluestacks.com/ko/blog/game-guides/blue-archive/ba-tier-list-ko.html" target="_blank" rel="noopener">BlueStacks KR: 블루 아카이브 티어 리스트 (11/2026)</a></li>
+        <li><a href="https://www.gacha.gg/blue-archive/tier-list" target="_blank" rel="noopener">gacha.gg: Blue Archive tier list (12/11/2026)</a></li>
+        <li><a href="https://www.gamsgo.com/ja/blog/blue-archive-character-tier-list" target="_blank" rel="noopener">GamsGo JP: ブルアカ最強キャラTier表 2026</a></li>
+        <li><a href="https://mollulog.net/raids" target="_blank" rel="noopener">mollulog: Total / Grand Assault</a></li>
+        <li><a href="https://bluearchive.wiki/wiki/Unique_weapons" target="_blank" rel="noopener">Blue Archive Wiki: Unique weapons</a></li>
+        <li><a href="https://bluearchive.wiki/wiki/Shop" target="_blank" rel="noopener">Blue Archive Wiki: Shop (Eligma)</a></li>
+        <li><a href="https://kamigame.jp/bluearchive/page/142954441589444800.html" target="_blank" rel="noopener">Kamigame: 総力戦のボス一覧 (cập nhật 10/11/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/774215" target="_blank" rel="noopener">Game8: Goz Torment (né đoàn tàu bằng Yuuka (Track))</a></li>
+        <li><a href="https://game8.jp/blue-archive/812580" target="_blank" rel="noopener">Game8: Perorodzilla trong nhà (9/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/675587" target="_blank" rel="noopener">Game8: Shiro &amp; Kuro trong nhà</a></li>
+        <li><a href="https://bluearchive.wiki/wiki/Total_Assault" target="_blank" rel="noopener">Blue Archive Wiki: skill chi tiết của 15 boss Total Assault</a></li>
+        <li><a href="https://game8.jp/blue-archive/733809" target="_blank" rel="noopener">Game8: Yesod</a></li>
+        <li><a href="https://game8.jp/blue-archive/675588" target="_blank" rel="noopener">Game8: Hieronymus đô thị (8/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/670832" target="_blank" rel="noopener">Game8: Kurokage, Grand Assault (5/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/829987" target="_blank" rel="noopener">Game8: Geburah, Grand Assault (10/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/685890" target="_blank" rel="noopener">Game8: Gregorius Torment (7/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/786114" target="_blank" rel="noopener">Game8: Drum Crab (9/2026)</a></li>
+        <li><a href="https://bluearchive.wiki/wiki/Combat_basics" target="_blank" rel="noopener">Blue Archive Wiki: bảng khắc hệ (có Corrosive / Composite)</a></li>
+        <li><a href="https://kamigame.jp/bluearchive/page/142824712756579518.html" target="_blank" rel="noopener">Kamigame: thêm Corrosive và Composite (1/2026)</a></li>
+        <li><a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12327576267" target="_blank" rel="noopener">Yahoo! 知恵袋: chưa có học sinh / boss Corrosive (4/2026)</a></li>
+        <li><a href="https://game8.jp/blue-archive/699441" target="_blank" rel="noopener">Game8: Kei (Mystic, giáp Composite)</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer><div class="flogo"><img src="Icons/schale.png" alt="SCHALE" onerror="this.remove()"><img src="Icons/ba-logo.png" alt="Blue Archive" onerror="this.remove()"></div>Schale Tactical Report · Soạn cho roster 215 học sinh của bạn<br><small>Logo, icon và hình học sinh © NEXON Games / Yostar · Blue Archive. Trang fan phi thương mại.</small></footer>
+  </div>
+</div>
+
+<!-- Roster: the player's own students (this browser only); rows are built by the ROSTER script -->
+<div class="screen" id="s-roster" data-title="Roster của tôi" data-cast="roster">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="block" id="roster">
+    <div class="sec-head"><div><h2>Roster của tôi</h2><p>Sửa học sinh đang có, số sao, mốc UE, level và cấp kỹ năng. Bấm Lưu là cả report tính lại theo roster này. Dữ liệu chỉ nằm trên trình duyệt này: muốn sang máy khác thì Xuất file rồi Nhập file ở máy kia.</p></div></div>
+    <div class="tools">
+      <input id="rq" type="search" placeholder="Tìm học sinh… (ví dụ: Hina, Swimsuit)">
+      <div class="filters" id="rfil"><button type="button" class="on" data-f="all">Tất cả</button><button type="button" data-f="no">Chưa có</button><button type="button" data-f="noue">Chưa UE</button><button type="button" data-f="ed">Đã sửa</button></div>
+    </div>
+    <div class="bnav rbar"><span id="rcnt"></span><button type="button" class="go" id="rsave" disabled>Lưu</button><button type="button" id="rexp">Xuất file</button><button type="button" id="rimp">Nhập file</button><button type="button" id="rreset">Về mặc định</button>
+      <input type="file" id="rfile" accept=".json,application/json" hidden></div>
+    <p class="lnote">Mặc định mỗi em: Lv 90 · 5★ · kỹ năng EX 5, Normal / Passive / Sub 10. UE cần 5★, nên chọn dưới 5★ thì mốc UE tự về "Chưa UE". Bỏ dấu "Có" là em đó rời khỏi Tier list và hiện "chưa có · mượn" trong đội hình boss.</p>
+    <div class="rlist" id="rlist"></div>
+  </section>
+  </div>
+</div>
+
+<div class="screen" id="s-boss" data-title="Cơ chế boss · Đội hình" data-cast="boss">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <!-- IV -->
+  <section class="block" id="teams">
+    <div class="sec-head"><div class="sec-num">4</div><div><h2>BOSS và ĐỘI HÌNH</h2><p>Dấu * = học sinh chưa mở UE. Đội vẫn chạy được, nhưng có UE sẽ trụ lâu hơn và gây nhiều damage hơn.</p></div></div>
+
+    <div class="card">
+      <h3>Đạn nào khắc giáp nào</h3>
+      <div class="pairs">
+        <div class="pair"><div class="big"><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Light</span></div><small>Kiếm đỏ khắc khiên đỏ</small></div>
+        <div class="pair"><div class="big"><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Heavy</span></div><small>Kiếm vàng khắc khiên vàng</small></div>
+        <div class="pair"><div class="big"><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Special</span></div><small>Kiếm xanh khắc khiên xanh</small></div>
+        <div class="pair"><div class="big"><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Elastic</span></div><small>Kiếm tím khắc khiên tím</small></div>
+        <div class="pair" style="border-color:#9fdcbc"><div class="big"><span class="tag t-cor">Corrosive</span><span class="arrow">➜</span><span class="ar ar-comp">Composite</span></div><small>Xanh lá đậm khắc xanh lá nhạt · mới</small></div>
+      </div>
+      <div class="note">Cùng màu là khắc nhau: icon kiếm là đạn của học sinh, icon khiên là giáp của boss. Đánh đúng hệ thì damage được nhân lên rất nhiều so với đánh sai hệ.</div>
+
+      <div class="tbl-wrap" style="margin-top:14px"><table class="mtx">
+        <thead><tr><th>Đạn ↓ · Giáp →</th><th><span class="ar ar-light">Light</span></th><th><span class="ar ar-heavy">Heavy</span></th><th><span class="ar ar-special">Special</span></th><th><span class="ar ar-elastic">Elastic</span></th><th><span class="ar ar-comp">Composite</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag t-exp">Explosive</span></td><td class="w">200%</td><td class="n">100%</td><td class="r">50%</td><td class="r">50%</td><td class="n">100%</td></tr>
+          <tr><td><span class="tag t-pie">Piercing</span></td><td class="r">50%</td><td class="w">200%</td><td class="n">100%</td><td class="n">100%</td><td class="n">100%</td></tr>
+          <tr><td><span class="tag t-mys">Mystic</span></td><td class="n">100%</td><td class="r">50%</td><td class="w">200%</td><td class="n">100%</td><td class="r">50%</td></tr>
+          <tr><td><span class="tag t-son">Sonic</span></td><td class="n">100%</td><td class="r">50%</td><td class="e">150%</td><td class="w">200%</td><td class="r">50%</td></tr>
+          <tr><td><span class="tag t-cor">Corrosive</span></td><td class="r">50%</td><td class="e">150%</td><td class="n">100%</td><td class="n">100%</td><td class="w">200%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">Bảng này dùng được cả hai chiều. Khi bạn đánh boss: tìm hàng đạn của DPS. Khi boss đánh bạn: tìm hàng đạn của boss để biết Striker giáp nào chỉ nhận 50% (ô đỏ). Mỗi thẻ boss bên dưới đã ghi sẵn “Boss bắn” và “Striker chịu tốt”.</div>
+
+      <!-- the "Đạn Corrosive và giáp Composite" box that sat here was removed (copy in _old/boss_newtype_corrosive.html) -->
+    </div>
+
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="armor" style="--c:var(--exp)"><h4><span class="tag t-exp">Explosive</span><span class="arrow">➜</span><span class="ar ar-light">Giáp Light</span></h4>
+        <div class="k">DPS</div><div class="v">Hina (Dress), Iroha (Swimsuit)</div>
+        <div class="k">Support / Special</div><div class="v">Hoshino (Swimsuit), Mari (Pop Idol); Kisaki, Ibuki (Swimsuit)*, Nagisa (Swimsuit)</div></div>
+      <div class="armor" style="--c:var(--pie)"><h4><span class="tag t-pie">Piercing</span><span class="arrow">➜</span><span class="ar ar-heavy">Giáp Heavy</span></h4>
+        <div class="k">DPS</div><div class="v">Neru (School), Mika</div>
+        <div class="k">Support / Special</div><div class="v">Seia*; Himari (Armed), Kisaki, Rio</div></div>
+      <div class="armor" style="--c:var(--mys)"><h4><span class="tag t-mys">Mystic</span><span class="arrow">➜</span><span class="ar ar-special">Giáp Special</span></h4>
+        <div class="k">DPS</div><div class="v">Aris (Armed), Hoshino (Armed), Shiroko*Terror, Wakamo, Makoto (Swimsuit)</div>
+        <div class="k">Support / Special</div><div class="v">Kei, Kayoko (New Year)*; Rio, Shiroko (Swimsuit)</div></div>
+      <div class="armor" style="--c:var(--son)"><h4><span class="tag t-son">Sonic</span><span class="arrow">➜</span><span class="ar ar-elastic">Giáp Elastic</span></h4>
+        <div class="k">DPS</div><div class="v">Mika (Swimsuit) đơn mục tiêu, Hanako (Swimsuit) AoE</div>
+        <div class="k">Support / Special</div><div class="v">Hikari; Kisaki, Nagisa (Swimsuit)</div></div>
+    </div>
+
+    <div class="card" id="order">
+      <h3>Xếp đội và thẻ EX mở đầu</h3>
+      <div class="grid2">
+        <ul style="margin:0">
+          <li><b>Thứ tự ô trong đội hình = chỗ đứng khi vào trận.</b> Người đứng gần boss ăn các đòn nhắm "người gần nhất", ví dụ Binah dồn đòn lên 4 Striker gần nhất. Đặt tank vào ô đứng trước, DPS xa ra.</li>
+          <li><b>Không cài gì thì 3 thẻ đầu tiên trên tay là ngẫu nhiên.</b> Vì vậy người chơi raid hay thoát ra vào lại tới khi được thẻ đúng.</li>
+          <li><b>Cài thẻ mở đầu</b> trong màn chọn đội (raid, drill…; không áp dụng cho PvP và cốt truyện chính). JP từ 27/5/2026 cài được <b>5 thẻ</b> (Unrestricted Battle 9). Bản Global của bạn có thể vẫn là 3.</li>
+          <li>Theo Game8: cài A B C D E thì <b>A, B, C có sẵn trên tay</b>, dùng xong mới tới D rồi E. Họ cũng nhắc là thứ tự thẻ mở đầu <b>phụ thuộc vị trí xếp đội</b>. Đây là cách hiểu của họ, chưa phải thông báo chính thức.</li>
+          <li><b>Thẻ đã lên tay thì bấm thẻ nào trước cũng được</b>, miễn đủ cost.</li>
+        </ul>
+        <ul class="mx" style="margin:0">
+          <li class="must"><span class="lab">Quy tắc</span>Xếp thẻ mở đầu theo thứ tự: <b>① debuff boss</b> (giảm DEF: Kanna (Swimsuit), Mine) → <b>② buff lên DPS</b> (Kisaki, Aru (Dress), Hoshino (Swimsuit), Hare (Camp), Fuuka (New Year) giảm cost cho DPS) → <b>③ EX của DPS</b> → <b>④ thẻ chép EX</b> (Rio) ngay sau EX của DPS.</li>
+          <li class="warn"><span class="lab">Cẩn thận</span>Buff có thời hạn. Đừng tung buff quá sớm khi chưa đủ cost cho EX của DPS ngay sau đó.</li>
+          <li class="tip"><span class="lab">Mẹo</span>Thử thứ tự thẻ và chỗ đứng ở <b>chế độ luyện tập (không tốn vé)</b> trước khi đánh thật. Nếu Global chỉ cài được 3 thẻ, bỏ qua thẻ thứ 4–5 (số viền nét đứt) trong gợi ý bên dưới.</li>
+        </ul>
+      </div>
+      <div class="note">Thứ tự "Thẻ mở đầu gợi ý" ở từng boss là mình suy ra theo quy tắc trên và vai trò của từng học sinh, <b>không phải timeline (TL) có sẵn</b>. Muốn leo hạng cao thì làm theo TL top của mùa đó. Nguồn: <a href="https://x.com/BlueArchive_kg2/status/2059154172373836095" target="_blank" rel="noopener">Game8 (X, 26/5/2026)</a>, <a href="https://game8.jp/blue-archive/642762" target="_blank" rel="noopener">Game8: cách xếp đội hình</a>.</div>
+    </div>
+
+    <div class="card">
+      <h3>15 boss: chọn 1 boss để xem cơ chế, khắc hệ và đội hình</h3>
+      <p class="sub" style="color:var(--muted);font-size:13px;margin-bottom:6px">Mỗi trang hiện 1 boss: bên trái là từng skill và cách xử lý, bên phải là khắc hệ hai chiều, diễn biến trận, vai trò từng học sinh và checklist. Bấm tên boss hoặc dùng nút Boss trước / Boss sau.</p>
+      <p class="sub" style="color:var(--muted);font-size:13px;margin-bottom:10px">Mỗi thẻ boss liệt kê từng skill theo tên gốc (EN · JP): skill đó làm gì, số liệu theo độ khó, và <b>cách xử lý</b>. Chữ tô đậm là chỗ cần chú ý. Chip viền nét đứt là học sinh bạn chưa có, cần mượn của bạn bè hoặc club. Số liệu skill lấy từ Blue Archive Wiki (bản Total Assault); giáp, đội mẫu và độ khó theo Kamigame (10/11/2026) và Game8. Grand Assault mỗi mùa có 3 giáp khác nhau nhưng cơ chế giữ nguyên.</p>
+      <div class="legend3"><span class="must"><b>BẮT BUỘC</b>: làm sai là gần như thua</span><span class="warn"><b>CẨN THẬN</b>: bẫy dễ dính</span><span class="tip"><b>MẸO</b>: tăng điểm, tối ưu</span></div>
+      <div class="filters" id="bf">
+        <button class="on" data-a="all">Tất cả</button>
+        <button data-a="light">Giáp Light</button>
+        <button data-a="heavy">Giáp Heavy</button>
+        <button data-a="special">Giáp Special</button>
+        <button data-a="elastic">Giáp Elastic</button>
+      </div>
+      <div class="bsel" id="bsel"></div>
+      <div id="bosses"></div>
+      <div class="bnav"><button id="bprev">← Boss trước</button><span id="bcnt"></span><button id="bnext">Boss sau →</button></div>
+      <div class="note">Theo mollulog, sắp tới là Grand Assault Binah (1/12, ngoài trời, giáp Light / Heavy / Elastic) và Total Assault Perorodzilla (15/12, trong nhà, giáp Special). Lịch có thể lệch theo server. Riêng Tiphareth (FRR): Game8 chọn Nozomi là DPS Sonic chí mạng tốt nhất.</div>
+    </div>
+    <!-- the PvP and Map / Mission / Hard cards that sat here were removed (copy in _old/boss_pvp_map_cards.html) -->
+  </section>
+
+  </div>
+</div>
+
+<!-- the "JP · KR · Global" screen was removed (copy in _old/servers_screen.html); its sources list + footer now close the Học sinh screen -->
+
+<!-- Joint Firing Drill guide: opened from the lobby card, no student on duty (full-width panel), 4 tabs. The first one ("Mùa này")
+     shows the running season's rules + the suggested team at once; it, the types and rewards tabs and the season line are filled
+     by JS from the JFD schedule; the room picture follows the season's terrain (data-g). -->
+<div class="screen" id="s-jfd" data-title="Joint Firing Drill" data-cast="jfd">
+  <aside class="cast"></aside>
+  <div class="pane">
+  <section class="block" id="jfd">
+    <div class="sec-head"><div class="sec-num">J</div><div><h2>Joint Firing Drill · cho người mới</h2><p id="jfdCd"></p></div></div>
+    <div class="ttabs" id="jfdTabs" role="tablist"><button type="button" role="tab" data-p="s" class="on">Mùa này</button><button type="button" role="tab" data-p="a">Cách chơi</button><button type="button" role="tab" data-p="b">Kiểu đề</button><button type="button" role="tab" data-p="d">Thưởng</button></div>
+    <div class="jp" data-p="s"><div id="jfdNow"></div><div id="jfdTeam"></div></div>
+    <div class="jp" data-p="a" hidden><div class="jgrid">
+      <div class="jk"><h4>🔓 Mở khóa</h4><p>Xong <b>Mission 5 Act 3</b> (Chương 5, màn 3) là vào được. Mỗi đợt mở <b>1 tuần</b>, giữa các đợt có vài tuần nghỉ.</p></div>
+      <div class="jk"><h4>🎫 Vé</h4><p>Mỗi ngày nhận <b>3 vé</b> lúc reset server; vé chưa dùng được giữ lại, tối đa <b>6 vé</b>. Chạy thử (nút xanh) <b>không tốn vé</b>.</p></div>
+      <div class="jk"><h4>📶 Chọn độ khó</h4><p>Có <b>4 phase</b> (địch Lv 25 · 40 · 65 · 78). Phase cao điểm cao hơn nhưng có thêm luật đặc biệt. Mẹo: chạy thử phase định đánh trước để xem đội có kịp giờ không.</p></div>
+      <div class="jk"><h4>👥 3 màn, 3 đội riêng</h4><p>Một lượt gồm <b>3 màn</b>, mỗi màn một đội. Học sinh đã ra trận ở màn trước <b>không dùng lại</b> được trong cùng lượt, nên cần đủ người cho 3 đội. Đánh thua thì học sinh vẫn dùng lại được.</p></div>
+      <div class="jk"><h4>⏱ Tính điểm</h4><p>Điểm mỗi màn theo <b>thời gian còn lại</b> và độ khó; cộng 3 màn thành tổng điểm. Điểm càng cao, càng nhiều coin.</p></div>
+      <div class="jk"><h4>🤝 Mượn &amp; quét</h4><p>Mượn học sinh của bạn trong club như ở raid. Đánh xong 1 lượt, các vé còn lại dùng để <b>quét</b> (sweep) mà không cần đánh lại.</p></div>
+    </div></div>
+    <div class="jp" data-p="b" hidden><div class="jgrid" id="jfdType"></div></div>
+    <div class="jp" data-p="d" hidden><div id="jfdRw"></div></div>
+    <p class="lnote">Nguồn: <a href="https://bluearchive.wiki/wiki/Joint_Firing_Drill" target="_blank" rel="noopener">Blue Archive Wiki · Joint Firing Drill</a> (luật, lịch Global, mốc thưởng), <a href="https://bluearchive.fandom.com/wiki/Joint_Firepower_Exercise" target="_blank" rel="noopener">Fandom · Joint Firepower Exercise</a> (mở khóa, cấp địch), bảng địa hình ở <a href="https://bluearchive.wiki/wiki/Characters" target="_blank" rel="noopener">Blue Archive Wiki · Characters</a> (đọc 24/11/2026).</p>
+  </section>
+  </div>
+</div>
+
+</main>
+
+<div class="gm" id="gm"><div class="gbox" role="dialog" aria-modal="true" data-t="info">
+  <div class="gl"><img class="gpor" id="gpor" alt="" onerror="this.style.display='none'">
+    <div class="gid"><span class="pin">Hồ sơ học sinh</span><h4 id="gmt"></h4><div class="gstar" id="gstar"></div></div></div>
+  <div class="gr"><div class="gtabs" id="gtabs"><span class="seg"><button type="button" data-t="info" class="on">Thông tin cơ bản</button><button type="button" data-t="grow">Kỹ năng &amp; trang bị</button></span><button id="gmx" type="button" aria-label="Đóng">✕</button></div>
+  <div class="gpane"><div id="gmb"></div>
+  <p class="gsrc"><b>Cách đọc:</b> nâng theo số thứ tự 1 → 2 → 3…, mỗi dòng ghi cấp cần đạt. Skill: EX tối đa Lv5, BS/ES/SS tối đa Lv10. Mức <b>Lv7</b> là điểm dừng trước khi cần sách bậc cao; <b>Lv10</b> cần Secret Note. Từ UE 2★, ES nâng thành <b>ES+</b>. Trang bị tính theo bậc T1–T10.<br>
+  Mức ưu tiên lấy từ <a href="https://game8.jp/blue-archive/669424" target="_blank" rel="noopener">Game8: スキルと装備強化優先度の早見表</a>; mình quy đổi sang cấp như sau: Ưu tiên = Lv5 / Lv10 / T10, Nâng vừa = Lv4 / Lv7 / T9, Để sau = Lv3 / Lv4 / T8. Tác dụng trang bị: <a href="https://bluearchive.wiki/wiki/Equipment" target="_blank" rel="noopener">Blue Archive Wiki</a>.</p>
+  </div></div>
+</div></div>
 
 <button class="totop" id="totop" type="button" aria-label="Lên đầu trang">↑</button>
 <div class="hpop" id="hpop" role="dialog" aria-label="Hướng dẫn"><h4 id="hpopT"></h4><ul id="hpopB"></ul></div>
@@ -2066,144 +2066,13 @@ const RLV={T:'Tank',A:'Dealer',H:'Healer',S:'Support',X:'T.S.'},ARMK={l:'light',
 // role label -> game icon (Icons/role-*.png); icon only, the name stays in the tooltip / for screen readers. Unknown label = text
 const RIC={Tank:'tank',Dealer:'dealer',Attacker:'dealer',Healer:'healer',Support:'support','T.S.':'tactical-support','T.S':'tactical-support','Tactical Support':'tactical-support'};
 const roleIc=l=>RIC[l]?`<img class="rlic" src="Icons/role-${RIC[l]}.png" alt="${l}" title="${l}" onerror="this.replaceWith('${l}')">`:l||'';
-// student profile (Blue Archive Wiki "Characters trivia list", 11/2026) + short Vietnamese intro from the in-game profile.
-// key = base name (costumes share it); [JP name, reading, school, age, birthday d/m, height cm, hobbies, voice, intro]
-const BIO={};
-Object.assign(BIO,{
- 'Airi':['栗村アイリ','Kurimura Airi','Trinity',15,'30/1',160,'Tìm đồ ngọt ngon, tiệc trà','Mizumori Chiko','Thành viên Hội Nghiên cứu Đồ ngọt Trinity. Hiền lành, hay lo, thường là người can ngăn cả nhóm.'],
- 'Akane':['室笠アカネ','Murokasa Akane','Millennium',16,'1/4',164,'Dọn dẹp','Hara Yumi','Thành viên C&C, đội đặc vụ hầu gái của Millennium. Lịch sự, nhã nhặn nhưng rất mê chất nổ và "dọn sạch" mục tiêu.'],
- 'Akari':['鰐渕アカリ','Wanibuchi Akari','Gehenna',17,'9/12',167,'Ăn thật nhiều','Morishima Yūka','Thành viên Hội Nghiên cứu Ẩm thực Gehenna. Luôn tươi cười, ăn khỏe vô đáy.'],
- 'Ako':['天雨アコ','Amau Ako','Gehenna',17,'22/12',165,'Chủ tịch Hina','Kouno Marika','Thư ký của Ban Kỷ luật Gehenna, cánh tay phải của Hina. Giỏi tham mưu nhưng hễ dính tới Hina là mất bình tĩnh.'],
- 'Aoba':['内海アオバ','Utsumi Aoba','Highlander',16,'19/7',151,'Mơ mộng, nói mỉa','Tajima Saran','Học sinh Học viện Đường sắt Highlander. Hay buông lời châm chọc nhưng vẫn làm tròn việc.'],
- 'Aris':['天童アリス','Tendou Aris','Millennium','??','25/3',152,'Chơi game (nhất là RPG)','Tanaka Minami','Thành viên Câu lạc bộ Phát triển Game. Được tìm thấy trong một phế tích, học cách nói chuyện qua game nên hay nói như nhân vật RPG.'],
- 'Aru':['陸八魔アル','Rikuhachima Aru','Gehenna',16,'12/3',160,'Học quản trị kinh doanh','Kondō Reina','Thủ lĩnh tự xưng của Problem Solver 68. Muốn làm "phản diện ngầu" nhưng hay hớ hênh nên lộ ra là người tốt bụng.'],
- 'Asuna':['一之瀬アスナ','Ichinose Asuna','Millennium',17,'24/3',167,'Tấn công','Hasegawa Ikumi','Thành viên C&C. Vô tư, hành động theo trực giác, và trực giác ấy hầu như luôn đúng.'],
- 'Atsuko':['秤アツコ','Hakari Atsuko','Arius',15,'20/1',158,'Chăm sóc hoa','Hanazawa Kana','Thành viên Arius Squad, luôn đeo mặt nạ. Ít nói, giao tiếp bằng ký hiệu tay, được cả đội che chở.'],
- 'Ayane':['奥空アヤネ','Okusora Ayane','Abydos',15,'12/11',153,'Ghi sổ sách, sưu tầm đồ cổ','Harada Sayaka','Thành viên Đội Đối sách Abydos, phụ trách hậu cần và liên lạc. Chu đáo, là người tỉnh táo nhất nhóm.'],
- 'Azusa':['白洲アズサ','Shirasu Azusa','Trinity',16,'26/12',149,'Chưa có','Taneda Risa','Học sinh chuyển trường vào Lớp Phụ đạo Trinity. Được huấn luyện như lính, nghiêm túc, đang dần học cách tận hưởng cuộc sống.'],
- 'Cherino':['連河チェリノ','Renkawa Cherino','Red Winter','??','27/10',128,'Thanh trừng, ném tuyết','Yano Hinaki','Chủ tịch Hội học sinh Red Winter. Thấp bé nhưng thích ra oai, hay ban hành mệnh lệnh kỳ quặc.'],
- 'Chiaki':['元宮チアキ','Motomiya Chiaki','Gehenna',16,'22/9',167,'Ra tạp chí tuần, kết bạn','Kanno Mai','Thành viên Pandemonium Society của Gehenna, phụ trách truyền thông. Hoạt bát, thích kết bạn.'],
- 'Chihiro':['各務チヒロ','Kagami Chihiro','Millennium',17,'26/4',160,'Mua đồ điện tử','Yamamura Hibiku','Phó hội trưởng Veritas, câu lạc bộ hacker của Millennium. Điềm tĩnh, là người lý trí của nhóm.'],
- 'Chinatsu':['火宮チナツ','Hinomiya Chinatsu','Gehenna',15,'22/8',159,'Đọc sách triết học','Kouzuki Haruka','Thành viên Ban Kỷ luật Gehenna, lo y tế cho đội. Điềm đạm, thích suy ngẫm.'],
- 'Chise':['和楽チセ','Waraku Chise','Hyakkiyako',16,'13/7',159,'Làm thơ haiku','Shimamura Yuu','Thành viên Ban Âm Dương Hyakkiyako. Nói năng mơ màng, khó đoán.'],
- 'Eimi':['和泉元エイミ','Izumimoto Eimi','Millennium',15,'1/5',167,'Thả hồn, nghe nhạc','Matsunaga Akane','Đặc vụ của Đội Xử lý Hiện tượng Siêu nhiên Millennium. Ít nói, hay nhìn xa xăm nhưng làm nhiệm vụ cực kỳ hiệu quả.'],
- 'Erika':['旗見エリカ','Hatami Erika','Gehenna',16,'1/2',166,'Ngắm đồ, sưu tầm catalogue','Nakano Saima','Học sinh Gehenna, thích mua sắm và ngắm đồ.'],
- 'Fubuki':['合歓垣フブキ','Nemugaki Fubuki','Valkyrie',15,'21/10',148,'Ô chữ, nghe radio','Hirayama Emi','Cảnh sát Valkyrie, Cục An ninh Công cộng. Lười biếng, chỉ muốn ăn bánh donut và trốn việc.'],
- 'Fuuka':['愛清フウカ','Aikiyo Fuuka','Gehenna',16,'30/4',159,'Nấu ăn, làm cơm hộp','Fairouz Ai','Trưởng Bộ phận Bếp ăn Gehenna. Chăm chỉ, hay bị Hội Nghiên cứu Ẩm thực bắt cóc.'],
- 'Hanae':['朝顔ハナエ','Asagao Hanae','Trinity',15,'12/5',150,'Nhảy, cổ vũ','Yūki Kana','Thành viên Đội Cứu hộ Trinity. Nhiệt tình quá mức, chữa trị theo kiểu "càng nhiều càng tốt".'],
- 'Hanako':['浦和ハナコ','Urawa Hanako','Trinity',16,'3/1',161,'Đi dạo lang thang','Toyota Moe','Thành viên Lớp Phụ đạo Trinity. Thông minh xuất chúng nhưng thích trêu người bằng những câu nói đùa táo bạo.'],
- 'Hare':['小鈎ハレ','Omagari Hare','Millennium',16,'19/4',153,'Chơi game, xem phim','Kaihara Reina','Thành viên Veritas, câu lạc bộ hacker Millennium. Trầm lặng, mê nước tăng lực.'],
- 'Haruka':['伊草ハルカ','Igusa Haruka','Gehenna',15,'13/5',157,'Trồng cỏ dại','Ishitobi Erika','Thành viên Problem Solver 68. Nhút nhát, hay xin lỗi, nhưng sẵn sàng làm mọi thứ (kể cả nổ tung) vì Aru.'],
- 'Haruna':['黒舘ハルナ','Kurodate Haruna','Gehenna',17,'1/3',163,'Tìm món ngon','Tadokoro Azusa','Hội trưởng Hội Nghiên cứu Ẩm thực Gehenna. Thanh lịch nhưng sẵn sàng cho nổ nhà hàng nào làm đồ ăn dở.']});
-Object.assign(BIO,{
- 'Hasumi':['羽川ハスミ','Hanekawa Hasumi','Trinity',17,'12/12',179,'Đọc sách, quan sát người khác','Seto Asami','Phó đội trưởng Đội Chính nghĩa Thực thi Trinity. Điềm tĩnh, là xạ thủ đáng tin, nhưng rất để ý chuyện cân nặng.'],
- 'Hibiki':['猫塚ヒビキ','Nekozuka Hibiki','Millennium',15,'2/4',154,'Mua sắm, cosplay','Nazuka Kaori','Thành viên Câu lạc bộ Kỹ thuật Millennium. Kiệm lời, giỏi chế tạo vũ khí hạng nặng.'],
- 'Hifumi':['阿慈谷ヒフミ','Ajitani Hifumi','Trinity',16,'27/11',158,'Sưu tầm đồ Peroro, đồ dễ thương, mua sắm, nghe tâm sự','Hondo Kaede','Trưởng Lớp Phụ đạo Trinity. Học sinh "bình thường", dễ mến, mê linh vật Peroro.'],
- 'Hikari':['橘ヒカリ','Tachibana Hikari','Highlander',15,'14/6',147,'Học lái xe (biểu diễn), quan sát kiến','Iwami Manaka','Học sinh Highlander, chị em sinh đôi với Nozomi. Trầm tính hơn, hay bị Nozomi kéo vào rắc rối.'],
- 'Himari':['明星ヒマリ','Akeboshi Himari','Millennium',17,'10/12',162,'Bói toán, huyền bí','Yukana','Hội trưởng Veritas, tự xưng "thiên tài thiếu nữ xinh đẹp". Ngồi xe lăn, là hacker hàng đầu Millennium.'],
- 'Hina':['空崎ヒナ','Sorasaki Hina','Gehenna',17,'19/2',142,'Ngủ, nghỉ ngơi','Hirohashi Ryō','Trưởng Ban Kỷ luật Gehenna. Hay than "phiền quá" nhưng xử lý vi phạm và chiến đấu cực kỳ dứt khoát, được kẻ thù của Gehenna nể sợ.'],
- 'Hinata':['若葉ヒナタ','Wakaba Hinata','Trinity',17,'17/5',166,'Cầu nguyện, dọn dẹp','Hidaka Rina','Thành viên Hội Sứ đồ (Sisterhood) Trinity. Sức mạnh phi thường, hay vô tình làm hỏng đồ.'],
- 'Hiyori':['槌永ヒヨリ','Tsuchinaga Hiyori','Arius',16,'8/1',155,'Sưu tầm tạp chí','Nakahara Mai','Xạ thủ của Arius Squad. Bi quan, hay than số khổ.'],
- 'Hoshino':['小鳥遊ホシノ','Takanashi Hoshino','Abydos',17,'2/1',145,'Ngủ trưa, lười biếng','Hanamori Yumiri','Phó hội trưởng (sau là hội trưởng) Hội học sinh Abydos, trưởng Đội Đối sách. Ra vẻ "ông già" lười nhác nhưng xông pha tuyến đầu để bảo vệ bạn bè.'],
- 'Ibuki':['丹花イブキ','Tanga Ibuki','Gehenna',11,'14/4',128,'Làm bài tập, sưu tầm thú bông','Haruse Natsumi','Thành viên nhỏ tuổi nhất Pandemonium Society. Ngây thơ, được cả Gehenna cưng chiều.'],
- 'Ichika':['仲正イチカ','Nakamasa Ichika','Trinity',16,'11/11',163,'Giúp đỡ mọi người, thử nhiều công việc','Sumi Tomomi Jiena','Thành viên Đội Chính nghĩa Thực thi Trinity. Thân thiện, nhưng đáng sợ khi nghiêm túc.'],
- 'Iori':['銀鏡イオリ','Shiromi Iori','Gehenna',16,'8/11',157,'Đi tuần, quát mắng','Sakura Ayane','Chuyên gia chiến đấu của Ban Kỷ luật Gehenna. Mạnh và quyết liệt nhưng cứng đầu nên dễ dính bẫy.'],
- 'Iroha':['棗イロハ','Natsume Iroha','Gehenna',16,'16/11',151,'Đọc sách, trốn học','Fukuen Misato','Sĩ quan Pandemonium Society, chỉ huy xe tăng Toramaru. Lười biếng nhưng đầu óc nhạy bén.'],
- 'Izumi':['獅子堂イズミ','Shishidou Izumi','Gehenna',16,'11/5',161,'Nấu và ăn món kỳ lạ','Kubo Yurika','Thành viên Hội Nghiên cứu Ẩm thực Gehenna. Ăn được mọi thứ, kể cả những món không nên ăn.'],
- 'Izuna':['久田イズナ','Kuda Izuna','Hyakkiyako',15,'16/12',155,'Học nhẫn thuật, hộ tống chủ nhân','Asumi Kana','Thành viên Câu lạc bộ Nghiên cứu Nhẫn thuật Hyakkiyako. Năng nổ, gọi Sensei là "chủ nhân".'],
- 'Junko':['赤司ジュンコ','Akashi Junko','Gehenna',15,'27/12',149,'Đi ăn khắp nơi','Kanemoto Hisako','Thành viên Hội Nghiên cứu Ẩm thực Gehenna. Lúc nào cũng đói và dễ nổi cáu khi đói.'],
- 'Juri':['牛牧ジュリ','Ushimaki Juri','Gehenna',15,'20/10',170,'Tự nghiên cứu nấu ăn','Tanabe Rui','Thành viên Bộ phận Bếp ăn Gehenna. Rất nhiệt tình nhưng món ăn hay biến thành thứ "sống động" khó tả.'],
- 'Kaede':['勇美カエデ','Isami Kaede','Hyakkiyako',15,'9/7',142,'Nghịch ngợm (cố kiềm chế), bắt bọ cánh cứng','Kato Emiri','Thành viên nhỏ của Ban Tu luyện Hyakkiyako. Muốn trở thành người lớn đáng tin cậy.'],
- 'Kaho':['桑上カホ','Kuwakami Kaho','Hyakkiyako',17,'9/10',173,'Quảng bá văn hóa Hyakkiyako, sưu tầm đồ lưu niệm','Matsui Eriko','Thư ký Hội Âm Dương Hyakkiyako. Lịch thiệp, tận tụy với văn hóa của trường.'],
- 'Kanna':['尾刃カンナ','Ogata Kanna','Valkyrie',17,'7/9',166,'Đọc sách, xem phim trinh thám','Matsuoka Misato','Trưởng Cục An ninh Công cộng Valkyrie, biệt danh "Chó săn điên". Nghiêm khắc, cứng rắn nhưng có tinh thần trách nhiệm cao.'],
- 'Kanoe':['板垣カノエ','Itagaki Kanoe','Wildhunt',17,'2/11',144,'Mơ mộng','Hyōsei','Học sinh Học viện Nghệ thuật Wildhunt.'],
- 'Karin':['角楯カリン','Kakudate Karin','Millennium',16,'2/2',170,'Dọn dẹp','Numakura Manami','Xạ thủ bắn tỉa của C&C. Ít nói, nghiêm túc, hay lúng túng với đồ hầu gái.'],
- 'Kasumi':['鬼怒川カスミ','Kinugawa Kasumi','Gehenna',16,'24/5',148,'Đánh bom, khai thác suối nước nóng','Uesaka Sumire','Thủ lĩnh Hội Phát triển Suối nước nóng Gehenna. Tự tin thái quá, đào bới khắp nơi để tìm suối nóng.'],
- 'Kayoko':['鬼方カヨコ','Onikata Kayoko','Gehenna',18,'17/3',157,'Sưu tầm CD','Fujī Yukiyo','Trưởng phòng Problem Solver 68. Gương mặt lạnh lùng nhưng là người chín chắn và quan tâm đồng đội nhất nhóm.'],
- 'Kazusa':['杏山カズサ','Kyoyama Kazusa','Trinity',15,'5/8',155,'Ăn đồ ngọt "bình thường"','Natsuyoshi Yuuko','Thành viên Hội Nghiên cứu Đồ ngọt Trinity. Từng là "Kyalyl" khét tiếng, giờ muốn sống như học sinh bình thường.'],
- 'Kei':['天童ケイ','Tendou Kei','Millennium','??','25/3',152,'Chăm sóc Aris, thời trang, game (dù chối)','Tanaka Minami','Một trí tuệ gắn với Aris, nay có cơ thể riêng ở Millennium. Kiêu kỳ, hay chối nhưng rất quan tâm Aris.']});
-Object.assign(BIO,{
- 'Kirino':['中務キリノ','Nakatsukasa Kirino','Valkyrie',15,'22/10',161,'Vừa đi vừa ăn','Nakajima Yui','Cảnh sát tuần tra Valkyrie. Đầy chính nghĩa nhưng bắn rất tệ.'],
- 'Kisaki':['竜華キサキ','Ryuuge Kisaki','Shanhaijing',17,'19/2',142,'Trà đạo, vi hành','Aisaka Yūka','Hội trưởng Ban Huyền Long (Hội học sinh) Shanhaijing. Uy nghi, thích lén đi dạo phố.'],
- 'Koharu':['下江コハル','Shimoe Koharu','Trinity',15,'16/4',148,'Tưởng tượng, mơ mộng, sưu tầm tạp chí "người lớn"','Akao Hikaru','Thành viên Đội Chính nghĩa Thực thi, bị chuyển vào Lớp Phụ đạo Trinity. Hay hét "cấm dâm ô!" nhưng tự mình lại tò mò nhất.'],
- 'Kokona':['春原ココナ','Sunohara Kokona','Shanhaijing',11,'1/6',139,'Đọc truyện tranh thiếu nhi','Igarashi Hiromi','Giáo viên nhỏ tuổi của Lớp Mai Hoa Shanhaijing. Rất muốn được đối xử như người lớn.'],
- 'Konoka':['志真コノカ','Shima Konoka','Valkyrie',16,'19/8',165,'Ngồi ghế massage, giải ô chữ báo','Sembongi Sayaka','Cảnh sát Valkyrie.'],
- 'Kotama':['音瀬コタマ','Otose Kotama','Millennium',17,'5/1',158,'Liên lạc vô tuyến, nghe lén','Takagawa Mina','Thành viên Veritas. Chuyên nghe lén, có thú vui khó nói.'],
- 'Kotori':['豊見コトリ','Toyomi Kotori','Millennium',15,'31/12',151,'Nói chuyện','Shinohara Narumi','Thành viên Câu lạc bộ Kỹ thuật Millennium. Nói nhiều, thích giải thích mọi thứ.'],
- 'Koyuki':['黒崎コユキ','Kurosaki Koyuki','Millennium',15,'14/2',149,'Cờ bạc, trốn thoát','Inui Natsune','Thành viên Seminar Millennium, giỏi giải mã. Ham chơi, hay bị Yuuka nhốt lại.'],
- 'Kurumi':['高倉クルミ','Takakura Kurumi','SRT',17,'30/9',151,'Sưu tầm sticker, dọn dẹp','Tachibana Ichika','Học sinh Học viện Đặc nhiệm SRT.'],
- 'Maki':['小塗マキ','Konuri Maki','Millennium',15,'1/8',149,'Vẽ graffiti, chơi game','Mikami Shiori','Thành viên Veritas. Mê vẽ graffiti lên mọi bức tường.'],
- 'Makoto':['羽沼マコト','Hanuma Makoto','Gehenna',18,'19/3',169,'Mưu kế, chơi khăm, chơi với Ibuki','Asakawa Yuu','Chủ tịch Pandemonium Society (Hội học sinh) Gehenna. Ngạo mạn, luôn tìm cách hạ bệ Hina nhưng thường tự làm hỏng việc.'],
- 'Mari':['伊落マリー','Iochi Mari','Trinity',15,'12/9',151,'Cầu nguyện, suy ngẫm','Ozawa Ari','Nữ tu tập sự của Hội Sứ đồ Trinity. Dịu dàng, tận tụy giúp đỡ mọi người.'],
- 'Mashiro':['静山マシロ','Shizuyama Mashiro','Trinity',15,'5/6',155,'Leo lên chỗ cao, viết nhật ký quan sát','Kitō Akari','Xạ thủ của Đội Chính nghĩa Thực thi Trinity. Đầy nhiệt huyết với "chính nghĩa".'],
- 'Megu':['下倉メグ','Shimokura Megu','Gehenna',17,'25/4',164,'Phá dỡ','Aihara Arisa','Thành viên Hội Phát triển Suối nước nóng Gehenna. Vui vẻ, cầm súng phun lửa.'],
- 'Meru':['姫木メル','Himeki Meru','Red Winter',16,'21/12',137,'Vẽ manga, ghép cặp nhân vật','Arai Satomi','Học sinh Red Winter, thành viên câu lạc bộ vẽ manga.'],
- 'Michiru':['千鳥ミチル','Chidori Michiru','Hyakkiyako',17,'22/2',153,'Sáng tạo nhẫn thuật mới, làm video','Mizuhashi Kaori','Hội trưởng Câu lạc bộ Nghiên cứu Nhẫn thuật Hyakkiyako. Mê ninja, thích quay video.'],
- 'Midori':['才羽ミドリ','Saiba Midori','Millennium',15,'8/12',143,'Vẽ tranh','Takada Yūki','Thành viên Câu lạc bộ Phát triển Game, phụ trách vẽ minh họa. Chín chắn hơn cô chị song sinh Momoi.'],
- 'Mika':['聖園ミカ','Misono Mika','Trinity',17,'8/5',157,'Tán gẫu, sưu tầm phụ kiện','Tōyama Nao','Một trong ba thủ lĩnh Trà Đoàn Trinity (phe Pater). Vô tư, nói thẳng, sức mạnh phi thường.'],
- 'Mimori':['水羽ミモリ','Mizuha Mimori','Hyakkiyako',16,'15/3',156,'Truyện shoujo, việc nhà','Tanaka Rie','Thành viên Ban Tu luyện Hyakkiyako. Ra dáng "Yamato Nadeshiko", mơ về chuyện tình lãng mạn.'],
- 'Mina':['近衛ミナ','Konoe Mina','Shanhaijing',16,'9/9',166,'Xem phim (hành động hard-boiled)','Sato Rina','Thành viên Ban Huyền Long Shanhaijing, cận vệ của Kisaki. Ít nói, hay bị hiểu lầm là đáng sợ.'],
- 'Mine':['蒼森ミネ','Aomori Mine','Trinity',17,'23/11',168,'Sưu tầm dụng cụ y tế','Horie Yui','Đội trưởng Đội Cứu hộ Trinity. Nghiêm túc, cứu người bằng cách lao thẳng vào chiến trường.'],
- 'Misaki':['戒野ミサキ','Imashino Misaki','Arius',16,'13/1',163,'Ở một mình','Tsuchiya Rio','Thành viên Arius Squad, dùng bệ phóng tên lửa. Trầm lặng, hay nghĩ tiêu cực.'],
- 'Miyako':['月雪ミヤコ','Tsukiyuki Miyako','SRT',15,'7/1',156,'Xem video động vật','Fujita Akane','Đội trưởng Thỏ Đội (RABBIT) của SRT. Kỷ luật, gánh vác cả đội sau khi SRT bị đóng cửa.'],
- 'Miyo':['桜井ミヨ','Sakurai Miyo','Wildhunt',16,'24/8',155,'Sưu tầm máy đánh chữ','Hanaiwa Kana','Học sinh Học viện Nghệ thuật Wildhunt.'],
- 'Miyu':['霞沢ミユ','Kasumizawa Miyu','SRT',15,'12/7',149,'Suy nghĩ tiêu cực, trốn tránh, nhặt sỏi','Goto Yuko','Xạ thủ Thỏ Đội SRT. Rất nhút nhát, hay bị mọi người quên mất.'],
- 'Moe':['風倉モエ','Kazekura Moe','SRT',15,'13/9',163,'Pháo hoa','Izawa Shiori','Thành viên Thỏ Đội SRT, phụ trách pháo binh. Mê những vụ nổ lớn.'],
- 'Momiji':['秋泉モミジ','Akiizumi Momiji','Red Winter',15,'7/8',135,'Sưu tầm manga','Ōgame Asuka','Học sinh Red Winter, mê manga.'],
- 'Momoi':['才羽モモイ','Saiba Momoi','Millennium',15,'8/12',143,'Chơi game','Tokui Sora','Thành viên Câu lạc bộ Phát triển Game, phụ trách kịch bản. Hiếu động, hay gây chuyện.']});
-Object.assign(BIO,{
- 'Mutsuki':['浅黄ムツキ','Asagi Mutsuki','Gehenna',16,'29/7',144,'Sưu tầm bom','Ōkubo Rumi','Phó giám đốc Problem Solver 68. Tinh nghịch, thích trêu chọc và ném bom.'],
- 'Nagisa':['桐藤ナギサ','Kirifuji Nagisa','Trinity',17,'4/7',160,'Sưu tầm lá trà, làm bánh, chăm vườn','Hayami Saori','Chủ tịch đương nhiệm Trà Đoàn Trinity (phe Philius). Thanh lịch, gánh trọng trách nên hay đa nghi.'],
- 'Nagusa':['御稜ナグサ','Goryou Nagusa','Hyakkiyako',17,'7/12',161,'Thiền, đọc sách','Sakura Kaoru','Học sinh Hyakkiyako, điềm tĩnh, thích thiền định.'],
- 'Natsu':['柚鳥ナツ','Yutori Natsu','Trinity',15,'4/12',152,'Lãng mạn hóa suy nghĩ, chiêm nghiệm','Naganawa Maria','Thành viên Hội Nghiên cứu Đồ ngọt Trinity. Thích nói những câu triết lý về đồ ngọt.'],
- 'Neru':['美甘ネル','Mikamo Neru','Millennium',17,'17/8',146,'Chiến thắng','Koshimizu Ami','Đội trưởng C&C, mật danh "Double 0". Nóng tính, thô lỗ, nhưng là chiến binh mạnh nhất Millennium.'],
- 'Niko':['吉野ニコ','Yoshino Niko','SRT',17,'11/2',160,'Nấu ăn (nhất là inarizushi)','Asami Kazuki','Học sinh Học viện Đặc nhiệm SRT.'],
- 'Noa':['生塩ノア','Ushio Noa','Millennium',16,'13/4',161,'Đọc sách, ngâm thơ','Suzushiro Sayumi','Thư ký Seminar Millennium. Trí nhớ siêu phàm, nụ cười bí ẩn, hay trêu Yuuka.'],
- 'Nodoka':['天見ノドカ','Amami Nodoka','Red Winter',16,'20/2',147,'Thiên văn học','Satou Satomi','Học sinh Red Winter, sống ở khu tập thể và mê ngắm sao.'],
- 'Nonomi':['十六夜ノノミ','Izayoi Nonomi','Abydos',16,'1/9',160,'Mua sắm','Miura Chiyuki','Thành viên Đội Đối sách Abydos. Dịu dàng, giàu có, luôn dùng súng máy.'],
- 'Nozomi':['橘ノゾミ','Tachibana Nozomi','Highlander',15,'14/6',147,'Phá kỷ lục tốc độ','Hoshitani Mio','Học sinh Highlander, chị em sinh đôi với Hikari. Hiếu động, mê tốc độ.'],
- 'Otogi':['天神山オトギ','Tenjinyama Otogi','SRT',17,'20/5',150,'Giải đố, mơ mộng','Sasaki Hitomi','Học sinh Học viện Đặc nhiệm SRT.'],
- 'Pina':['朝比奈フィーナ','Asahina Pina','Hyakkiyako',17,'3/11',165,'Xem phim yakuza','Kido Ibuki','Học sinh Hyakkiyako, thích phim yakuza.'],
- 'Rabu':['河駒風ラブ','Komakaze Rabu','Trinity',16,'6/5',161,'Đánh bóng mũ bảo hiểm, mò dưới máy bán hàng','Suzuki Hina','Học sinh Trinity.'],
- 'Reijo':['鹿山レイジョ','Kayama Reijo','Shanhaijing',17,'3/3',169,'Luyện kung fu, ẩm thực','Suganuma Chisa','Học sinh Shanhaijing, võ sĩ kung fu.'],
- 'Reisa':['宇沢レイサ','Uzawa Reisa','Trinity',15,'31/5',153,'Thách đấu, tự giới thiệu','Nemoto Miyari','Thành viên tự xưng của Đội Tự vệ Trinity. Rất nhiệt tình, luôn muốn thách đấu Kazusa.'],
- 'Renge':['不破レンゲ','Fuwa Renge','Hyakkiyako',16,'23/7',157,'Đọc light novel, luyện tập','Koichi Makoto','Thành viên Ban Tu luyện Hyakkiyako. Nhiệt huyết, nói năng như nhân vật chính anime.'],
- 'Rio':['調月リオ','Tsukatsuki Rio','Millennium',17,'6/6',171,'Thiết kế','Lynn','Hội trưởng Seminar Millennium. Lý trí đến lạnh lùng, sẵn sàng đưa ra quyết định khó vì lợi ích lớn.'],
- 'Rumi':['朱城ルミ','Akeshiro Rumi','Shanhaijing',17,'5/3',168,'Nấu ăn, phát triển món mới','Aoyama Yoshino','Học sinh Shanhaijing, đam mê nấu ăn và phát triển món mới.'],
- 'Saki':['空井サキ','Sorai Saki','SRT',15,'9/4',161,'Bảo dưỡng súng, hái cây cỏ…','Tomonaga Akane','Thành viên Thỏ Đội SRT. Kỷ luật kiểu quân đội, dễ nổi nóng.'],
- 'Sakurako':['歌住サクラコ','Utazumi Sakurako','Trinity',17,'4/10',160,'Cầu nguyện','Kakuma Ai','Trưởng Hội Sứ đồ Trinity. Trang nghiêm, hay bị đồn đại vô căn cứ.'],
- 'Saori':['錠前サオリ','Joumae Saori','Arius',17,'3/9',167,'Chưa có','Ishigami Shizuka','Đội trưởng Arius Squad. Lạnh lùng, được huấn luyện để chiến đấu, đang học cách sống bình thường.'],
- 'Satsuki':['京極サツキ','Kyougoku Satsuki','Gehenna',17,'10/4',172,'Nghiên cứu thôi miên, mua sắm','Sakurai Harumi','Thành viên Pandemonium Society của Gehenna.'],
- 'Saya':['薬子サヤ','Yakushi Saya','Shanhaijing',16,'3/1',149,'Nghiên cứu','Tamura Yukari','Thành viên Hội Luyện đan Shanhaijing. Tự xưng thiên tài, hay thử thuốc lạ.'],
- 'Seia':['百合園セイア','Yurizono Seia','Trinity',17,'29/9',149,'Giải đố, đọc sách','Tanezaki Atsumi','Một trong ba thủ lĩnh Trà Đoàn Trinity (phe Sanctus). Có khả năng nhìn thấy tương lai, nói năng triết lý.'],
- 'Sena':['氷室セナ','Himuro Sena','Gehenna',17,'7/4',155,'Túc trực, pha thuốc','Ōnishi Saori','Trưởng Bộ phận Y tế Khẩn cấp Gehenna. Lạnh lùng, hay gọi người bị thương là "thi thể".'],
- 'Serika':['黒見セリカ','Kuromi Serika','Abydos',15,'25/6',153,'Tiết kiệm tiền, làm thêm','Ōhashi Ayaka','Thành viên Đội Đối sách Abydos. Hay cáu gắt (tsundere), làm thêm khắp nơi để trả nợ cho trường.'],
- 'Serina':['鷲見セリナ','Sumi Serina','Trinity',16,'6/1',156,'Tình nguyện ở bệnh viện','Suzumoto Akiho','Thành viên Đội Cứu hộ Trinity. Dịu dàng, luôn xuất hiện đúng lúc có người bị thương.'],
- 'Shigure':['間宵シグレ','Mayoi Shigure','Red Winter',16,'22/1',156,'Tự làm đồ uống','Kawase Maki','Học sinh Red Winter, mê nấu đồ uống tự chế.'],
- 'Shimiko':['円堂シミコ','Endou Shimiko','Trinity',15,'30/11',157,'Đọc sách, làm bookmark','Tomita Miyu','Thành viên Ủy ban Thư viện Trinity. Mê sách, nói nhiều khi nhắc tới sách.']});
-Object.assign(BIO,{
- 'Shiroko':['砂狼シロコ','Sunaookami Shiroko','Abydos',16,'16/5',156,'Chạy bộ, tập thể lực, đạp xe','Ogura Yui','Thành viên Đội Đối sách Abydos. Ít biểu cảm, thể lực dồi dào, hay đề xuất… cướp ngân hàng để trả nợ cho trường.'],
- 'Shiroko*Terror':['砂狼シロコ＊テラー','Sunaookami Shiroko＊Terror','Abydos',17,'16/5',165,'Chạy bộ, tập thể lực, đạp xe','Ogura Yui','Một Shiroko đến từ tương lai khác, nơi mọi thứ đã mất. Trầm mặc, mang sức mạnh của "Terror".'],
- 'Shizuko':['河和シズコ','Kawawa Shizuko','Hyakkiyako',16,'7/7',153,'Tiếp khách bằng sự đáng yêu, kéo khách vào quán','Morinaga Chitose','Chủ tịch Hội Lễ hội Hyakkiyako, chủ quán trà. Trước khách thì ngọt ngào, sau lưng thì tính toán.'],
- 'Shun':['春原シュン','Sunohara Shun','Shanhaijing','Bí mật','5/2',174,'Chơi với trẻ con','Itou Shizuka','Giáo viên Lớp Mai Hoa Shanhaijing, chị của Kokona. Hiền hậu, một lần uống thuốc lạ của Saya thì bị teo nhỏ.'],
- 'Sumire':['乙花スミレ','Otohana Sumire','Millennium',16,'20/8',167,'Tập luyện, làm vườn','Imai Asami','Thành viên Câu lạc bộ Thể dục Millennium. Mê vận động, hay khiến người khác tập theo.'],
- 'Suzumi':['守月スズミ','Morizuki Suzumi','Trinity',16,'31/8',162,'Đi tuần, dạo phố','Shamoto Haruka','Thành viên Đội Tự vệ Trinity. Nghiêm túc giữ trật tự đường phố.'],
- 'Takane':['三善タカネ','Miyoshi Takane','Red Winter',16,'18/6',148,'Đọc sách, chụp ảnh, xem khúc côn cầu','Harumi Momo','Học sinh Red Winter.'],
- 'Toki':['飛鳥馬トキ','Asuma Toki','Millennium',16,'16/8',165,'Đang tìm','Ishikawa Yui','Hầu gái riêng của Rio, thành viên C&C. Mặt không cảm xúc nhưng hay nói đùa tỉnh bơ.'],
- 'Tomoe':['佐城トモエ','Sashiro Tomoe','Red Winter',17,'10/11',165,'Kích động quần chúng','Atsugi Nanami','Thư ký Hội học sinh Red Winter, người thực sự điều hành mọi việc sau lưng Cherino.'],
- 'Tsubaki':['春日ツバキ','Kasuga Tsubaki','Hyakkiyako',16,'3/2',162,'Ngủ trưa','Shirasu Saho','Thành viên Ban Tu luyện Hyakkiyako. Cực kỳ dễ buồn ngủ, nhưng khi tỉnh thì là lá chắn vững chắc.'],
- 'Tsukuyo':['大野ツクヨ','Ono Tsukuyo','Hyakkiyako',15,'5/4',180,'Thế thân thuật, trốn','Goto Ayasa','Thành viên Câu lạc bộ Nghiên cứu Nhẫn thuật. Cao lớn nhưng rất nhút nhát, giỏi ẩn mình.'],
- 'Tsurugi':['剣先ツルギ','Kenzaki Tsurugi','Trinity',17,'24/6',162,'Xem phim, đọc tiểu thuyết lãng mạn','Kobayashi Yū','Đội trưởng Đội Chính nghĩa Thực thi Trinity. Chiến đấu như quái vật, nhưng bên trong là cô gái mơ mộng chuyện tình yêu.'],
- 'Ui':['古関ウイ','Kozeki Ui','Trinity',17,'23/4',165,'Đọc sách, quản lý và nghiên cứu sách cổ','Goto Saori','Trưởng Hội Lưu trữ Sách cổ Trinity. Sống khép kín trong thư viện, rất quý sách.'],
- 'Umika':['里浜ウミカ','Satohama Umika','Hyakkiyako',15,'1/7',165,'Đi lễ hội, sưu tầm tờ rơi lễ hội','Nitta Hiyori','Thành viên Hội Lễ hội Hyakkiyako.'],
- 'Utaha':['白石ウタハ','Shiraishi Utaha','Millennium',17,'13/11',162,'Phát minh và sửa chữa','Aochi Nozomi','Hội trưởng Câu lạc bộ Kỹ thuật Millennium. Tự tin vào phát minh của mình, dù chúng hay nổ.'],
- 'Wakamo':['狐坂ワカモ','Kosaka Wakamo','Hyakkiyako',18,'3/4',161,'Phá hoại, cướp bóc','Saito Chiwa','"Tai họa Thất Tù" bị truy nã, đã vượt ngục. Nguy hiểm và thích phá hoại, nhưng lại si mê Sensei.'],
- 'Yoshimi':['伊原木ヨシミ','Ibaragi Yoshimi','Trinity',15,'29/8',146,'Đủ loại sự kiện, đi quán cà phê săn bánh giới hạn','Mano Ayumi','Thành viên Hội Nghiên cứu Đồ ngọt Trinity. Tự tin, hay bày trò.'],
- 'Yukari':['勘解由小路ユカリ','Kadenokouji Yukari','Hyakkiyako',15,'16/6',155,'Cầu nguyện, ghé tiệm kẹo','Murakami Manatsu','Thành viên Ban Tu luyện Hyakkiyako, xuất thân gia đình danh giá. Ngây thơ, cách nói chuyện cổ kính.'],
- 'Yuuka':['早瀬ユウカ','Hayase Yuuka','Millennium',16,'14/3',156,'Tính toán','Haruka Ran','Kế toán của Seminar Millennium. Giỏi toán, hay càu nhàu chuyện chi tiêu của Sensei.'],
- 'Yuzu':['花岡ユズ','Hanaoka Yuzu','Millennium',16,'12/8',150,'Làm game','Terasawa Momoka','Hội trưởng Câu lạc bộ Phát triển Game. Cực kỳ nhút nhát, hay trốn trong tủ đồ, nhưng là thiên tài làm game.']});
-//BIO-END
-const bioOf=n=>BIO[n]||BIO[n.replace(/\s*\(.*\)$/,'')];
+// student profile — loaded lazily from data/bio.js on first popup open
+let BIO=null,_bioP=null;
+const ensureBIO=()=>_bioP||(_bioP=new Promise(r=>{
+  const s=document.createElement('script');s.src='data/bio.js';
+  s.onload=()=>{BIO=window.__BIO;delete window.__BIO;r();};
+  document.head.appendChild(s);}));
+const bioOf=n=>BIO&&(BIO[n]||BIO[n.replace(/\s*\(.*\)$/,'')]);
 function bioHTML(n){const b=bioOf(n);if(!b)return '';const [jp,rd,sc,age,bd,h,hob,cv,txt]=b;
  return `<div class="gbio"><h5>Hồ sơ học sinh</h5><div class="bgrid"><span><i>Họ tên</i>${rd} <small>${jp}</small></span><span><i>Trường</i>${sc}</span>
   <span><i>Tuổi</i>${typeof age==='number'?age+' tuổi':age}</span><span><i>Sinh nhật</i>${bd}</span><span><i>Chiều cao</i>${typeof h==='number'?h+' cm':h}</span>
@@ -2989,11 +2858,11 @@ const setGT=t=>{document.querySelector('#gm .gbox').dataset.t=t;
  document.querySelectorAll('#gtabs button[data-t]').forEach(x=>x.classList.toggle('on',x.dataset.t===t));document.querySelector('#gm .gpane').scrollTop=0;};
 document.getElementById('gtabs').addEventListener('click',e=>{const b=e.target.closest('button[data-t]');if(b)setGT(b.dataset.t);});
 function openStu(n){const gp=document.getElementById('gpor');gp.style.display='';gp.src=`Portrait_Full/${avFile(n)}.webp`;
- // the portrait stands in the room of the screen the sheet was opened from (its background picture)
  const sc=document.querySelector('.screen.on');GM.style.setProperty('--room',sc?getComputedStyle(sc).backgroundImage:'none');
  document.getElementById('gmt').textContent=n;document.getElementById('gstar').innerHTML=starHTML(n);
- document.getElementById('gmb').innerHTML=`<div class="gp-info">${stuInfo(n)}${uePick(n)}</div><div class="gp-grow">${growBody(n)}</div>`;
- setGT('info');GM.classList.add('on');}
+ setGT('info');GM.classList.add('on');
+ const render=()=>{document.getElementById('gmb').innerHTML=`<div class="gp-info">${stuInfo(n)}${uePick(n)}</div><div class="gp-grow">${growBody(n)}</div>`;};
+ if(BIO){render();}else{document.getElementById('gmb').innerHTML='<p style="text-align:center;padding:2em;color:var(--muted)">Đang tải hồ sơ…</p>';ensureBIO().then(render);}}
 document.addEventListener('click',e=>{const t=e.target;
  if(t.closest('.bl')){GM.classList.remove('on');return;}
  if(t.closest('#gm')){if(t===GM||t.closest('#gmx'))GM.classList.remove('on');return;}
@@ -3010,6 +2879,7 @@ try{const y=sessionStorage.getItem('ba_y');if(y!==null){sessionStorage.removeIte
 // a link inside the student sheet (e.g. "sửa trong Roster") opens another screen: the sheet must not stay on top of it
 addEventListener('hashchange',()=>GM.classList.remove('on'));
 
+const debounce=(fn,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);};};
 // ===== ROSTER screen (#roster): edit owned / stars / UE / level / skills of the 215 default students, then Save = reload =====
 // D = the working copy (one entry per student, every field filled); only Save / Import write it to the browser.
 (function(){const L=document.getElementById('rlist');if(!L)return;
@@ -3042,7 +2912,7 @@ addEventListener('hashchange',()=>GM.classList.remove('on'));
  const show=()=>{const s=q.value.trim().toLowerCase();L.querySelectorAll('.rr').forEach(el=>{const n=el.dataset.n,r=D[n];
   const ok=(!s||n.toLowerCase().includes(s))&&(fm==='all'||(fm==='no'&&!r.o)||(fm==='noue'&&r.o&&!r.u)||(fm==='ed'&&el.classList.contains('ed')));
   el.classList.toggle('hide',!ok);});};
- q.addEventListener('input',show);
+ q.addEventListener('input',debounce(show,150));
  document.getElementById('rfil').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fm=b.dataset.f;FB.forEach(x=>x.classList.toggle('on',x===b));show();});
  // write a full roster (name -> {o,s,u,l,k}) to the browser: only differences from the defaults are kept, then reload
  const commit=M=>{const R={},U={...UEX};
@@ -3087,7 +2957,7 @@ function applyFilter(){const q=document.getElementById('q').value.trim().toLower
   const s=t.querySelector('.tier-badge small');if(s)s.textContent=on||q?`${n}/${cs.length} em`:s.dataset.t;});
  document.getElementById('fcnt').textContent=on||q?`Hiện ${tot} học sinh`:'';
  document.getElementById('fclr').hidden=!on;}
-document.getElementById('q').addEventListener('input',applyFilter);
+document.getElementById('q').addEventListener('input',debounce(applyFilter,150));
 document.getElementById('sfil').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
  if(b.id==='fclr'){Object.values(FSEL).forEach(s=>s.clear());document.querySelectorAll('#sfil .fb.on').forEach(x=>x.classList.remove('on'));}
  else{const s=FSEL[b.dataset.g],v=b.dataset.v;s.has(v)?s.delete(v):s.add(v);b.classList.toggle('on',s.has(v));}
@@ -3290,18 +3160,21 @@ function zoomScr(prev,sc,from,prevTop,prevY){
  let fixY=null;
  if(!closing){const t0=mover.getBoundingClientRect().top;fixY=scrollY;
   mover.classList.add('zfix');mover.style.top=tb+'px';mover.style.height=Hv+'px';mover.scrollTop=Math.max(0,tb-t0);}
- mover.classList.add('zmove');
+ // read bw and mr before adding zmove: zmove only changes will-change/z-index (position is already fixed via zfix/zleave),
+ // so getBoundingClientRect() is identical before and after — this avoids one extra forced layout
  const r=(closing?zTarget(prev):from)||{left:W*.3,top:tb+Hv*.35,right:W*.7,bottom:tb+Hv*.65,width:W*.4,height:Hv*.3};
  // NO scale any more: the screen keeps its real size the whole time and only its visible window (clip-path) grows from the
  // tapped tile to the full screen. Nothing is stretched or resized, so the room pictures (fixed backgrounds) stay exactly
  // as they are from the first frame to the last and there is no jump when the animation ends. Corners: clip-path round.
- const px=v=>Math.max(0,v).toFixed(1)+'px',rad=Math.min(18,r.height/3,r.width/3),bw=mover.getBoundingClientRect().width||W;
+ const bw=mover.getBoundingClientRect().width||W;
+ const px=v=>Math.max(0,v).toFixed(1)+'px',rad=Math.min(18,r.height/3,r.width/3);
  let small={clipPath:`inset(${px(r.top-tb)} ${px(bw-r.right)} ${px(tb+Hv-r.bottom)} ${px(r.left)} round ${rad}px)`};
  let big={clipPath:'inset(0px 0px 0px 0px round 0px)'};
  // SHAPE MORPH for lobby tiles: the tile's shape layer leans (skewX --sk) with round corners, so the window grows out of that
  // exact rounded parallelogram into the full rectangle. Both ends are polygons with the same 16 points (4 per corner, a curve
  // through each corner; at the open end the 4 points of a corner sit on the corner = radius 0), so the browser morphs point by point.
  const ot=ZM.orig[(closing?prev:sc).id];
+ mover.classList.add('zmove');
  if(ot&&ot.matches&&ot.matches('#home .tile')){
   const mr=mover.getBoundingClientRect(),ox=mr.left,oy=mr.top,skd=parseFloat(getComputedStyle(ot).getPropertyValue('--sk'))||0,
    T=Math.tan(-skd*Math.PI/180)*r.height/2,cr=Math.min(14,r.height/4,r.width/4);
@@ -3318,8 +3191,10 @@ function zoomScr(prev,sc,from,prevTop,prevY){
  // "zoom" feel without touching the room picture: the screen box itself never scales (its fixed background stays put), only
  // what stands inside it (student, panels) grows from ZS to full size around the tapped tile; the page behind eases back to ZB
  const ZS=.9,ZB=.96,cxr=(r.left+r.right)/2,cyr=(r.top+r.bottom)/2,kids=[];
- const grow=(s,from,to,ox,oy)=>[...s.children].forEach(c=>{if(c.id==='zdim')return;const q=c.getBoundingClientRect();if(!q.width||!q.height)return;
-  c.style.transformOrigin=`${(ox-q.left).toFixed(1)}px ${(oy-q.top).toFixed(1)}px`;kids.push(c);A.push(c.animate(k({transform:`scale(${from})`},{transform:`scale(${to})`}),o));});
+ const grow=(s,from,to,ox,oy)=>{const ch=[...s.children].filter(c=>c.id!=='zdim');
+  const rs=ch.map(c=>c.getBoundingClientRect());
+  ch.forEach((c,i)=>{const q=rs[i];if(!q.width||!q.height)return;
+   c.style.transformOrigin=`${(ox-q.left).toFixed(1)}px ${(oy-q.top).toFixed(1)}px`;kids.push(c);A.push(c.animate(k({transform:`scale(${from})`},{transform:`scale(${to})`}),o));});};
  grow(mover,ZS,1,cxr,cyr);grow(back,1,ZB,W/2,tb+Hv/2);ZM.kids=kids;
  ZD.classList.add('z');A.push(ZD.animate(k({opacity:0},{opacity:1}),o));
  // cross-fade: the tapped lobby tile melts away as the screen grows out of it (and comes back as the screen shrinks into it)
@@ -3474,7 +3349,7 @@ const jAmmo=a=>Object.keys(MTX).find(k=>k!=='C'&&MTX[k][a]===200);
 // suggested team (under the season card): the 6 best roster students per group with grade S / A on the season's terrain; damage dealers and supports must use
 // the ammo that counters the armor, tanks / healers only need the terrain. Sorted by grade, then by the season's school bonus.
 function jfdTeam(b,am){const gi=JGI[b.g],grade=n=>(JTR[n]||'')[gi]||'',sc=n=>JGR[grade(n)]??-1;
- const sch=n=>{const x=BIO[n.replace(/ \(.*\)$/,'')];return !!(b.sch&&x&&b.sch.includes(x[2]));};
+ const sch=n=>{if(!BIO)return false;const x=BIO[n.replace(/ \(.*\)$/,'')];return !!(b.sch&&x&&b.sch.includes(x[2]));};
  const L=Object.keys(STAT).filter(n=>n in OWN&&sc(n)>=3),srt=f=>L.filter(f).sort((x,y)=>sc(y)-sc(x)||sch(y)-sch(x)||x.localeCompare(y)).slice(0,6);
  const chip=n=>`<span class="jc">${pnm(n)}<i class="jgr g${grade(n)}" title="Địa hình ${JFDG[b.g]}: ${grade(n)}">${grade(n)}</i>${sch(n)?'<i class="jsb" title="Được buff Mystic ở phase 3–4">+100%</i>':''}</span>`;
  const G=[[`Striker gây damage · <span class="tag ${AM[am][0]}">${AM[am][1]}</span>`,n=>STAT[n].a===am&&STAT[n].k&&STAT[n].r==='A'],
@@ -3709,6 +3584,7 @@ const L2DQ=(()=>{const L=[];let q=0,all=false;
  const ask=a=>{if(a)all=true;if(!q)q=requestAnimationFrame(run);};
  addEventListener('resize',()=>ask());addEventListener('hashchange',()=>ask());
  return {add:(el,fn)=>{L.push({el,fn});fn();},ask};})();
+(requestIdleCallback||setTimeout)(function(){
 (function(){const D='Spine/',WZ={head:[-120,955,190,1095],cheek:[-60,800,130,900]},
   CH={Plana:{dir:D+'ap_wp/assets/',file:'NP0035_spr',zones:WZ,vo:VO_P},Arona:{dir:D+'ap_wp/assets/',file:'arona_spr',zones:WZ,vo:VO_A},
   // not on lobby duty: Rin stands on the TA/GA screen. Rin_raiddungeon = her in-game raid lobby L2D (from the Wallpaper Engine
@@ -3986,6 +3862,7 @@ const L2DQ=(()=>{const L=[];let q=0,all=false;
   window.l2dRefit=refit;
   if(window.ResizeObserver){const ro=new ResizeObserver(refit);document.querySelectorAll('#lobbyScene,.l2d').forEach(h=>ro.observe(h));}}
 })();
+},{timeout:800});
 
 // ===== Talk screens: a Spine student beside a game-style dialogue box (TA/GA: Nanagami Rin, Kế hoạch UE: Oki Aoi) =====
 // K = per-screen config (stageTalk calls at the end). Spine files missing: the CAST portrait stays with the old line.
