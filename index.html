@@ -10,9 +10,7 @@
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
-<script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
-<!-- fallback CDN when opened outside Dia (e.g. GitHub Pages) -->
-<script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"><\/script>')</script>
+<!-- The distribution chart uses native HTML/CSS; no external library is needed. -->
 <!-- Style: custom -->
 <style>
 :root{
@@ -305,7 +303,12 @@ html[data-theme=dark] .live .rwt,html[data-theme=dark] .pbar{background:#22253f;
 .tools input:focus{border-color:var(--sky);box-shadow:0 0 0 4px rgba(21,151,240,.12)}
 .legend{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--muted);align-items:center}
 
-.chart-box{position:relative;width:100%;height:260px}
+.chart-box{position:relative;width:100%;min-height:240px;display:grid;gap:12px;padding:12px 0}
+.dist-row{display:grid;grid-template-columns:85px minmax(0,1fr);gap:12px;align-items:center;font-size:13px;color:var(--muted)}
+.dist-track{display:flex;height:24px;background:rgba(21,80,140,.05);border-radius:6px;overflow:hidden}
+.dist-track span{display:block;height:100%}
+.dist-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;font-size:12px;color:var(--muted)}
+.dist-legend span{display:inline-flex;align-items:center;gap:6px}.dist-legend i{width:12px;height:12px;border-radius:3px}
 
 /* ARMOR TEAM CARDS */
 .armor{border-radius:16px;padding:16px 18px;border:1px solid var(--line);background:#fff;border-top:5px solid var(--c)}
@@ -555,7 +558,9 @@ html{scroll-padding-top:calc(var(--tb) + 12px)}
 .tb-res{display:flex;gap:8px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
 .tb-res::-webkit-scrollbar{display:none}
 .res{display:flex;align-items:center;gap:6px;flex:none;text-decoration:none;color:var(--navy);background:#eef2f7;border:1px solid #d3dde9;border-radius:999px;padding:3px 13px 3px 4px;font-size:13px}
+.res{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
 .res:hover{border-color:var(--sky)}
+.tb-res .res.on{background:var(--sky-soft);border-color:var(--sky);color:var(--sky)}
 .res i{font-style:normal;width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:14px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .res b{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .res small{color:var(--muted);font-size:11px}
@@ -1715,7 +1720,7 @@ html[data-theme=dark] #home #tBan{--room:url(BG/BG_Convenience_Night.jpg)}
 
     <div class="card">
       <h3>Phân bố tier × UE</h3>
-      <div class="chart-box"><canvas id="dist"></canvas></div>
+      <div class="chart-box"></div>
       <div class="note">Các tier cao gần như đã có UE hết. <span id="m4">130 em chưa mở UE (60% roster)</span> dồn chủ yếu ở tier A và B–C, phần lớn không cần đụng tới.</div>
     </div>
 
@@ -2025,6 +2030,10 @@ const BC=[['Hasumi (Track)',3],['Hifumi',2],['Mutsuki',2],['Midori',2],['Haruka'
 // saved progress (this browser only): UE overrides the player marked in the growth popup
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+// Expensive screens initialize once, when the router first opens them.
+const SCREEN_INIT=new Map();
+const deferScreen=(id,init)=>SCREEN_INIT.set(id,init);
+function initScreen(id){const init=SCREEN_INIT.get(id);if(!init)return;SCREEN_INIT.delete(id);init();}
 const UEX=LS.get('ba_ue',{});
 [SSP,SS,S,A,BC].forEach(g=>g.forEach(x=>{if(x[0] in UEX)x[1]=UEX[x[0]]}));
 // roster edits from the Roster screen (this browser only). RALL = the full default roster [name, tier index, UE] taken before
@@ -2068,10 +2077,11 @@ const RIC={Tank:'tank',Dealer:'dealer',Attacker:'dealer',Healer:'healer',Support
 const roleIc=l=>RIC[l]?`<img class="rlic" src="Icons/role-${RIC[l]}.png" alt="${l}" title="${l}" onerror="this.replaceWith('${l}')">`:l||'';
 // student profile — loaded lazily from data/bio.js on first popup open
 let BIO=null,_bioP=null;
-const ensureBIO=()=>_bioP||(_bioP=new Promise(r=>{
+const ensureBIO=()=>_bioP||(_bioP=new Promise((resolve,reject)=>{
   const s=document.createElement('script');s.src='data/bio.js';
-  s.onload=()=>{BIO=window.__BIO;delete window.__BIO;r();};
-  document.head.appendChild(s);}));
+  s.onload=()=>{const data=window.__BIO;delete window.__BIO;if(!data){reject(new Error('Invalid profile data'));return;}BIO=data;resolve();};
+  s.onerror=()=>reject(new Error('Profile request failed'));
+  document.head.appendChild(s);}).catch(e=>{_bioP=null;throw e;}));
 const bioOf=n=>BIO&&(BIO[n]||BIO[n.replace(/\s*\(.*\)$/,'')]);
 function bioHTML(n){const b=bioOf(n);if(!b)return '';const [jp,rd,sc,age,bd,h,hob,cv,txt]=b;
  return `<div class="gbio"><h5>Hồ sơ học sinh</h5><div class="bgrid"><span><i>Họ tên</i>${rd} <small>${jp}</small></span><span><i>Trường</i>${sc}</span>
@@ -2861,8 +2871,9 @@ function openStu(n){const gp=document.getElementById('gpor');gp.style.display=''
  const sc=document.querySelector('.screen.on');GM.style.setProperty('--room',sc?getComputedStyle(sc).backgroundImage:'none');
  document.getElementById('gmt').textContent=n;document.getElementById('gstar').innerHTML=starHTML(n);
  setGT('info');GM.classList.add('on');
- const render=()=>{document.getElementById('gmb').innerHTML=`<div class="gp-info">${stuInfo(n)}${uePick(n)}</div><div class="gp-grow">${growBody(n)}</div>`;};
- if(BIO){render();}else{document.getElementById('gmb').innerHTML='<p style="text-align:center;padding:2em;color:var(--muted)">Đang tải hồ sơ…</p>';ensureBIO().then(render);}}
+ const current=()=>GM.classList.contains('on')&&document.getElementById('gmt').textContent===n;
+ const render=()=>{if(current())document.getElementById('gmb').innerHTML=`<div class="gp-info">${stuInfo(n)}${uePick(n)}</div><div class="gp-grow">${growBody(n)}</div>`;};
+ if(BIO){render();}else{document.getElementById('gmb').innerHTML='<p style="text-align:center;padding:2em;color:var(--muted)">Đang tải hồ sơ…</p>';ensureBIO().then(render).catch(()=>{if(current())document.getElementById('gmb').textContent='Chưa tải được hồ sơ. Đóng và mở lại để thử lại.';});}}
 document.addEventListener('click',e=>{const t=e.target;
  if(t.closest('.bl')){GM.classList.remove('on');return;}
  if(t.closest('#gm')){if(t===GM||t.closest('#gmx'))GM.classList.remove('on');return;}
@@ -2882,7 +2893,7 @@ addEventListener('hashchange',()=>GM.classList.remove('on'));
 const debounce=(fn,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);};};
 // ===== ROSTER screen (#roster): edit owned / stars / UE / level / skills of the 215 default students, then Save = reload =====
 // D = the working copy (one entry per student, every field filled); only Save / Import write it to the browser.
-(function(){const L=document.getElementById('rlist');if(!L)return;
+deferScreen('s-roster',()=>{const L=document.getElementById('rlist');if(!L)return;
  const TN=['SS+','SS','S','A','B–C'],D={},dirty=new Set();
  RALL.forEach(([n,,u])=>{const r=rget(n);D[n]={...r,k:[...r.k],u:n in OWN?OWN[n]:u};});
  // the game's rule: UE needs 5★, so stars under 5 force "no UE" and any UE means 5★
@@ -2903,9 +2914,9 @@ const debounce=(fn,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f
  // one handler for every field; numbers are clamped to the game's limits when you leave the box
  L.addEventListener('change',e=>{const f=e.target,el=f.closest('.rr');if(!el||!f.dataset.k)return;const n=el.dataset.n,r=D[n],k=f.dataset.k;
   if(k==='o')r.o=f.checked?1:0;
-  else{const v=Math.round(+f.value)||1,max=+f.max||5,c=Math.min(max,Math.max(+f.min||0,v));f.value=c;
+  else{const raw=Number(f.value),v=Number.isFinite(raw)?Math.round(raw):1,max=+f.max||5,c=Math.min(max,Math.max(+f.min||0,v));f.value=c;
    if(k[0]==='k')r.k[+k[1]]=c;else r[k]=c;}
-  fix(r);el.querySelector('[data-k=s]').value=r.s;const us=el.querySelector('[data-k=u]');us.value=r.u;us.disabled=r.s<5;
+  if(k==='s'&&r.s<5)r.u=0;fix(r);el.querySelector('[data-k=s]').value=r.s;const us=el.querySelector('[data-k=u]');us.value=r.u;us.disabled=r.s<5;
   el.classList.toggle('off',!r.o);el.classList.add('ed');dirty.add(n);count();});
  // search + quick filters
  const q=document.getElementById('rq'),FB=[...document.querySelectorAll('#rfil button')];let fm='all';
@@ -2943,7 +2954,7 @@ const debounce=(fn,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f
   try{localStorage.removeItem('ba_roster');localStorage.removeItem('ba_ue');}catch(e){}dirty.clear();location.reload();});
  // leaving with unsaved edits asks first
  addEventListener('beforeunload',e=>{if(dirty.size){e.preventDefault();e.returnValue='';}});
- count();})();
+ count();});
 
 // search + filters (role, ammo, armor, slot, position): OR inside one row, AND between rows; empty tiers fold away
 const FSEL={r:new Set(),a:new Set(),m:new Set(),k:new Set(),p:new Set()};
@@ -2963,23 +2974,17 @@ document.getElementById('sfil').addEventListener('click',e=>{const b=e.target.cl
  else{const s=FSEL[b.dataset.g],v=b.dataset.v;s.has(v)?s.delete(v):s.add(v);b.classList.toggle('on',s.has(v));}
  applyFilter();});
 
-// distribution chart
-const count=(arr,u)=>arr.filter(x=>x[1]===u).length;
-const groups=[SSP,SS,S,A,BC];
-const ds=[[3,'UE 3★','#f5b52e'],[2,'UE 2★','#1597f0'],[1,'UE 1★','#21b37f'],[0,'Chưa mở UE','#f3a3b9']].map(([u,l,c])=>({label:l,data:groups.map(g=>count(g,u)),backgroundColor:c,borderRadius:6,borderSkipped:false}));
-// label colour follows the theme (the fixed #8a94b8 was only 3:1 on the light card): light #5d7088, dark #9aa0c4.
-// It watches <html data-theme>, so the theme button needs no extra code.
-if(window.Chart){const chTx=()=>document.documentElement.dataset.theme==='dark'?'#9aa0c4':'#5d7088';Chart.defaults.color=chTx();
-const chart=new Chart(document.getElementById('dist'),{type:'bar',
- data:{labels:groups.map((g,i)=>['SS+','SS','S','A','B–C'][i]+` (${g.length})`),datasets:ds},
- options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-  scales:{x:{stacked:true,grid:{color:'rgba(21,80,140,.08)'}},y:{stacked:true,grid:{display:false},ticks:{font:{weight:'600'}}}},
-  plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'rectRounded'}}}}});
-new ResizeObserver(()=>chart.resize()).observe(document.querySelector('.chart-box'));
-new MutationObserver(()=>{const c=chTx();Chart.defaults.color=c;const o=chart.options;
- o.scales.x.ticks.color=o.scales.y.ticks.color=o.plugins.legend.labels.color=c;chart.update('none');})
- .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-}
+// Native stacked bars: no chart library or external request is needed.
+deferScreen('s-stu',()=>{
+ const box=document.querySelector('.chart-box');
+ const levels=[[4,'UE 4★','#a78bfa'],[3,'UE 3★','#f5b52e'],[2,'UE 2★','#1597f0'],[1,'UE 1★','#21b37f'],[0,'Chưa mở UE','#f3a3b9']];
+ const groups=[SSP,SS,S,A,BC],max=Math.max(1,...groups.map(g=>g.length));
+ box.innerHTML=groups.map((g,i)=>{
+  const counts=levels.map(([u])=>g.filter(x=>x[1]===u).length),label=['SS+','SS','S','A','B–C'][i];
+  const description=label+': '+g.length+' học sinh; '+levels.map(([,name],j)=>name+': '+counts[j]).join(', ');
+  return '<div class="dist-row" role="img" aria-label="'+description+'"><b aria-hidden="true">'+label+' ('+g.length+')</b><div class="dist-track" aria-hidden="true">'+levels.map(([,name,color],j)=>counts[j]?'<span title="'+name+': '+counts[j]+'" style="width:'+counts[j]/max*100+'%;background:'+color+'"></span>':'').join('')+'</div></div>';
+ }).join('')+'<div class="dist-legend">'+levels.map(([,name,color])=>'<span><i style="background:'+color+'"></i>'+name+'</span>').join('')+'</div>';
+});
 
 // ===== metrics + stop lanes from the (possibly edited) roster =====
 const fmt=n=>n.toLocaleString('vi-VN');
@@ -3052,7 +3057,7 @@ function taskList(){const now=new Date(),out=[];
 let tkCat='all';
 function renderTasks(){const list=document.getElementById('tkList');if(!list)return;
  const L=taskList(),m=tkGet(),done=x=>x.lock||!!m[x.id],v=L.filter(x=>tkCat==='all'||x.c===tkCat),n=L.filter(done).length;
- list.innerHTML=v.length?v.map(x=>`<div class="tk${done(x)?' done':''}" data-id="${x.id}">
+ if(list.closest('.screen').classList.contains('on'))list.innerHTML=v.length?v.map(x=>`<div class="tk${done(x)?' done':''}" data-id="${x.id}">
   <button type="button" class="tk-ck" aria-label="${done(x)?'Bỏ đánh dấu':'Đánh dấu hoàn thành'}"${x.lock?' disabled':''}>✓</button>
   <div class="tk-t"><span class="tk-c">${TKC[x.c]}</span><b>${x.t}</b><small>${x.s}</small></div><a class="tk-go go" href="${x.h}">Đi tới</a></div>`).join('')
   :'<p class="lnote">Mục này không còn việc nào.</p>';
@@ -3070,7 +3075,7 @@ document.getElementById('tkList').addEventListener('click',e=>{const b=e.target.
  const m=tkGet(),on=!m[id];if(on)m[id]=1;else delete m[id];tkPut(m);renderTasks();window.tkSay&&tkSay(on?'done':'undo',x);});
 document.getElementById('tkAll').addEventListener('click',()=>{const m=tkGet(),v=taskList().filter(x=>(tkCat==='all'||x.c===tkCat)&&!x.ue&&!x.lock&&!m[x.id]);
  if(!v.length)return;v.forEach(x=>m[x.id]=1);tkPut(m);renderTasks();window.tkSay&&tkSay('all',v);});
-setInterval(renderTasks,60000);
+setInterval(()=>{if(!document.hidden)renderTasks();},60000);
 renderCalc();
 
 // ===== theme toggle (Arona light / Plana dark) =====
@@ -3129,7 +3134,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');i
 // jump the page without the CSS smooth scrolling (html{scroll-behavior:smooth}): a page still gliding while the zoom
 // measures its start / end boxes made screens opened from a scrolled lobby (PvP, UE...) grow from the middle
 function zJump(y,el){const H=document.documentElement,b=H.style.scrollBehavior;H.style.scrollBehavior='auto';
- if(el)el.scrollIntoView({block:'start'});else window.scrollTo(0,y);H.style.scrollBehavior=b;}
+ if(el)el.scrollIntoView({block:'start',behavior:'instant'});else window.scrollTo({top:y,left:0,behavior:'instant'});H.style.scrollBehavior=b;}
 const zScrOf=a=>{const t=a&&document.getElementById(decodeURIComponent((a.getAttribute('href')||'').slice(1)));return t&&t.closest('.screen');};
 function zVis(a){if(!a||!a.isConnected)return null;const r=a.getBoundingClientRect();
  return r.width>4&&r.height>4&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth?r:null;}
@@ -3145,11 +3150,11 @@ function zTarget(sc){const o=ZM.orig[sc.id];let r=zVis(o);
 const ZD=document.createElement('div');ZD.id='zdim';SCR[0].parentNode.appendChild(ZD);
 const ZE='cubic-bezier(.32,.72,0,1)';
 // ends (or aborts) the running zoom: drop every animation, unpin, and give a pinned screen that ended up current its scroll back
-function zClean(){const L=ZM.live;ZM.live=null;ZM.run.forEach(a=>{try{a.cancel()}catch(_){}});ZM.run=[];
+function zClean(){const L=ZM.live;ZM.live=null;ZM.tok++;cancelAnimationFrame(ZM.frame);ZM.frame=0;ZM.run.forEach(a=>{try{a.cancel()}catch(_){}});ZM.run=[];
  (ZM.kids||[]).forEach(c=>c.style.transformOrigin='');ZM.kids=[];
  SCR.forEach(s=>{if((L||s.classList.contains('zleave'))&&s!==curScr)s.classList.remove('on');s.classList.remove('zleave','zmove','zfix');
   s.style.top=s.style.height=s.style.transformOrigin='';});
- ZD.classList.remove('z');window.l2dRefit&&l2dRefit();if(L&&L.a===curScr)zJump(L.y);else if(L&&L.fy!=null&&L.b===curScr)zJump(L.fy);}
+ ZD.classList.remove('z');if(L&&window.l2dRefit)l2dRefit();if(L&&L.a===curScr)zJump(L.y);else if(L&&L.fy!=null&&L.b===curScr)zJump(L.fy);}
 function zoomScr(prev,sc,from,prevTop,prevY){
  const tb=Math.max(0,document.getElementById('topbar').getBoundingClientRect().bottom),W=innerWidth,Hv=innerHeight-tb,closing=sc.id==='home';
  // the old screen stays where it was (pinned, same scroll) while the new one zooms over it, or zooms away over the lobby
@@ -3184,23 +3189,29 @@ function zoomScr(prev,sc,from,prevTop,prevY){
   small={clipPath:poly([[r.left+T,r.top],[r.right+T,r.top],[r.right-T,r.bottom],[r.left-T,r.bottom]],cr)};
   big={clipPath:poly([[ox,oy],[ox+mr.width,oy],[ox+mr.width,oy+mr.height],[ox,oy+mr.height]],0)};}
  // closing runs ~20% faster than opening; opacity steps are linear so the cross-fade lands in the first / last ~120 ms
- const o={duration:closing?330:420,easing:ZE,fill:'both'},ol={...o,easing:'linear'};
+ const o={duration:closing?360:460,easing:ZE,fill:'both'},ol={...o,easing:'linear'};
  const k=(a,z)=>closing?[z,a]:[a,z],fadeIn=closing?[{opacity:1},{opacity:1,offset:.7},{opacity:0}]:[{opacity:0},{opacity:1,offset:.3},{opacity:1}];
  // the page behind only dims (opacity layer); it is not scaled, so its own fixed room picture can't glitch either
- const A=[mover.animate(k(small,big),o),mover.animate(fadeIn,ol)];
+ const jobs=[[mover,k(small,big),o],[mover,fadeIn,ol]];
  // "zoom" feel without touching the room picture: the screen box itself never scales (its fixed background stays put), only
  // what stands inside it (student, panels) grows from ZS to full size around the tapped tile; the page behind eases back to ZB
  const ZS=.9,ZB=.96,cxr=(r.left+r.right)/2,cyr=(r.top+r.bottom)/2,kids=[];
  const grow=(s,from,to,ox,oy)=>{const ch=[...s.children].filter(c=>c.id!=='zdim');
   const rs=ch.map(c=>c.getBoundingClientRect());
   ch.forEach((c,i)=>{const q=rs[i];if(!q.width||!q.height)return;
-   c.style.transformOrigin=`${(ox-q.left).toFixed(1)}px ${(oy-q.top).toFixed(1)}px`;kids.push(c);A.push(c.animate(k({transform:`scale(${from})`},{transform:`scale(${to})`}),o));});};
+   kids.push(c);jobs.push([c,k({transform:`scale(${from})`},{transform:`scale(${to})`}),o,`${(ox-q.left).toFixed(1)}px ${(oy-q.top).toFixed(1)}px`]);});};
  grow(mover,ZS,1,cxr,cyr);grow(back,1,ZB,W/2,tb+Hv/2);ZM.kids=kids;
- ZD.classList.add('z');A.push(ZD.animate(k({opacity:0},{opacity:1}),o));
+ ZD.classList.add('z');jobs.push([ZD,k({opacity:0},{opacity:1}),o]);
  // cross-fade: the tapped lobby tile melts away as the screen grows out of it (and comes back as the screen shrinks into it)
  const tile=ZM.orig[mover.id];
- if(tile&&tile.matches('#home .tile'))A.push(tile.animate(closing?[{opacity:0},{opacity:0,offset:.72},{opacity:1}]:[{opacity:1},{opacity:0,offset:.28},{opacity:0}],ol));
+ if(tile&&tile.matches('#home .tile'))jobs.push([tile,closing?[{opacity:0},{opacity:0,offset:.72},{opacity:1}]:[{opacity:1},{opacity:0,offset:.28},{opacity:0}],ol]);
+ // Measure both screens before writing transforms. Hold the first frame while the browser prepares
+ // the clip / scale layers, then start every animation on the same timeline tick.
+ const A=jobs.map(([el,keys,opts,origin])=>{if(origin)el.style.transformOrigin=origin;
+  const a=el.animate(keys,opts);a.pause();a.currentTime=0;return a;});
  const L={a:prev,b:sc,y:prevY,fy:fixY};ZM.live=L;ZM.run=A;
+ ZM.frame=requestAnimationFrame(()=>{ZM.frame=0;if(ZM.live!==L)return;
+  const now=document.timeline.currentTime;A.forEach(a=>{a.play();a.startTime=now;});});
  A[0].onfinish=()=>{if(ZM.live===L)zClean();};}
 // interrupting: tapping back to where the running zoom started turns it around from the exact frame it is on
 function zReverse(sc){const L=ZM.live;if(!L||!ZM.run.length||sc!==(curScr===L.b?L.a:L.b))return false;
@@ -3212,7 +3223,8 @@ let curScr=null;
 {const mq=matchMedia('(max-width:900px)'),f=()=>{zClean();requestAnimationFrame(()=>dispatchEvent(new Event('resize')));};
  mq.addEventListener?mq.addEventListener('change',f):mq.addListener(f);}
 function zUI(sc){document.getElementById('tbTitle').textContent=sc.dataset.title;document.getElementById('tbBack').hidden=sc.id==='home';
- document.querySelectorAll('#dock a').forEach(a=>a.classList.toggle('on',zScrOf(a)===sc));}
+ document.querySelectorAll('#dock a,.tb-res a').forEach(a=>{const on=zScrOf(a)===sc;a.classList.toggle('on',on);
+  if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});}
 function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let el=document.getElementById(h),sc=el&&el.closest('.screen');
  if(!sc){sc=document.getElementById('home');el=null;}
  if(zReverse(sc)){zUI(sc);return;}
@@ -3222,6 +3234,8 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let 
  const from=anim&&sc.id!=='home'?zOrigin(sc):null,prevTop=prev?prev.getBoundingClientRect().top:0,prevY=scrollY;
  if(moved&&prev.id==='home')ZM.homeY=scrollY;
  SCR.forEach(s=>{s.classList.toggle('on',s===sc);if(moved)s.classList.toggle('nz',anim&&s===sc);});curScr=sc;
+ initScreen(sc.id);
+ if(sc.id==='s-task')renderTasks();
  window.__scr=sc.id;if(moved)mDuck(sc.id);if(moved&&window.l2dRefit)l2dRefit();
  zUI(sc);
  const first=sc.querySelector('.pane>*'),deep=el&&el!==sc&&el!==first,wantY=sc.id==='home'&&moved?ZM.homeY:0;
@@ -3229,7 +3243,8 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let 
  else if(deep)el.scrollIntoView({block:'start',behavior:'smooth'});else scrollTo({top:0,behavior:'smooth'});
  // started in the next frame (still before it is painted), so the other hashchange handlers (lobby voice stop, greetings)
  // first see only the new screen as "on"; the scroll is set again there in case the browser moved it meanwhile
- if(anim)requestAnimationFrame(()=>{if(curScr!==sc||prev.classList.contains('on'))return;
+ const token=ZM.tok;
+ if(anim)requestAnimationFrame(()=>{if(token!==ZM.tok||curScr!==sc||prev.classList.contains('on'))return;
   if(deep)zJump(0,el);else if(Math.abs(scrollY-wantY)>1)zJump(wantY);zoomScr(prev,sc,from,prevTop,prevY);});}
 // Esc closes the open screen back into its tile, unless a popup (student card, help) is showing; that one closes first
 addEventListener('keydown',e=>{if(e.key!=='Escape'||!curScr||curScr.id==='home')return;
@@ -3584,7 +3599,6 @@ const L2DQ=(()=>{const L=[];let q=0,all=false;
  const ask=a=>{if(a)all=true;if(!q)q=requestAnimationFrame(run);};
  addEventListener('resize',()=>ask());addEventListener('hashchange',()=>ask());
  return {add:(el,fn)=>{L.push({el,fn});fn();},ask};})();
-(requestIdleCallback||setTimeout)(function(){
 (function(){const D='Spine/',WZ={head:[-120,955,190,1095],cheek:[-60,800,130,900]},
   CH={Plana:{dir:D+'ap_wp/assets/',file:'NP0035_spr',zones:WZ,vo:VO_P},Arona:{dir:D+'ap_wp/assets/',file:'arona_spr',zones:WZ,vo:VO_A},
   // not on lobby duty: Rin stands on the TA/GA screen. Rin_raiddungeon = her in-game raid lobby L2D (from the Wallpaper Engine
@@ -3862,7 +3876,6 @@ const L2DQ=(()=>{const L=[];let q=0,all=false;
   window.l2dRefit=refit;
   if(window.ResizeObserver){const ro=new ResizeObserver(refit);document.querySelectorAll('#lobbyScene,.l2d').forEach(h=>ro.observe(h));}}
 })();
-},{timeout:800});
 
 // ===== Talk screens: a Spine student beside a game-style dialogue box (TA/GA: Nanagami Rin, Kế hoạch UE: Oki Aoi) =====
 // K = per-screen config (stageTalk calls at the end). Spine files missing: the CAST portrait stays with the old line.
