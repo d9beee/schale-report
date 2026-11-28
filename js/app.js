@@ -1168,7 +1168,9 @@ const groups=[SSP,SS,S,A,BC];
 const ds=[[3,'UE 3★','#f5b52e'],[2,'UE 2★','#1597f0'],[1,'UE 1★','#21b37f'],[0,'Chưa mở UE','#f3a3b9']].map(([u,l,c])=>({label:l,data:groups.map(g=>count(g,u)),backgroundColor:c,borderRadius:6,borderSkipped:false}));
 // label colour follows the theme (the fixed #8a94b8 was only 3:1 on the light card): light #5d7088, dark #9aa0c4.
 // It watches <html data-theme>, so the theme button needs no extra code.
-if(window.Chart){const chTx=()=>document.documentElement.dataset.theme==='dark'?'#9aa0c4':'#5d7088';Chart.defaults.color=chTx();
+// Chart.js (~200 KB, the only chart on the site) is loaded ONLY when this chart comes near the screen: before, a blocking <script>
+// in <head> held back the first paint of every page. Dia's CDN first, jsDelivr when opened elsewhere (GitHub Pages).
+function drawDist(){const chTx=()=>document.documentElement.dataset.theme==='dark'?'#9aa0c4':'#5d7088';Chart.defaults.color=chTx();
 const chart=new Chart(document.getElementById('dist'),{type:'bar',
  data:{labels:groups.map((g,i)=>['SS+','SS','S','A','B–C'][i]+` (${g.length})`),datasets:ds},
  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
@@ -1179,6 +1181,11 @@ new MutationObserver(()=>{const c=chTx();Chart.defaults.color=c;const o=chart.op
  o.scales.x.ticks.color=o.scales.y.ticks.color=o.plugins.legend.labels.color=c;chart.update('none');})
  .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 }
+{const box=document.querySelector('.chart-box');
+ const add=(src,ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s);};
+ const get=()=>add('https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js',drawDist,
+  ()=>add('https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',drawDist,()=>box.remove()));
+ if(box)new IntersectionObserver((es,o)=>{if(es.some(e=>e.isIntersecting)){o.disconnect();get();}},{rootMargin:'300px'}).observe(box);}
 
 // ===== metrics + stop lanes from the (possibly edited) roster =====
 const fmt=n=>n.toLocaleString('vi-VN');
@@ -1275,7 +1282,7 @@ renderCalc();
 // ===== theme toggle (Arona light / Plana dark) =====
 const thm=document.getElementById('thm');
 // the button holds two vector icons (moon / sun); CSS shows the one for the theme you can switch to, so only the labels change here
-const setThm=t=>{document.documentElement.dataset.theme=t;const meta=document.querySelector('meta[name="theme-color"]'),scheme=document.querySelector('meta[name="color-scheme"]');if(meta)meta.content=t==='dark'?'#1E222D':'#6CC4FF';if(scheme)scheme.content=t;thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';thm.setAttribute('aria-label',thm.title);};
+const setThm=t=>{document.documentElement.dataset.theme=t;const meta=document.querySelector('meta[name="theme-color"]'),scheme=document.querySelector('meta[name="color-scheme"]');if(meta)meta.content=THC[t];if(scheme)scheme.content=t;thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';thm.setAttribute('aria-label',thm.title);};
 setThm(document.documentElement.dataset.theme);
 // the button only swaps for the current shift (not saved: the next load starts from the shift again, see the <head> script)
 thm.addEventListener('click',()=>setThm(dark()?'light':'dark'));
@@ -2154,14 +2161,11 @@ function stageTalk(K){const sc=document.querySelector(K.sc),cast=sc&&sc.querySel
    setInterval(()=>{if(on()&&blink&&!(st.getCurrent(1))&&!(H.busy&&H.busy()))st.setAnimation(2,blink,false);},6000);
    if(!on())P.pause&&P.pause();window.l2dRefit&&l2dRefit();})
   .catch(e=>{console.warn(K.ch+':',e);L.insertAdjacentHTML('afterbegin',porImg(CAST[K.cast][0],'cpor'));nm.textContent=CAST[K.cast][0];say(CAST[K.cast][1]);});}
- // warm-up: every screen student is loaded in the background, one after another, a few seconds after the page is up, and right
- // away when a finger / mouse goes down on a tile or Dock icon leading to its screen, so it is already standing there on open
+ // warm-up: a screen student starts loading the moment a finger / mouse goes DOWN on a tile or Dock icon leading to its screen
+ // (a head start before the tap lands), or when the screen opens. The old timed background queue (every student, one each 1.8 s,
+ // from 2.5 s after load) is gone: it loaded all the rigs while the player was still scrolling the lobby = lag.
  {const W=window.WARM=window.WARM||[];W.push({sc,go:()=>{if(!P&&!tried)wake();}});
   if(!W.t){W.t=1;
-   const idle=f=>(window.requestIdleCallback?requestIdleCallback(f,{timeout:3000}):setTimeout(f,300));
-   const run=()=>{const n=W.find(w=>!w.done);if(!n)return;n.done=1;n.go();setTimeout(()=>idle(run),1800);};
-   const start=()=>setTimeout(()=>idle(run),2500);
-   if(document.readyState==='complete')start();else addEventListener('load',start);
    document.addEventListener('pointerdown',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
     const t=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))),s=t&&t.closest('.screen'),w=s&&W.find(x=>x.sc===s);
     if(w&&!w.done){w.done=1;w.go();}},{capture:true,passive:true});}}
