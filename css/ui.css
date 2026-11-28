@@ -1103,7 +1103,8 @@ html.booting body{overflow:hidden;touch-action:none}
  /* Keep a fixed full-viewport loading surface; oversizing the overlay made Safari expose the lobby at the bottom edge. */
  html[data-theme="light"].booting,html[data-theme="light"].booting body{background:#6CC4FF!important}
  html[data-theme="dark"].booting,html[data-theme="dark"].booting body{background:#1E222D!important}
- html.booting #boot{height:100vh;height:100dvh;min-height:100dvh;bottom:0;background:#6CC4FF!important}
+ /* Extend the actual boot layer past Safari's collapsing bottom toolbar; the edge strip only tints Safari chrome and cannot cover page content. */
+ html.booting #boot{height:auto;min-height:0;bottom:-200px;background:#6CC4FF!important}
  html[data-theme="dark"].booting #boot{background:#1E222D!important}
  /* Solid edge strips give Safari an actual fixed color surface to sample behind both browser bars. */
  html[data-theme="light"].booting::before,html[data-theme="dark"].booting::before,
@@ -1112,8 +1113,8 @@ html.booting body{overflow:hidden;touch-action:none}
  html[data-theme="dark"].booting::before{top:0;height:max(14px,env(safe-area-inset-top));background:#1E222D}
  html[data-theme="light"].booting::after{bottom:0;height:max(14px,env(safe-area-inset-bottom));background:#6CC4FF}
  html[data-theme="dark"].booting::after{bottom:0;height:max(14px,env(safe-area-inset-bottom));background:#1E222D}
- #boot .bt{bottom:calc(24px + env(safe-area-inset-bottom))}
- #boot .lg{display:block;width:min(40vw,170px);height:auto;filter:drop-shadow(0 4px 14px rgba(0,0,0,.18));animation:bflip 1.6s ease-in-out infinite}
+ #boot .bt{bottom:calc(200px + 24px + env(safe-area-inset-bottom))}
+ #boot .lg{display:block;width:min(40vw,170px);height:auto;margin-bottom:200px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.18));animation:bflip 1.6s ease-in-out infinite}
 }
 /* coin flip: hold, one full turn around the vertical axis, hold */
 @keyframes bflip{0%,25%{transform:perspective(700px) rotateY(0)}75%,100%{transform:perspective(700px) rotateY(360deg)}}
