@@ -1087,3 +1087,12 @@ html[data-theme=dark] #home #tBan{--room:url(../BG/BG_Convenience_Night.jpg)}
  #home :is(#tBoss,#tTask) .tlab small{display:none!important}
  #home #tLock.open{min-height:84px!important}
 }
+/* ===== BOOT SCREEN (#boot, js/boot.js): loading video over the lobby while it and the Spine load, then a 0.25s CRT switch-off ===== */
+#boot{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#000;cursor:pointer}
+#boot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#boot .bt{position:absolute;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));margin:0;text-align:center;color:#fff;font:600 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;opacity:.75}
+html.booting,html.booting body{overflow:hidden}
+/* CRT off: squash to a bright line, then to a dot, then gone */
+#boot.off{animation:crt .25s cubic-bezier(.6,0,.4,1) forwards;pointer-events:none}
+@keyframes crt{0%{transform:scale(1,1);filter:brightness(1)}55%{transform:scale(1,.004);filter:brightness(4)}100%{transform:scale(0,.004);filter:brightness(8);opacity:0}}
+@media(prefers-reduced-motion:reduce){#boot.off{animation:none;opacity:0;transition:opacity .25s}}

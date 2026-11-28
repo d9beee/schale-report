@@ -16,9 +16,14 @@
 <!-- Style: custom -->
 <link rel="stylesheet" href="css/base.css?v=202611281405">
 <!-- game UI layer, loaded right after base so it wins the same way it did inline; in <head> so the page never paints unstyled -->
-<link rel="stylesheet" href="css/ui.css?v=202611281440">
+<link rel="stylesheet" href="css/ui.css?v=202611281510">
 </head>
 <body>
+<!-- boot screen: loading video until the lobby + Spine are ready (js/boot.js); put the file in Videos/ -->
+<div id="boot" aria-hidden="true"><video autoplay muted loop playsinline preload="auto">
+  <source src="Videos/loading.webm" type="video/webm"><source src="Videos/loading.mp4" type="video/mp4"></video>
+  <p class="bt">Đang tải · chạm để vào</p></div>
+<script src="js/boot.js?v=202611281455"></script>
 
 <header class="topbar" id="topbar">
   <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>
