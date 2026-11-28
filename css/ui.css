@@ -1095,13 +1095,15 @@ html[data-theme=dark] #home #tBan{--room:url(../BG/BG_Convenience_Night.jpg)}
 #boot .bt{position:absolute;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));margin:0;text-align:center;color:#fff;font:600 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;opacity:.75}
 /* scrolling locked on body ONLY: overflow:hidden on html makes iOS keep the small viewport */
 html.booting body{overflow:hidden;touch-action:none}
-/* phone: Safari paints the status bar / the area around the address bar from theme-color, the page background and whatever
-   touches the screen edge, so all three take the video's own edge colours (top #ADCDEC, bottom #E5CFF4) while booting */
+/* phone: tested on the player's iPhone, Safari paints the status bar from the html background, so html = the video's top edge
+   colour (#ADCDEC); body (full large-viewport height) and a strip fading into the bottom edge = the bottom colour (#E5CFF4),
+   for the area around the floating address bar */
 @media(max-width:900px){
- html.booting,html.booting body{background:#E5CFF4!important}
+ html.booting{background:#ADCDEC!important}
+ html.booting body{background:#E5CFF4!important;min-height:100lvh}
  #boot::before,#boot::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none}
  #boot::before{top:0;height:max(2px,env(safe-area-inset-top));background:#ADCDEC}
- #boot::after{bottom:0;height:max(2px,env(safe-area-inset-bottom));background:#E5CFF4}
+ #boot::after{bottom:0;height:calc(90px + env(safe-area-inset-bottom));background:linear-gradient(transparent,#E5CFF4 60%)}
 }
 /* CRT off: squash to a bright line, then to a dot, then gone */
 #boot.off{animation:crt .25s cubic-bezier(.6,0,.4,1) forwards;pointer-events:none}
