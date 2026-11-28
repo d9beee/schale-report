@@ -1275,7 +1275,7 @@ renderCalc();
 // ===== theme toggle (Arona light / Plana dark) =====
 const thm=document.getElementById('thm');
 // the button holds two vector icons (moon / sun); CSS shows the one for the theme you can switch to, so only the labels change here
-const setThm=t=>{document.documentElement.dataset.theme=t;const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=t==='dark'?'#1E222D':'#6CC4FF';thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';thm.setAttribute('aria-label',thm.title);};
+const setThm=t=>{document.documentElement.dataset.theme=t;const meta=document.querySelector('meta[name="theme-color"]'),scheme=document.querySelector('meta[name="color-scheme"]');if(meta)meta.content=t==='dark'?'#1E222D':'#6CC4FF';if(scheme)scheme.content=t;thm.title=t==='dark'?'Giao diện Arona (sáng)':'Giao diện Plana (tối)';thm.setAttribute('aria-label',thm.title);};
 setThm(document.documentElement.dataset.theme);
 thm.addEventListener('click',()=>{const t=dark()?'light':'dark';try{localStorage.setItem('ba_theme',t)}catch(e){}setThm(t);});
 

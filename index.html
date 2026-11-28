@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#6CC4FF">
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'};document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#1E222D':'#6CC4FF'</script>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'};var sch=document.createElement('meta');sch.name='color-scheme';sch.content=document.documentElement.dataset.theme;document.head.append(sch);document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#1E222D':'#6CC4FF'</script>
 <!-- boot screen: opening on the lobby -> html.booting before first paint, so js/boot.js knows to show the loading video -->
 <script>(function(){var h=location.hash.slice(1);if(!h||h==='home')document.documentElement.classList.add('booting')})()</script>
 <!-- Critical boot colors: apply before external scripts/styles can delay first paint. Match the app's saved theme, not iOS appearance. -->
@@ -480,7 +479,7 @@ html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-t
 <div class="hpop" id="hpop" role="dialog" aria-label="Hướng dẫn"><h4 id="hpopT"></h4><ul id="hpopB"></ul></div>
 <button class="hud-tg" id="hudTg" type="button" aria-label="Ẩn các ô chức năng để ngắm học sinh" title="Ẩn / hiện các ô chức năng">›</button>
 
-<script src="js/app.js?v=202611281405"></script>
+<script src="js/app.js?v=202611281735"></script>
 <script src="js/icons.js?v=202611281405"></script>
 <script src="js/compact.js?v=202611281405"></script>
 <script src="js/a11y.js?v=202611281405"></script>
