@@ -7,23 +7,21 @@
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint = the lobby shift by Vietnam time (06:00-18:00 Arona / light, else Plana / dark), the SAME rule as byTime()
-     in js/app.js, so the Spine loading later never flips it (before: saved / system theme first, then the shift = a dark->light flash) -->
-<script>(function(){var R=document.documentElement,h;try{h=+new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh',hour:'numeric',hour12:false})%24}catch(e){h=new Date().getHours()}
-R.dataset.theme=h>=6&&h<18?'light':'dark';var sch=document.createElement('meta');sch.name='color-scheme';sch.content=R.dataset.theme;document.head.append(sch);
-document.querySelector('meta[name="theme-color"]').content=R.dataset.theme==='dark'?'#1E222D':'#6CC4FF'})()</script>
-<!-- boot screen: opening on the lobby -> html.booting before first paint, so js/boot.js knows to show the loading video -->
-<script>(function(){var h=location.hash.slice(1);if(!h||h==='home')document.documentElement.classList.add('booting')})()</script>
-<!-- Critical boot colors: apply before external scripts/styles can delay first paint. Match the app's saved theme, not iOS appearance. -->
+     in js/app.js, so the Spine loading later never flips it. THC = the two browser-bar colours, ONE place (setThm in app.js reads it).
+     Opening on the lobby also sets html.booting here, before first paint, so js/boot.js knows to show the loading screen. -->
+<script>(function(){var R=document.documentElement,h,x=location.hash.slice(1);try{h=+new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh',hour:'numeric',hour12:false})%24}catch(e){h=new Date().getHours()}
+window.THC={light:'#6CC4FF',dark:'#1E222D'};R.dataset.theme=h>=6&&h<18?'light':'dark';if(!x||x==='home')R.classList.add('booting');if(/(?:^|[?&])safari-zdim-test=1(?:&|$)/.test(location.search))R.classList.add('safari-zdim-test');
+var sch=document.createElement('meta');sch.name='color-scheme';sch.content=R.dataset.theme;document.head.append(sch);
+document.querySelector('meta[name="theme-color"]').content=THC[R.dataset.theme]})()</script>
+<!-- critical boot colours (inline, so nothing can delay them): --bc = the boot colour of the theme, used by css/ui.css too -->
 <style>
-html[data-theme="light"].booting,html[data-theme="light"].booting body,html[data-theme="light"].booting #boot{background:#6CC4FF!important}
-html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-theme="dark"].booting #boot{background:#1E222D!important}
+html.booting{--bc:#6CC4FF}html.booting[data-theme="dark"]{--bc:#1E222D}
+html.booting,html.booting body,html.booting #boot{background:var(--bc)!important}
 </style>
 <!-- Start CSS before third-party scripts so the loading surface is styled as early as possible. -->
 <link rel="stylesheet" href="css/base.css?v=202611281405">
-<link rel="stylesheet" href="css/ui.css?v=202611281729">
-<script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
-<!-- fallback CDN when opened outside Dia (e.g. GitHub Pages) -->
-<script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"><\/script>')</script>
+<link rel="stylesheet" href="css/ui.css?v=20261128-zdimtest-1">
+<!-- Chart.js is no longer loaded here: js/app.js fetches it only when the tier chart (Học sinh screen) comes into view -->
 </head>
 <body>
 <!-- boot screen (js/boot.js): desktop = loading video (Videos/, sources added by boot.js so a phone never downloads it);
@@ -32,7 +30,7 @@ html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-t
   poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="></video>
   <img class="lg" src="Icons/schale.png" alt="">
   <p class="bt">Đang tải · chạm để vào</p></div>
-<script src="js/boot.js?v=202611281710"></script>
+<script src="js/boot.js?v=202611281730"></script>
 
 <header class="topbar" id="topbar">
   <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>
@@ -482,7 +480,7 @@ html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-t
 <div class="hpop" id="hpop" role="dialog" aria-label="Hướng dẫn"><h4 id="hpopT"></h4><ul id="hpopB"></ul></div>
 <button class="hud-tg" id="hudTg" type="button" aria-label="Ẩn các ô chức năng để ngắm học sinh" title="Ẩn / hiện các ô chức năng">›</button>
 
-<script src="js/app.js?v=202611281800"></script>
+<script src="js/app.js?v=202611281730"></script>
 <script src="js/icons.js?v=202611281405"></script>
 <script src="js/compact.js?v=202611281405"></script>
 <script src="js/a11y.js?v=202611281405"></script>
