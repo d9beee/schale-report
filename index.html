@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f3f8fd" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121326" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#6CC4FF">
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'};document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#1E222D':'#6CC4FF'</script>
 <!-- boot screen: opening on the lobby -> html.booting before first paint, so js/boot.js knows to show the loading video -->
 <script>(function(){var h=location.hash.slice(1);if(!h||h==='home')document.documentElement.classList.add('booting')})()</script>
 <script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
