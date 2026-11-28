@@ -1,0 +1,1086 @@
+.grw .stp{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:#1597f0;color:#fff;font-size:11px;font-weight:700}
+.grw .lv{white-space:nowrap;font-weight:700;font-size:13px;padding:2px 8px;border-radius:8px}
+.grw .lv small{font-weight:500;opacity:.7}
+.skd{font-size:12.5px;line-height:1.45;color:var(--muted);margin:-2px 0 8px 28px;padding-left:8px;border-left:2px solid var(--line)}
+.grw .lv.p3{background:#fde9b8;color:#8a5a00}.grw .lv.p2{background:#d8ecff;color:#0d5ea8}
+.grw .lv.p1{background:#eef1f5;color:#5b6675}.grw .lv.p0{background:#eef1f5;color:#5b6675;font-weight:500}
+.step.done{opacity:.72;border-style:dashed}.step.done .dot{background:#21b37f}
+/* any student name / avatar opens the popup */
+.stu{cursor:pointer;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,var(--sky) 55%,transparent);text-underline-offset:3px}
+.stu:hover{color:var(--sky);text-decoration-style:solid}
+img[data-stu],.chip,.nm,.calc-row,#tier [data-n]{cursor:pointer}
+.chip:hover,.nm:hover{border-color:var(--sky)}
+.ginfo{margin:0 0 12px}.ginfo .nr{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+
+/* ===== SCHALE TABLET STYLE ===== (cut corners removed: every corner is rounded now) */
+.metric{border-top:4px solid var(--sky)}
+.sec-num{border-radius:4px;width:50px}
+.sec-head h2{font-style:italic;letter-spacing:-.015em}
+.sec-head:after{content:"";flex:1;min-width:30px;height:10px;align-self:center;background:repeating-linear-gradient(-55deg,var(--sky) 0 3px,transparent 3px 10px);opacity:.28}
+.go,.rf,.bnav button{border-radius:0!important;padding-left:20px!important;padding-right:20px!important}
+.schale{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.3em;font-size:11px;color:var(--sky);margin-bottom:6px}
+.schale svg{width:26px;height:26px}
+
+/* nav extras */
+.totop{position:fixed;left:16px;bottom:16px;z-index:40;width:42px;height:42px;border:0;background:var(--sky);color:#fff;font-size:18px;font-weight:800;cursor:pointer;
+  clip-path:polygon(30% 0,100% 0,100% 70%,70% 100%,0 100%,0 30%);opacity:0;pointer-events:none;transition:.25s}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* own armor chip on tier cards */
+.own{font-size:10.5px;font-weight:700;color:var(--muted)}
+
+/* ===== ELIGMA / PYROXENE CALCULATOR ===== */
+.calc .calc-in{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 10px}
+.calc label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--muted)}
+.calc input{font:inherit;font-size:16px;font-weight:700;width:170px;padding:8px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px}
+.calc-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;margin:6px 0;background:var(--bg);border:1px solid var(--line)}
+.calc-row .n{font-weight:700}.calc-row small{display:block;color:var(--muted);font-size:12px;font-weight:500}
+.calc-row .k{font-weight:800;font-size:12px;white-space:nowrap}
+.calc-row.ok .k{color:#178a5f}.calc-row.done{opacity:.55}.calc-row.wait .k{color:var(--muted)}.calc-row.short .k{color:#c23a63}
+.calc-row .i{display:grid;place-items:center;width:26px;height:26px;background:var(--sky);color:#fff;font-weight:800;font-size:12px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.calc .sum{font-size:13.5px;margin-top:8px}
+.linkbtn{font:inherit;font-size:12.5px;border:0;background:none;color:var(--sky);text-decoration:underline;cursor:pointer;padding:0}
+.uepick{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.uepick button{font:inherit;font-size:12.5px;font-weight:700;padding:5px 12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.uepick button.on{background:var(--sky);border-color:var(--sky);color:#fff}
+
+/* ===== ARONA MOMOTALK ===== */
+.aro-btn{position:fixed;right:16px;bottom:16px;z-index:55;width:58px;height:58px;border-radius:50%;border:3px solid #fff;background:linear-gradient(160deg,#8fd3ff,#1597f0);cursor:pointer;padding:0;box-shadow:0 8px 22px rgba(21,80,140,.35)}
+.aro-btn svg{width:100%;height:100%}
+.aro-dot{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;border-radius:999px;background:#ff5c8a;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 5px;border:2px solid #fff}
+.aro{position:fixed;right:16px;bottom:86px;z-index:56;width:min(360px,calc(100vw - 32px));max-height:min(520px,70vh);display:none;flex-direction:column;background:var(--paper);border:1px solid var(--line);box-shadow:0 18px 44px rgba(15,40,70,.3);border-radius:10px;overflow:hidden}
+.aro.on{display:flex}
+.aro-top{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#ff8fab;color:#fff}
+.aro-top .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(160deg,#8fd3ff,#1597f0);border:2px solid #fff;flex:none;overflow:hidden}
+.aro-top b{display:block;font-size:14.5px}.aro-top small{opacity:.9;font-size:11.5px}
+.aro-top button{margin-left:auto;font:inherit;border:0;background:rgba(255,255,255,.25);color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer}
+.aro-body{padding:12px;overflow:auto;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.msg{display:flex;gap:8px;align-items:flex-end}
+.msg .av{width:28px;height:28px;border-radius:50%;flex:none;overflow:hidden;background:linear-gradient(160deg,#8fd3ff,#1597f0)}
+.msg p{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 11px;font-size:13.5px;line-height:1.45;max-width:270px}
+.msg p a{font-weight:700}
+.aro-time{text-align:center;font-size:11px;color:var(--muted)}
+.av svg{width:100%;height:100%;display:block}
+/* student avatars */
+.av-c,.av-s,.av-m{object-fit:cover;object-position:50% 15%;flex:none;background:var(--sky-soft)}
+.sc .n{display:flex;align-items:center;gap:9px}
+.av-c{width:42px;height:42px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+.av-s{width:22px;height:22px;border-radius:50%;margin-left:-6px;vertical-align:middle}
+.nm .av-s{margin:0 5px 0 -4px}
+.av-m{width:32px;height:32px;border-radius:8px}
+.gtop h4{display:flex;align-items:center;gap:10px}
+/* boss art */
+.bhero{aspect-ratio:650/200;max-height:180px;margin:-4px 0 10px;overflow:hidden;border-radius:6px;
+  background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--c) 30%,transparent),transparent 70%),linear-gradient(180deg,var(--sky-soft),transparent)}
+.bpor{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
+.bh h4{display:flex;align-items:center;gap:10px}
+.bico{width:40px;height:40px;object-fit:cover;flex:none;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px))}
+.bsi{width:20px;height:20px;object-fit:cover;border-radius:4px;vertical-align:middle;margin:-3px 6px 0 -4px}
+.lc h3{display:flex;align-items:center;gap:10px}
+.lci{width:46px;height:46px;object-fit:cover;flex:none;border:2px solid rgba(255,255,255,.7);clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+@media (max-width:820px){.bhero{max-height:130px}}
+/* boss portrait as TA/GA card background, faded toward the text */
+.lc{position:relative;overflow:hidden}
+.lc>*:not(.lbg){position:relative;z-index:1}
+.lbg{position:absolute;left:0;right:0;top:0;height:64%;z-index:0;pointer-events:none}
+.lbg img{width:100%;height:100%;object-fit:cover;object-position:60% 30%;display:block}
+.lbg:after{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,var(--paper) 6%,color-mix(in srgb,var(--paper) 72%,transparent) 42%,color-mix(in srgb,var(--paper) 10%,transparent) 85%),
+  linear-gradient(0deg,var(--paper) 2%,transparent 50%)}
+.lc h3{text-shadow:0 1px 8px var(--paper)}
+/* ===== STUDENT PORTRAITS (Portrait_Full) ===== */
+.hero-cast{position:absolute;top:0;bottom:0;right:max(0px,calc(50% - 600px));width:min(560px,50%);display:flex;justify-content:flex-end;align-items:flex-start;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 30%);mask-image:linear-gradient(90deg,transparent,#000 30%)}
+.hero-cast img{height:205%;width:auto;flex:none;filter:drop-shadow(0 10px 22px rgba(21,80,140,.2));animation:castIn .9s ease both}
+.hero-cast .hc1{height:175%;margin-top:30px;margin-right:-26%;opacity:.55}
+.hero-cast .hc2{margin-top:-10px;margin-right:-24%;opacity:.85;animation-delay:.12s}
+.hero-cast .hc3{margin-top:4px;animation-delay:.24s}
+@keyframes castIn{from{opacity:0;transform:translateY(18px)}}
+.hero .wrap{z-index:1}
+@media (min-width:1000px){.hero h1,.hero .lede{max-width:620px}}
+@media (max-width:999px){.hero-cast{opacity:.28;width:70%}}
+@media (prefers-reduced-motion:reduce){.hero-cast img{animation:none}}
+/* faded portrait behind SS+/SS cards */
+.sc{position:relative;overflow:hidden}
+.sc>*:not(.pbg){position:relative}
+.sc .pbg{position:absolute;right:-14%;top:-4px;height:220%;width:auto;opacity:.2;pointer-events:none;transition:opacity .25s,transform .25s;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 45%);mask-image:linear-gradient(90deg,transparent,#000 45%)}
+.sc:hover .pbg{opacity:.4;transform:translateX(-6px)}
+html[data-theme=dark] .sc .pbg{opacity:.26}
+/* growth popup header */
+.gbox{position:relative}
+.ghead{position:relative;height:150px;margin:-16px -20px 6px;padding:0 20px 12px;display:flex;align-items:flex-end;overflow:hidden;
+  background:linear-gradient(135deg,var(--sky-soft),var(--paper) 75%)}
+.ghead .gtop{position:relative;z-index:1;width:100%}
+.ghead h4{text-shadow:0 1px 10px var(--paper)}
+.gpor{position:absolute;right:56px;top:-6px;height:340px;width:auto;pointer-events:none}
+/* banner card: portrait of the top pick */
+.bcard{position:relative;overflow:hidden}
+.bcard>*:not(.bpg){position:relative}
+.bcard .bpg{position:absolute;right:-30px;top:30px;height:520px;width:auto;opacity:.18;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 45%,transparent 85%);mask-image:linear-gradient(180deg,#000 45%,transparent 85%)}
+/* footer cast */
+.fcast{display:flex;justify-content:center;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.fcast img{width:34px;height:34px;object-fit:cover;object-position:50% 15%;border-radius:50%;border:2px solid var(--paper);box-shadow:0 2px 6px rgba(21,80,140,.15)}
+
+/* ===== PLANA DARK THEME ===== */
+html[data-theme=dark]{--bg:#0e0f1d;--paper:#181a2e;--ink:#e7e9fb;--muted:#9aa0c4;--line:#2c2f52;--sky:#8b7cf6;--sky-soft:#25224a;--cyan:#b6a8ff}
+html[data-theme=dark] body{background-image:linear-gradient(rgba(139,124,246,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(139,124,246,.06) 1px,transparent 1px)}
+html[data-theme=dark] .hero{background:linear-gradient(135deg,#16142b 0%,#1d1a3a 55%,#2a2050 100%)}
+html[data-theme=dark] .hero:before{opacity:.06}
+html[data-theme=dark] .lede,html[data-theme=dark] .lede strong{color:var(--ink)}
+html[data-theme=dark] nav.toc{background:rgba(14,15,29,.88)}
+html[data-theme=dark] :is(.sc,.chip,.nm,.lane,.pair,.boss,.guide,.armor,.lc,.bcard,.gbox,.tools input,.step .dot){background:var(--paper);color:var(--ink)}
+html[data-theme=dark] :is(.boss .def,.lc .when,.bcard .bt,.gtop button){background:#22253f;color:var(--ink)}
+html[data-theme=dark] :is(.guide .gp,.guide .ros .rt,.bs .why,.gnote,.mx li){color:#cfd3ef}
+html[data-theme=dark] :is(.bl,.guide h5,.gbox h5,.sc .bk,.chip .bk2){color:#b6a8ff}
+html[data-theme=dark] .mx .must,html[data-theme=dark] .legend3 .must{background:#3a1d2a}
+html[data-theme=dark] .mx .warn,html[data-theme=dark] .legend3 .warn{background:#3a2e17}
+html[data-theme=dark] .mx .tip,html[data-theme=dark] .legend3 .tip{background:#1d2845}
+html[data-theme=dark] .mx .must b{background:linear-gradient(transparent 58%,#6b2a3c 58%)}
+html[data-theme=dark] .mx .warn b{background:linear-gradient(transparent 58%,#6b5220 58%)}
+html[data-theme=dark] .sk .sf{background:rgba(0,0,0,.25);border-color:rgba(255,255,255,.12)}
+html[data-theme=dark] .lc .cd,html[data-theme=dark] .bcard .bcd{color:#b6a8ff}
+html[data-theme=dark] .aro-top{background:#5b3fd1}
+html[data-theme=dark] .aro-btn,html[data-theme=dark] .aro-top .av,html[data-theme=dark] .msg .av{background:linear-gradient(160deg,#4b4f75,#1c1d33)}
+html[data-theme=dark] .calc-row{background:#141629}
+
+/* ===== GAME UI: top bar, lobby tiles, screens with a student on the left ===== */
+:root{--navy:#1e3456;--ylw:#ffd84a;--ylw2:#e9b800;--tb:58px}
+body{background:#e9f2fb;background-image:linear-gradient(115deg,rgba(255,255,255,.92) 0 38%,rgba(214,236,252,.55) 70%,rgba(190,224,250,.85)),repeating-linear-gradient(-60deg,rgba(21,151,240,.05) 0 2px,transparent 2px 22px);background-attachment:fixed}
+html{scroll-padding-top:calc(var(--tb) + 12px)}
+.topbar{position:sticky;top:0;z-index:50;height:var(--tb);display:flex;align-items:center;gap:10px;padding:0 14px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(30,52,86,.13)}
+.tb-back{width:40px;height:40px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:26px;line-height:1;cursor:pointer;flex:none;display:grid;place-items:center;padding:0 0 3px}
+.tb-back[hidden]{display:none}
+.tb-title{margin:0;font-size:21px;font-weight:800;font-style:italic;color:var(--navy);white-space:nowrap;letter-spacing:-.01em;flex:none}
+.tb-res{display:flex;gap:8px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.tb-res::-webkit-scrollbar{display:none}
+.res{display:flex;align-items:center;gap:6px;flex:none;text-decoration:none;color:var(--navy);background:#eef2f7;border:1px solid #d3dde9;border-radius:999px;padding:3px 13px 3px 4px;font-size:13px}
+.res:hover{border-color:var(--sky)}
+.res i{font-style:normal;width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:14px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.res b{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.res small{color:var(--muted);font-size:11px}
+.tb-ic{flex:none;width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:#eef2f7;border:1px solid #d3dde9;cursor:pointer;text-decoration:none;font:inherit;font-size:18px;padding:0}
+#app{max-width:1500px;margin:0 auto}
+.screen{display:none}
+.screen.on{display:grid;grid-template-columns:minmax(240px,30%) minmax(0,1fr);animation:scrIn .35s ease}
+@keyframes scrIn{from{opacity:0;transform:translateX(18px)}}
+.cast{position:sticky;top:var(--tb);height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb));overflow:hidden;pointer-events:none}
+.cast .cpor{position:absolute;left:50%;bottom:-6%;transform:translateX(-50%);height:116%;width:auto;max-width:none;filter:drop-shadow(0 12px 26px rgba(30,52,86,.2));animation:castIn .7s ease both}
+.cast .bubble{position:absolute;left:7%;right:7%;bottom:6%;background:#fff;border-radius:18px;padding:12px 16px;font-size:14.5px;font-weight:600;line-height:1.45;color:var(--navy);box-shadow:0 8px 22px rgba(30,52,86,.2);pointer-events:auto}
+.cast .bubble:before{content:"";position:absolute;top:-10px;left:34px;border:11px solid transparent;border-bottom-color:#fff;border-top:0}
+.cast .bubble b{display:block;font-size:11.5px;font-weight:800;color:var(--sky);text-decoration:none;margin-bottom:2px}
+.pane{padding:18px 22px 100px;min-width:0}
+.pane>section.block:first-child,.pane>.live:first-child{margin-top:0}
+section.block{scroll-margin-top:calc(var(--tb) + 12px)}
+/* lobby tiles (Campaign screen) */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:118px;gap:12px}
+.tile{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;padding:12px 14px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#4d77ad,#1e3456);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));transition:transform .2s,filter .2s}
+.tile:hover{transform:translateY(-3px);filter:brightness(1.06)}
+.tile.big,.tile.wide{grid-column:span 2;grid-row:span 2}
+.tile.flat{grid-column:span 2;background:linear-gradient(135deg,#fff,#e2eefa);color:var(--navy)}
+.tile .tbg{position:absolute;inset:0;z-index:0}
+.tile .tbg img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.tile:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(0deg,rgba(18,34,60,.88),rgba(18,34,60,.05) 65%)}
+.tile.flat:after{display:none}
+.tile>*:not(.tbg){position:relative;z-index:1}
+.tile b{font-size:17px;font-weight:800;font-style:italic;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.45)}
+.tile.big b,.tile.wide b{font-size:25px}
+.tile.flat b{text-shadow:none}
+.tile small{font-size:12.3px;opacity:.92;line-height:1.35}
+.tile .ttag{position:absolute;top:10px;left:10px;background:var(--ylw);color:var(--navy);font-size:11.5px;font-weight:800;padding:2px 11px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.tile .ttag:empty{display:none}
+.tile .ttag.pink{background:#ff6f9a;color:#fff}
+.tile .dot{position:absolute;top:9px;right:12px;width:11px;height:11px;border-radius:50%;background:#ff4d6a;border:2px solid #fff}
+#tPvp{background:linear-gradient(135deg,#25a07f,#0d4a3c)}#tUe{background:linear-gradient(135deg,#8a6be8,#3a2a7a)}#tBoss{background:linear-gradient(135deg,#e05a64,#5a1c2a)}
+.notice{margin-top:16px;background:#fff;padding:18px 22px;border-top:4px solid var(--sky);clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)}
+.nhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ntag{background:var(--navy);color:#fff;font-size:11px;font-weight:800;padding:2px 12px;letter-spacing:.06em;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.notice h2{margin:8px 0 8px;font-size:23px;font-style:italic;line-height:1.25;color:var(--navy)}
+.notice h2 em{font-style:inherit;color:var(--sky)}
+.notice .metrics{margin:14px 0 6px}
+/* panels: the glass block at the end of the CSS sets their look; only spacing and text colours stay here */
+.live,.live.bn,.live.pv{margin-top:0;margin-bottom:16px}
+.live-top h2{font-style:italic}
+.lnote{color:var(--muted);opacity:1}.lnote a{color:var(--sky)}
+.lc,.bcard{border:1px solid #dbe5f0;background:#fbfdff}
+.bpick{background:#fff6d2;color:var(--navy)}
+.go{background:var(--ylw)!important;color:var(--navy)!important;border:0!important;font-weight:800!important;box-shadow:inset 0 -3px 0 var(--ylw2)}
+.sec-head h2{color:var(--navy)}
+/* student list: tier tabs + grid of cards (tab look: BUTTONS & TABS block) */
+.ttabs{display:flex;flex-wrap:wrap}
+.ttabs button{font:inherit;border:0;cursor:pointer}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px}
+.scard{position:relative;background:#fff;border:1px solid #d3dde9;cursor:pointer;transition:transform .15s,border-color .15s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.scard:hover{transform:translateY(-3px);border-color:var(--sky)}
+.scard.hide{display:none}.scard.hit{outline:3px solid var(--sky);outline-offset:-3px}
+.scard .ph{position:relative;aspect-ratio:1/1.08;overflow:hidden;background:linear-gradient(160deg,#dcecfb,#a9cff2)}
+.scard .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block}
+.scard .am{position:absolute;right:0;bottom:0;border-left:24px solid transparent;border-bottom:24px solid var(--c)}
+.scard .us{position:absolute;left:0;right:0;bottom:0;padding:12px 6px 3px;background:linear-gradient(0deg,rgba(18,34,60,.8),transparent);color:var(--ylw);font-size:12.5px;letter-spacing:1px}
+.scard .us .no{color:#fff;font-size:10.5px;letter-spacing:0;font-weight:700;opacity:.9}
+.scard .sl{position:absolute;top:4px;right:5px;font-size:9.5px;font-weight:800;color:#fff;background:#e5484d;padding:0 5px;border-radius:3px}
+.scard .sl.sp{background:#2b74e0}
+.scard .gico{position:absolute;top:4px;left:4px;background:#fff;border-radius:5px;padding:0 3px;font-size:11px;opacity:1}
+.scard>b{display:block;font-size:12px;font-weight:700;padding:5px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--navy)}
+/* student profile: two columns like the in-game Student screen */
+.gm .gbox{max-width:1000px;width:100%;padding:0;display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);height:min(88vh,680px);max-height:none;overflow:hidden;border-radius:0;background:#fff;
+  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px))}
+.gbox .gl{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#eaf6ff,transparent 60%),linear-gradient(165deg,#cfe7fb,#7fb9ea 60%,#2f6eb3)}
+.gbox .gl:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-60deg,rgba(255,255,255,.12) 0 2px,transparent 2px 24px)}
+.gbox .gpor{position:absolute;left:50%;right:auto;top:-2%;transform:translateX(-50%);height:140%;width:auto;filter:drop-shadow(0 10px 24px rgba(20,40,70,.3))}
+.gid{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 16px;background:linear-gradient(0deg,rgba(255,255,255,.97) 58%,rgba(255,255,255,0))}
+.gid .pin{display:inline-block;background:var(--ylw);color:var(--navy);font-size:11px;font-weight:800;padding:1px 10px;clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
+.gid h4{margin:6px 0 4px;font-size:23px;font-style:italic;font-weight:800;color:var(--navy);line-height:1.15}
+.gstar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.gstar .st5{color:#f0b400;letter-spacing:2px;font-size:17px}
+.gbox .gr{display:flex;flex-direction:column;min-height:0;background:linear-gradient(180deg,#f3f7fc,#fff 30%)}
+.gtabs{display:flex;align-items:flex-end;gap:4px;padding:12px 12px 0;border-bottom:3px solid var(--navy)}
+.gtabs button{font:inherit;font-size:14px;font-weight:800;font-style:italic;border:0;padding:8px 18px;background:#dfe8f2;color:var(--navy);cursor:pointer;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%)}
+.gtabs button.on{background:var(--navy);color:#fff}
+.gtabs #gmx{margin:0 0 6px auto;align-self:center;clip-path:none;border-radius:50%;width:36px;height:36px;padding:0;font-style:normal}
+.gpane{overflow:auto;padding:14px 20px 18px;flex:1;min-height:0}
+.gbox[data-t=info] .gp-grow,.gbox[data-t=info] .gsrc,.gbox[data-t=grow] .gp-info{display:none}
+@media (max-width:1000px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+  .screen.on{grid-template-columns:minmax(0,1fr)}
+  .cast{position:relative;top:0;height:170px}
+  .cast.lobby{height:210px}
+  .cast .cpor{left:auto;right:-4%;top:-12px;bottom:auto;transform:none;height:340%}
+  .cast .bubble{left:12px;right:40%;bottom:12px;font-size:13px;padding:9px 12px}
+  .pane{padding:14px 12px 100px}
+  .res small{display:none}
+  .tb-title{font-size:17px}
+}
+@media (max-width:760px){.gm{padding:0}.gm .gbox{grid-template-columns:minmax(0,1fr);grid-template-rows:210px minmax(0,1fr);height:94vh}
+  .gbox .gpor{height:330%;top:-8px;left:auto;right:-6%;transform:none}.gid{padding:30px 14px 10px}.gid h4{font-size:19px}}
+html[data-theme=dark] body{background:#0e0f1d;background-image:repeating-linear-gradient(-60deg,rgba(139,124,246,.06) 0 2px,transparent 2px 22px)}
+html[data-theme=dark] :is(.topbar){background:rgba(24,26,46,.95)}
+html[data-theme=dark] :is(.res,.tb-ic){background:#22253f;border-color:#2c2f52;color:var(--ink)}
+html[data-theme=dark] :is(.tb-title,.notice h2,.sec-head h2,.scard>b,.gid h4,.cast .bubble){color:var(--ink)}
+html[data-theme=dark] :is(.notice,.scard,.cast .bubble,.gm .gbox,.gbox .gr,.tile.flat){background:var(--paper)}
+html[data-theme=dark] .cast .bubble:before{border-bottom-color:var(--paper)}
+html[data-theme=dark] .gid{background:linear-gradient(0deg,rgba(24,26,46,.97) 58%,rgba(24,26,46,0))}
+html[data-theme=dark] .gbox .gl{background:linear-gradient(165deg,#2a2552,#4b3c9a 60%,#16142b)}
+html[data-theme=dark] .bpick{background:#2e2a17;color:var(--ink)}
+html[data-theme=dark] .lc,html[data-theme=dark] .bcard{border-color:#2c2f52}
+/* soft rounded corners like the game (no cut corners anywhere) */
+body *:not(.zmove){clip-path:none!important}
+.tile{border-radius:16px;box-shadow:0 4px 14px rgba(30,52,86,.18)}
+.notice{border-radius:16px;overflow:hidden}
+.card,.metric,.guide,.calc-row,.sources,.lc,.bcard,.bpick,.sc,.chip{border-radius:12px}
+.scard{border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(30,52,86,.1)}
+.gm .gbox{border-radius:20px}
+.gbox .gl{border-radius:20px 0 0 20px}
+.ttag,.ntag,.gid .pin,.tile .ttag{border-radius:999px}
+.res{border-radius:999px}
+@media (max-width:760px){.gm .gbox{border-radius:18px 18px 0 0}.gbox .gl{border-radius:18px 18px 0 0}}
+/* touchable lobby student: pat head, poke / pinch cheek, tap body; game-style dialogue box */
+.cast.lobby .l2d{position:absolute;inset:0;pointer-events:auto;touch-action:pan-y;cursor:pointer;user-select:none;-webkit-user-select:none}
+.cast.lobby .cpor{-webkit-user-drag:none}
+@media (min-width:901px){.cast.lobby .cpor{height:104%;bottom:-4%}}
+.l2d .spn{position:absolute;inset:0}
+.cast.day .l2d .spn{background:radial-gradient(ellipse 60% 55% at 50% 45%,rgba(40,80,140,.16),rgba(40,80,140,.06) 60%,transparent 80%)}
+/* TA/GA: Rin from the thighs up, dialogue box over the lower part like the game's story scenes */
+.cast.talk .l2d{position:absolute;left:-12%;right:-12%;top:3%;height:128%;pointer-events:auto;touch-action:pan-y;cursor:pointer;user-select:none;-webkit-user-select:none}
+.cast.talk .dlg p{min-height:4.5em}
+.cast.talk .l2hint{z-index:5}.cast.talk .dlg{z-index:4}.cast.talk .fx{z-index:3}.cast.talk .l2d{z-index:1}
+@media (max-width:900px){.cast.talk{height:210px}.cast.talk .l2d{left:42%;right:-16%;top:0;height:290%}
+ .cast.talk .dlg{left:12px;right:40%;bottom:12px;padding:16px 12px 10px}.cast.talk .dlg p{font-size:13px;min-height:0}}
+.spn .spine-player{position:relative;width:100%;height:100%;background:none!important;border:0!important}
+.spn canvas{display:block;width:100%!important;height:100%!important}
+.spn .spine-player-controls,.spn .spine-player-error{display:none!important}
+.l2d.spring{transition:transform .5s cubic-bezier(.3,1.8,.5,1)}
+.l2d.poke{animation:l2poke .35s ease}.l2d.pat{animation:l2pat .6s ease}.l2d.hop{animation:l2hop .45s ease}
+@keyframes l2poke{30%{transform:scale(.97,1.02)}60%{transform:scale(1.015,.99)}}
+@keyframes l2pat{25%{transform:translateY(5px) scaleY(.985)}55%{transform:translateY(-3px)}}
+@keyframes l2hop{35%{transform:translateY(-10px)}70%{transform:translateY(2px)}}
+.cast .fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.fx .rip{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 8px rgba(21,151,240,.7);animation:rip .6s ease-out forwards}
+@keyframes rip{to{transform:scale(4.5);opacity:0}}
+.fx .blush{position:absolute;width:70px;height:34px;margin:-17px 0 0 -35px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,110,150,.55),transparent);animation:blush 1.4s ease forwards}
+@keyframes blush{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+.fx .heart{position:absolute;color:#ff6f9a;font-size:20px;margin:-10px 0 0 -6px;text-shadow:0 0 6px #fff;animation:heart 1.1s ease-out both}
+@keyframes heart{from{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:1}to{opacity:0;transform:translate(var(--dx),-70px) scale(1.15)}}
+.fx .zb{position:absolute;border:2px dashed #ff4d6a;background:rgba(255,77,106,.12);border-radius:8px}
+.fx .zb:after{content:attr(data-k);position:absolute;top:-20px;left:0;font-size:11px;font-weight:800;color:#fff;background:#ff4d6a;padding:0 6px;border-radius:6px}
+.l2hint{position:absolute;top:12px;left:12px;pointer-events:auto;font:inherit;font-size:11.5px;font-weight:700;color:var(--navy);background:rgba(255,255,255,.9);border:1px solid #d3dde9;border-radius:999px;padding:4px 11px;cursor:pointer}
+.cast .dlg{position:absolute;left:5%;right:5%;bottom:5%;pointer-events:auto;cursor:pointer;background:rgba(255,255,255,.97);border-radius:16px;padding:20px 18px 14px;box-shadow:0 8px 24px rgba(30,52,86,.22);border:2px solid #cfe2f5}
+.dlg b{position:absolute;top:-13px;left:14px;background:var(--navy);color:#fff;font-size:12px;font-weight:800;font-style:italic;padding:3px 14px;border-radius:999px;cursor:pointer}
+.dlg p{margin:0;min-height:3em;font-size:14.5px;font-weight:600;line-height:1.5;color:var(--navy)}
+.dlg i{position:absolute;right:14px;bottom:6px;font-style:normal;font-size:11px;color:var(--sky);opacity:0}
+.dlg.done i{opacity:1;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+html[data-theme=dark] :is(.cast .dlg,.l2hint){background:var(--paper);color:var(--ink);border-color:#2c2f52}
+html[data-theme=dark] .dlg p{color:var(--ink)}
+@media (max-width:900px){.cast .dlg{left:12px;right:30%;bottom:10px;padding:16px 12px 10px}.dlg p{font-size:13px;min-height:0}.l2hint{font-size:10.5px}}
+/* ===== BA DESIGN LANGUAGE (60-30-10, skewed tabs, ? help, lobby HUD hide) ===== */
+/* 30% navy structure, 10% accents: cyan = secondary actions, lemon yellow only for the main CTA (.go: "go there / enter") */
+:root{--navy:#1e2b3e;--ylw:#fde100;--ylw2:#d4bc00;--cy:#00aeef;--cy2:#0090c7;--skw:-12deg}
+.go{background:var(--ylw)!important;color:var(--navy)!important;box-shadow:inset 0 -3px 0 var(--ylw2)!important}
+.tile .ttag,.gid .pin{background:var(--cy);color:#fff}
+.bpick{background:var(--sky-soft)}
+html[data-theme=dark] .bpick{background:#22253f}
+/* parallelogram tabs and buttons: skewed ~12° with a 6px radius; text upright-ish via the skew itself, so drop the extra italic */
+:is(.go,.rf,.bnav button,.bw button,.filters button,.bsel button,.uepick button,.ttabs button,.gtabs button:not(#gmx),.sfil .fb:not(:has(.rlic,.psic,.tag,.ar)),.sfil .fclr,.ttag,.ntag,.gid .pin,.l2hint){
+  transform:skewX(var(--skw));border-radius:6px!important;font-style:normal}
+.tile .ttag{transform:skewX(var(--skw))}
+.rf:active,.go:active,.bnav button:active{transform:skewX(var(--skw)) scale(.96)}
+/* round only for universal controls: Back, Home, theme, help */
+.tb-ic{border-radius:50%!important}
+.tb-help{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--navy);background:#fff;color:var(--navy);font:inherit;font-size:15px;font-weight:800;cursor:pointer;display:grid;place-items:center;padding:0}
+.tb-help[aria-expanded=true]{background:var(--navy);color:#fff}
+.hpop{position:fixed;top:calc(var(--tb) + 8px);left:14px;z-index:70;width:min(380px,calc(100vw - 28px));background:#fff;border-radius:12px;box-shadow:0 14px 36px rgba(30,43,62,.28);overflow:hidden;display:none}
+.hpop.on{display:block;animation:scrIn .2s ease}
+.hpop h4{margin:0;background:var(--navy);color:#fff;font-size:14px;font-weight:800;padding:9px 14px}
+.hpop ul{margin:0;padding:10px 14px 12px 30px;font-size:13.5px;line-height:1.5;color:var(--navy)}
+.hpop li{margin:4px 0}
+html[data-theme=dark] .tb-help{background:#22253f;border-color:var(--ink);color:var(--ink)}
+html[data-theme=dark] .hpop{background:var(--paper)}html[data-theme=dark] .hpop ul{color:var(--ink)}
+/* lobby: collapse every tile to look at the Live2D student, like the game's "<" arrow */
+.hud-tg{position:fixed;right:0;top:50%;z-index:45;transform:translateY(-50%);width:30px;height:64px;border:0;border-radius:10px 0 0 10px;background:var(--navy);color:#fff;font-size:22px;font-weight:800;cursor:pointer;display:none;place-items:center;padding:0;box-shadow:-2px 2px 10px rgba(30,43,62,.25)}
+body:has(#home.on) .hud-tg{display:grid}
+body.hud-off #home.screen.on{grid-template-columns:minmax(0,1fr)}
+body.hud-off #home .pane{display:none}
+body.hud-off #home .cast.lobby{height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb))}
+body.hud-off :is(.aro-btn,.totop){display:none}
+@media (max-width:900px){.hud-tg{top:auto;bottom:90px;transform:none}}
+/* ===== NHIỆM VỤ (Tasks screen, replaces MomoTalk) ===== */
+/* lobby = the game's Work / Campaign screen: the animated flooded-classroom scene (Spine) covers the whole home screen,
+   the student stands in it on the left, the tiles float on the right. isolation keeps the scene above #home's own sky fallback. */
+#home.screen{position:relative;isolation:isolate}
+#lobbyScene{position:absolute;left:0;right:0;top:0;height:calc(100vh - var(--tb,56px));height:calc(100dvh - var(--tb,56px));z-index:-1;pointer-events:none;overflow:hidden}
+#lobbyScene .spn{position:absolute;inset:0}
+#lobbyCast .l2d .spn{transition:opacity .6s ease}
+@media (min-width:901px){html body #home.screen.on{grid-template-columns:minmax(0,1.6fr) minmax(380px,1fr)}}
+/* ===== LOBBY LAYOUT (confirmed on the 20×12 screen grid): the room fills the screen, every tile sits inside cells L2→S10
+   = columns 12-19 (left 55%, width 40%) × rows 2-10 (top 1/12, height 9/12). Inside, an 8×9 grid, one track per screen cell:
+   big 4×3 = TA/GA, Banner, PvP, Kế hoạch UE, Học sinh · medium 2×2 = Cơ chế boss, Nhiệm vụ · small 2×1 = Thẻ EX, locked slot */
+#home .notice{display:none}
+@media (min-width:901px){
+ html body #home.screen.on{display:block;position:relative;height:calc(100vh - var(--tb,56px));height:calc(100dvh - var(--tb,56px));min-height:0;overflow:hidden}
+ #home .cast.lobby{position:absolute;inset:0;height:auto;width:auto}
+ #home>.pane{position:absolute;left:55%;width:40%;top:calc(100% / 12);height:calc(100% * 9 / 12);padding:0;margin:0;overflow:visible;z-index:3}
+ #home .tiles{height:100%;margin:0;display:grid}
+ #home .tiles .tile{min-height:0;height:auto}
+ /* (the card grid itself is set once, in the LOBBY TILES block at the end of the CSS) */
+ /* dialogue box + hint stay on the student's side, clear of the tiles */
+ #home .cast.lobby .dlg{left:2.5%;right:auto;width:min(48%,720px)}
+ #home .cast.lobby .l2hint{left:2.5%;right:auto}
+}
+/* screens with no student on duty: one full-width column, content centred at a readable width */
+.screen.nocast.on{grid-template-columns:minmax(0,1fr)!important}
+.screen.nocast .pane{width:100%;max-width:1320px;margin:0 auto;box-sizing:border-box}
+/* TEMPORARY touch-zone grid (remove with drawGrid once the zones are confirmed) */
+.zb.zgrid{position:absolute;border:0!important;background:none!important;pointer-events:none;overflow:visible;z-index:0}
+.zb.zgrid::before,.zb.zgrid::after{display:none!important;content:none!important}
+.zb.zgrid svg{overflow:visible;display:block}
+.zb.zgrid line{stroke:rgba(255,40,90,.55);stroke-width:1}
+.zb.zgrid text{fill:#fff;font:700 9px/1 system-ui,sans-serif;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:rgba(20,20,40,.85);stroke-width:2.5px}
+/* the game's Tasks room (wallpaper's Mssion_Bg.png, name as shipped) covers the whole screen, left to right; Ayumu's edges
+   then sit on a mid-tone picture instead of the bright page, so the light fringe pixels no longer stand out */
+#s-task.screen{background:#1e2b3e url(../Spine/ayumu_wp/assets/Mssion_Bg.png) center/cover no-repeat fixed}
+#s-task .cast,#s-task .cast .l2d,#s-task .cast .spn,#s-task .pane{background:transparent!important}
+#s-task .cast::before,#s-task .cast::after{display:none!important}
+#s-task .tasks{background:rgba(255,255,255,.82)}
+html[data-theme=dark] #s-task .tasks{background:rgba(30,32,58,.82)}
+/* same full-width room backdrop on every Live2D screen, each from its own wallpaper:
+   TA/GA = Rin's raid control room (Raid_Bg.png), Kế hoạch UE = Aoi's GSC lobby (Event_Main_Stage_Bg_60000.png),
+   lobby = Shittim Chest painted in CSS (the wallpaper's own room is an animated Spine scene with Arona/Plana sitting in it):
+   day = sky and water, night (Plana's shift) = dark sky with stars */
+#s-raid.screen{background:#1e2b3e url(../Spine/rin_wp/assets/Raid_Bg.png) center/cover no-repeat fixed}
+.screen[data-cast="ue"]{background:#1e2b3e url(../Spine/aoi_wp/assets/Event_Main_Stage_Bg_60000.png) center/cover no-repeat fixed}
+#home.screen{background:
+  radial-gradient(ellipse 70% 30% at 50% 100%,rgba(255,255,255,.55),transparent 70%),
+  linear-gradient(180deg,#5fb8f2 0%,#9fd6f7 38%,#e4f5fd 56%,#bfe6f8 57%,#8fd0f0 75%,#6ec0ea 100%) fixed}
+#home.screen:not(:has(.cast.day)){background:
+  radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 27% 8%,#fff,transparent),radial-gradient(1.5px 1.5px at 44% 26%,#cfe6ff,transparent),
+  radial-gradient(1px 1px at 63% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 78% 30%,#fff,transparent),radial-gradient(1px 1px at 90% 6%,#cfe6ff,transparent),
+  radial-gradient(ellipse 70% 30% at 50% 100%,rgba(120,150,255,.25),transparent 70%),
+  linear-gradient(180deg,#0b1030 0%,#1a2150 45%,#2e3470 56%,#1b2a5c 57%,#121a44 80%,#0b1030 100%) fixed}
+:is(#s-raid,.screen[data-cast="ue"],#home) :is(.cast,.cast .l2d,.cast .spn,.pane){background:transparent!important}
+/* PvP = Momoka's Bounty / Commissions room (Week_Bg.png); Banner = Sora's Angel 24 (her wallpaper ships no room picture, so a
+   bright shop counter in CSS: shelves of light at the top, cool floor below) */
+.screen[data-cast="pvp"]{background:#1e2b3e url(../Spine/ws_2959842788/assets/Week_Bg.png) center/cover no-repeat fixed}
+.screen[data-cast="banner"]{background:
+  repeating-linear-gradient(90deg,rgba(255,255,255,.0) 0 140px,rgba(255,255,255,.35) 140px 146px),
+  linear-gradient(180deg,#e9f6ff 0%,#cfeaff 30%,#ffffff 31%,#f3f8fc 52%,#b9d6ee 53%,#8fb6d8 100%) fixed}
+html[data-theme=dark] .screen[data-cast="banner"]{background:linear-gradient(180deg,#1d2650 0%,#26306a 52%,#161c3f 53%,#0f1430 100%) fixed}
+:is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) :is(.cast,.cast .l2d,.cast .spn,.pane){background:transparent!important}
+:is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) .cast::before,:is(.screen[data-cast="pvp"],.screen[data-cast="banner"]) .cast::after{display:none!important}
+:is(#s-raid,.screen[data-cast="ue"],#home) .cast::before,:is(#s-raid,.screen[data-cast="ue"],#home) .cast::after{display:none!important}
+/* screens without a student get the same backdrops as their lobby cards (wiki "Background images", local copies in BG/):
+   Cơ chế boss = Abydos ruins (Binah's desert); night versions in dark mode.
+   Thẻ EX is a section inside the boss screen: its card gets the arcade under a frosted veil so the text stays readable. */
+#s-boss.screen{background:#1e2b3e url(../BG/BG_AbydosRuinArea.jpg) center/cover no-repeat fixed}
+html[data-theme=dark] #s-boss.screen{background-image:url(../BG/BG_AbydosRuinArea_Night.jpg)}
+#s-stu.screen,#s-roster.screen{background:#1e2b3e url(../BG/BG_ClassRoom.jpg) center/cover no-repeat fixed}
+html[data-theme=dark] :is(#s-stu,#s-roster).screen{background-image:url(../BG/BG_ClassRoom_Night.jpg)}
+:is(#s-boss,#s-stu,#s-roster,#s-jfd) .pane{background:transparent!important}
+#order.card{background:linear-gradient(rgba(255,255,255,.84),rgba(255,255,255,.84)),url(../BG/BG_Arcade.jpg) center/cover no-repeat!important}
+html[data-theme=dark] #order.card{background:linear-gradient(rgba(20,22,42,.86),rgba(20,22,42,.86)),url(../BG/BG_Arcade.jpg) center/cover no-repeat!important}
+#tTask{background:linear-gradient(135deg,#00aeef,#1e2b3e)}
+.tile.alert .ttag{background:#ff4d6a;color:#fff}
+.tasks{background:rgba(255,255,255,.94);border-radius:16px;padding:16px 18px;box-shadow:0 6px 22px rgba(30,52,86,.1)}
+.tk-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.tk-prog{display:grid;grid-template-columns:auto auto;gap:2px 8px;align-items:baseline;min-width:190px}
+.tk-prog b{font-size:22px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.tk-prog small{color:var(--muted);font-size:12px}
+.tk-prog .pbar{grid-column:1/-1}.tk-prog .pbar i{background:var(--cy);transition:width .3s}
+.tk-list{display:grid;gap:8px}
+.tk{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;background:#fff;border:1px solid #d3dde9;border-left:5px solid var(--cy);border-radius:10px;padding:10px 14px;transition:opacity .2s}
+.tk-ck{width:36px;height:36px;border-radius:50%;border:2px solid #b8c6d6;background:#fff;color:transparent;font-size:18px;font-weight:900;cursor:pointer;display:grid;place-items:center;padding:0;transition:.15s}
+.tk-ck:hover:not(:disabled){border-color:var(--cy);color:var(--cy)}
+.tk.done .tk-ck{background:var(--cy);border-color:var(--cy);color:#fff}
+.tk-ck:disabled{cursor:default}
+.tk.done{opacity:.6;border-left-color:#b8c6d6}
+.tk.done .tk-t b{text-decoration:line-through;text-decoration-color:rgba(30,43,62,.4)}
+.tk-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tk-t b{font-size:15px;color:var(--navy);line-height:1.3}
+.tk-t small{font-size:12.5px;color:var(--muted);line-height:1.4}
+.tk-c{align-self:flex-start;font-size:10.5px;font-weight:800;color:#fff;background:var(--navy);padding:0 8px;border-radius:5px;transform:skewX(var(--skw))}
+/* "Đi tới" of a task = the page's main action button (.go: yellow, slant, 40px); here only no underline */
+.tk-go{text-decoration:none}
+.tk-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:14px}
+.tk-foot .lnote{margin:0;flex:1 1 280px}
+.tk-all{font-size:15px!important;padding:10px 26px!important}
+.tk-all:disabled{filter:grayscale(1);opacity:.5;cursor:default}
+html[data-theme=dark] :is(.tasks,.tk,.tk-ck){background:var(--paper);border-color:#2c2f52}
+html[data-theme=dark] :is(.tk-t b,.tk-prog b){color:var(--ink)}
+@media (max-width:600px){.tk{grid-template-columns:36px minmax(0,1fr)}.tk-go{grid-column:2;justify-self:start}}
+/* TA/GA: both cards the same height, the "Xem cơ chế" buttons pinned to the bottom of each card at full width; the cards absorb
+   the free height of the panel; quick prep (sample team + must rules) inside each card, season list underneath */
+#live{display:flex;flex-direction:column}
+#live .lgrid{flex:1 0 auto;align-items:stretch}
+#live .lc .go{margin-top:auto;align-self:stretch;text-align:center}
+.lprep{display:flex;flex-direction:column;gap:5px;background:rgba(255,255,255,.7);border:1px solid #dbe5f0;border-radius:10px;padding:8px 10px}
+.lprep .k{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.lprep .keys{display:flex;flex-wrap:wrap;gap:6px}
+.lprep .rl{margin:0;padding-left:18px;font-size:12.8px;line-height:1.45}
+.lsched{margin-top:14px}
+.lsched h4{margin:0 0 8px;font-size:15px;color:var(--navy)}
+.lsg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.lsched .ls{display:flex;flex-direction:column;gap:3px;padding:8px 12px;border-radius:10px;background:#fbfdff;border:1px solid #dbe5f0;border-left:5px solid var(--c);color:var(--ink);text-decoration:none}
+.lsched .ls:hover{border-color:var(--sky);border-left-color:var(--c)}
+.lsched .ls.on{background:var(--sky-soft)}
+.lsched .lm{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.lsched .ls b{font-size:14px;display:flex;align-items:center}
+.lsched .ld{font-size:12.5px;color:var(--muted)}
+.lsched .la{display:flex;flex-wrap:wrap;gap:4px}
+html[data-theme=dark] :is(.lprep,.lsched .ls){background:var(--paper);border-color:#2c2f52}
+html[data-theme=dark] .lsched .ls.on{background:var(--sky-soft)}
+html[data-theme=dark] .lsched h4{color:var(--ink)}
+/* student profile block in the popup */
+.gbio{margin:12px 0 4px}
+.gbio .bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;background:var(--sky-soft);border-radius:12px;padding:10px 12px}
+.gbio .bgrid span{display:flex;flex-direction:column;font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.35}
+.gbio .bgrid span.w{grid-column:1/-1}
+.gbio .bgrid i{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.gbio .bgrid small{font-weight:500;color:var(--muted)}
+.gbio .btxt{margin:10px 0 0;font-size:13.5px;line-height:1.6;color:var(--ink);border-left:3px solid var(--sky);padding-left:10px}
+.gbio .bsrc{margin:8px 0 0;font-size:11px;color:var(--muted)}
+/* student filters: role / ammo / armor / slot chips under the search box (their look: GAME ICONS block = bare icon,
+   BUTTONS & TABS block = the text ones STRIKER / SPECIAL and "Xóa lọc") */
+.sfil{flex:1 0 100%;width:100%;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.sfil .fr{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sfil .fr>b{min-width:66px;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.sfil .fb{display:inline-flex;align-items:center;gap:4px;font:inherit;cursor:pointer;transition:.15s}
+.sfil .fb>span{pointer-events:none;margin:0}
+.sfil .fcnt{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--sky)}
+.tier.fempty{display:none}
+/* desktop: the panel of each screen reaches the bottom of the screen (the last block stretches), no empty room under it */
+/* every screen spans the whole window, so its room picture reaches both edges (the old 1500px cap left bare strips left and right) */
+#app{max-width:none}
+/* any window width (desktop window dragged narrow, tablet, phone): a screen's panel may shrink below the widest thing inside it.
+   Without this the grid column grew to fit e.g. the one-row TA/GA season list, so the panel ran past the right edge of the
+   window and the TA/GA frame looked cut on the right. Wide rows scroll inside themselves instead. */
+.screen>.pane,.screen>.pane>*,#live,#live>*,.lgrid>*,.lsched,.lsg{min-width:0;max-width:100%;box-sizing:border-box}
+html,body{overflow-x:clip}
+/* every sub-frame scales with its window: card rows re-flow into as many columns as fit (each column at least ~150px or the
+   full width when even that doesn't fit), long words / codes break instead of pushing the frame wider */
+#s-raid .lsched .lsg,.lsg{grid-auto-flow:row!important;grid-auto-columns:auto!important;overflow:visible!important;
+ grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))!important;gap:6px}
+.lsched .ls{min-width:0}
+.lsched .ls b,.lsched .ld{overflow-wrap:anywhere}
+.pairs{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))!important}
+.metrics{grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))!important}
+.grid2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))!important}
+.pmeta{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))!important}
+.lgrid.pg{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))!important}
+.pane :is(.card,.lc,.block,.boss,.tasks,.tk,.lprep,.ls,.pair,.metric){min-width:0;overflow-wrap:anywhere}
+.pane :is(img,video,canvas,svg,table){max-width:100%}
+/* tables wrap between words only: the "anywhere" rule above let the table squeeze a column down to one letter
+   ("Mi ễn ph í"); a table still too wide for the window scrolls sideways inside its frame */
+.pane table{overflow-wrap:normal}
+.pane .tbl-wrap{overflow-x:auto}
+.pane td .ue{white-space:nowrap}
+@media (min-width:901px){
+ #s-raid .lsched .lsg{max-height:22vh;overflow-y:auto!important;scrollbar-width:thin}
+ .screen.on:not(#home)>.pane{min-height:calc(100vh - var(--tb));min-height:calc(100dvh - var(--tb));display:flex;flex-direction:column;padding-bottom:18px}
+ .screen.on:not(#home)>.pane>.block:last-child{flex:1 0 auto}
+}
+/* desktop TA/GA fits one screen, no page scroll: the panel is exactly the window height, the two boss cards share the free
+   height (a card scrolls inside itself only on a very short window), season list = one row, notes smaller */
+@media (min-width:901px){
+ #s-raid.screen.on>.pane{height:calc(100vh - var(--tb));height:calc(100dvh - var(--tb));min-height:0;padding:14px 22px}
+ #s-raid #live{flex:1 1 auto;min-height:0;margin:0}
+ #s-raid #live .live-top{margin:0 0 10px}
+ #s-raid #live .live-top h2{font-size:18px}
+ #s-raid #live .lgrid{flex:1 1 auto;min-height:0;grid-template-rows:minmax(0,1fr);gap:10px}
+ #s-raid #live .lc{min-height:0;overflow-y:auto;scrollbar-width:thin;gap:6px;padding:12px 14px}
+ #s-raid .lc .lbg{height:46%}
+ #s-raid .lc h3{font-size:20px}
+ #s-raid .lc .when{padding:5px 10px;line-height:1.4}
+ #s-raid .lprep{padding:6px 10px;gap:4px}
+ #s-raid .lprep .rl li{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ #s-raid .lsched{margin-top:10px;flex:none}
+ #s-raid .lsched h4{font-size:13.5px;margin-bottom:6px}
+ #s-raid .lsg{grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);grid-template-columns:none;overflow-x:auto;scrollbar-width:thin}
+ #s-raid .lsched .ls{padding:5px 10px;gap:1px}
+ #s-raid .lnote{font-size:11.5px;line-height:1.45;margin-top:8px;flex:none}
+}
+/* ===== Apple-style open / close: the new screen grows out of the tapped tile or dock icon, and shrinks back into it on close.
+   The old screen stays pinned behind (zleave) and dims; the moving one (zmove) gets a solid background so nothing shows through. */
+.screen.zleave{position:fixed!important;left:0!important;right:0!important;z-index:1!important;overflow:hidden!important;pointer-events:none;animation:none!important}
+.screen.zleave .cast{top:0}
+.screen.zmove{position:relative;z-index:3;pointer-events:none;will-change:clip-path,opacity;background-color:#eef5fc}
+.screen.zleave.zmove{z-index:4!important}
+/* the opening screen as its own fixed window-sized layer during the zoom (all devices); the page can't scroll under it */
+.screen.zfix{position:fixed!important;left:0!important;right:0!important;margin:0!important;overflow:hidden!important;overscroll-behavior:contain;isolation:isolate;animation:none!important}
+.screen.zfix .cast{top:0}
+/* dim layer between the page behind and the zooming screen (opacity only, so it stays on the GPU) */
+#zdim{position:fixed;inset:0;z-index:2;background:rgba(8,18,36,.3);opacity:0;pointer-events:none;display:none;will-change:opacity}
+#zdim.z{display:block}
+html[data-theme=dark] #zdim{background:rgba(0,0,0,.45)}
+.screen.nz{animation:none!important}
+html[data-theme=dark] .screen.zmove{background-color:#0e0f1d}
+/* ===== phone Dock: floating frosted glass bar at the bottom replaces the top-bar resource pills ===== */
+/* edge swipe back: the screen being dragged away casts a soft shadow on the one underneath */
+.screen.swp{z-index:3!important;box-shadow:0 0 40px rgba(10,25,50,.35);will-change:transform}
+/* student profile: grab bar on top, drag it (or the portrait) down to close, like an iOS sheet */
+.gm .grab{position:absolute;top:0;left:0;right:0;height:28px;z-index:6;display:flex;justify-content:center;align-items:center;touch-action:none;cursor:grab}
+.gm .grab i{display:block;width:44px;height:5px;border-radius:3px;background:rgba(30,43,62,.38);box-shadow:0 0 0 1px rgba(255,255,255,.5)}
+.gm .grab:active{cursor:grabbing}
+html[data-theme=dark] .gm .grab i{background:rgba(231,233,251,.5);box-shadow:none}
+@media (max-width:760px){.gm .gbox .gl{touch-action:none}}
+/* while a sheet is open every swipe stays inside it: the student list behind never scrolls */
+.gm,.gm .gpane{overscroll-behavior:contain}
+html:has(.gm.on){overflow:hidden}
+.dock{display:none}
+/* ===== PHONE LAYOUT (≤900px), one block: student band, room pictures, Dock =====
+   Student band: same room pictures and students, only panels and tiles move; the student stands in a band at the top (head to
+   thighs) and the panel starts right under her. Lobby: the room is shifted up so Arona / Plana stand above the tiles.
+   Room pictures: phone browsers don't do background-attachment:fixed (iOS ignores it), so "cover" was worked out against the whole
+   screen and blew up; the screen's own picture is switched off and redrawn on a window-sized fixed layer behind it. */
+/* iOS spring (small overshoot, settles fast) for the Dock growing back; older browsers get a bouncy cubic-bezier, reduce-motion a plain ease */
+:root{--spring:cubic-bezier(.32,1.3,.5,1)}
+@supports (transition-timing-function:linear(0,1)){:root{--spring:linear(0,.06,.22 6%,.6 14%,.86 21%,1.02 30%,1.05 36%,1.04 42%,1.01 54%,.995 66%,1)}}
+@media (prefers-reduced-motion:reduce){:root{--spring:ease}}
+@media (max-width:900px){
+ .cast.talk{height:min(56vh,520px)}
+ .cast.talk .l2d{left:0;right:0;top:0;height:100%}
+ .cast.talk .dlg,#home .cast.lobby .dlg{left:10px;right:10px;bottom:10px}
+ #home .cast.lobby{height:58vh}
+ #lobbyScene{top:-18vh}
+ .pane{position:relative;z-index:2;padding:12px 12px calc(104px + env(safe-area-inset-bottom))}
+ .screen:not(#home){background-size:0 0!important;background-color:transparent!important}
+ .screen:not(#home)::before{content:"";position:fixed;left:0;right:0;top:var(--tb);bottom:0;z-index:-1;pointer-events:none;
+  background:inherit;background-size:cover!important;background-attachment:scroll!important;background-repeat:no-repeat!important}
+ .topbar .tb-res{display:none}
+ .topbar .tb-title{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+ .dock{display:flex;position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:48;
+  width:min(460px,calc(100vw - 20px));gap:2px;padding:6px;border-radius:26px;justify-content:space-between;
+  background:rgba(255,255,255,.58);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
+  border:1px solid rgba(255,255,255,.75);box-shadow:0 12px 32px rgba(21,48,77,.24),inset 0 1px 0 rgba(255,255,255,.85);
+  transform-origin:50% 100%;will-change:transform;transition:opacity .25s,transform .55s var(--spring)}
+ .dock a{flex:1 1 0;min-width:0;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 2px 6px;border-radius:20px;
+  text-decoration:none;color:var(--navy);font-size:10.5px;font-weight:700;line-height:1.1;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+ .dock a span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .3s .1s}
+ /* minimized while scrolling (JS adds .mini): only transform + opacity move, so the phone's GPU animates it without re-laying out
+    the glass. The whole dock shrinks to 70% toward its bottom edge (~43px tall), labels fade, icons drop into the middle and grow
+    back a little, badges become dots. Shrinking is a quick ease, growing back the iOS spring (a transition follows the state it goes TO) */
+ .dock.mini{transform:translateX(-50%) scale(.7)}
+ .dock.mini a span{opacity:0}
+ .dock.mini a i{transform:translateY(7px) scale(1.15)!important}
+ .dock.mini .bd{transform:translate(2px,6px) scale(.5);color:transparent}
+ .dock.mini,.dock.mini a i,.dock.mini a span,.dock.mini .bd{transition-duration:.3s;transition-delay:0s;transition-timing-function:cubic-bezier(.3,.7,.4,1)}
+ .dock a i{font-style:normal;font-size:22px;line-height:1.2;display:block;transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
+ .dock a:active i{transform:scale(.8)}
+ .dock a.on{background:rgba(21,151,240,.15);color:var(--sky)}
+ .dock a.on i{transform:translateY(-1px) scale(1.08)}
+ .dock a.on::after{content:"";position:absolute;bottom:2px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--sky)}
+ .dock .bd{position:absolute;top:0;left:calc(50% + 5px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#ff3b30;color:#fff;
+  font-size:10px;font-weight:800;line-height:18px;text-align:center;white-space:nowrap;box-shadow:0 0 0 2px rgba(255,255,255,.95);font-variant-numeric:tabular-nums}
+ .dock .bd:empty{display:none}
+ .dock .bd.info{background:var(--sky)}
+ .dock .bd{transform-origin:0 0;transition:transform .55s var(--spring),color .2s}
+ html[data-theme=dark] .dock{background:rgba(24,26,46,.6);border-color:rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08)}
+ html[data-theme=dark] .dock a{color:#dfe6ff}
+ html[data-theme=dark] .dock a.on{background:rgba(139,124,246,.22);color:#c9c0ff}
+ html[data-theme=dark] .dock a.on::after{background:#c9c0ff}
+ html[data-theme=dark] .dock .bd{box-shadow:0 0 0 2px rgba(24,26,46,.95)}
+ body.hud-off .dock{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px)}
+ /* the floating buttons sit above the Dock */
+ .totop{bottom:calc(92px + env(safe-area-inset-bottom))!important}
+ .hud-tg{bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+/* ===== LIQUID GLASS (phone + desktop): the big frames (TA/GA, PvP, banners), the section panels of the room screens, the top bar
+   and the Dock become one material: a clear, slightly tinted pane with a strong blur + saturation of the room behind it,
+   a bright rim of light along the top edge, a softer one along the bottom, and a moving-looking sheen across the upper half. */
+:root{--pad:clamp(14px,2.2vw,22px);--lg-bg:linear-gradient(135deg,rgba(255,255,255,.40),rgba(255,255,255,.16) 55%,rgba(255,255,255,.26));
+ --lg-blur:blur(20px) saturate(1.9) brightness(1.04);
+ --lg-rim:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),inset 1px 0 0 rgba(255,255,255,.35),inset -1px 0 0 rgba(255,255,255,.25);
+ --lg-drop:0 12px 32px rgba(20,45,80,.18),0 2px 6px rgba(20,45,80,.08)}
+html[data-theme=dark]{--lg-bg:linear-gradient(135deg,rgba(60,64,110,.42),rgba(20,22,42,.30) 55%,rgba(40,42,80,.38));
+ --lg-blur:blur(20px) saturate(1.6) brightness(.95);
+ --lg-rim:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.08),inset 1px 0 0 rgba(255,255,255,.10),inset -1px 0 0 rgba(255,255,255,.06);
+ --lg-drop:0 12px 32px rgba(0,0,0,.45)}
+.live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block{position:relative;isolation:isolate;clip-path:none!important;border-radius:22px!important;
+ padding:var(--pad)!important;box-sizing:border-box;
+ background:var(--lg-bg)!important;-webkit-backdrop-filter:var(--lg-blur)!important;backdrop-filter:var(--lg-blur)!important;
+ border:1px solid rgba(255,255,255,.45)!important;box-shadow:var(--lg-rim),var(--lg-drop)!important;color:var(--ink)!important}
+/* a frame inside a frame (the TA/GA tracker is also a section) is not padded twice */
+:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block .live{padding:0!important;background:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block .live::before{display:none!important}
+.live .live-top{margin:0 0 12px!important;padding:0!important}
+:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block>.sec-head:first-child{margin-top:0}
+:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block+.block{margin-top:18px}
+/* the sheen: a soft diagonal highlight over the top, like light caught in curved glass */
+.live::before,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block::before{content:"";display:block!important;position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+ background:radial-gradient(120% 60% at 15% -10%,rgba(255,255,255,.55),transparent 55%),linear-gradient(180deg,rgba(255,255,255,.18),transparent 40%)}
+.live::after{display:none!important}
+html[data-theme=dark] :is(.live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block){border-color:rgba(255,255,255,.14)!important}
+html[data-theme=dark] :is(.live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block)::before{background:radial-gradient(120% 60% at 15% -10%,rgba(255,255,255,.14),transparent 55%)}
+.live .live-top{background:transparent!important;background-image:none!important;clip-path:none!important;box-shadow:none!important}
+.live .live-top h2{color:var(--navy)!important;font-style:italic;text-shadow:0 1px 0 rgba(255,255,255,.55)}
+.live .live-top small,.live .lnote{color:var(--muted)!important;opacity:1}
+.live .lnote a{color:var(--sky)!important}
+html[data-theme=dark] .live .live-top h2{color:#eef0ff!important;text-shadow:none}
+.live .bpick{background:rgba(255,255,255,.5);color:var(--ink)}
+/* cards inside the glass: almost solid so the text stays easy to read, with the same rim of light */
+.live :is(.lc,.bcard){background:rgba(255,255,255,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 14px rgba(20,45,80,.10);border:1px solid rgba(255,255,255,.7)}
+html[data-theme=dark] .live :is(.lc,.bcard){background:rgba(24,26,46,.80);border-color:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+/* top bar and Dock: the same glass */
+.topbar{background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,.42))!important;-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+ box-shadow:inset 0 -1px 0 rgba(255,255,255,.6),0 6px 20px rgba(20,45,80,.12)!important}
+html[data-theme=dark] .topbar{background:linear-gradient(180deg,rgba(30,32,58,.70),rgba(22,24,44,.55))!important;box-shadow:inset 0 -1px 0 rgba(255,255,255,.08),0 6px 20px rgba(0,0,0,.4)!important}
+@media (max-width:900px){
+ /* lighter blur on phones: hardly visible difference, much less GPU work while scrolling */
+ :root{--lg-blur:blur(14px) saturate(1.8) brightness(1.04)}
+ html[data-theme=dark]{--lg-blur:blur(14px) saturate(1.5) brightness(.95)}
+ .dock{background:var(--lg-bg)!important;-webkit-backdrop-filter:var(--lg-blur)!important;backdrop-filter:var(--lg-blur)!important;box-shadow:var(--lg-rim),var(--lg-drop)!important}
+ .live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block{border-radius:20px!important}
+}
+/* browsers without backdrop-filter: fall back to a near-solid pane so text never sits on a busy picture */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ .live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block{background:rgba(255,255,255,.9)!important}
+ html[data-theme=dark] :is(.live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block){background:rgba(24,26,46,.92)!important}}
+/* ===== PHONE ANTI-CUT (≤900px only, desktop untouched): nothing may be wider than the screen. Every grid / flex child may shrink
+   (min-width:0), multi-column blocks stack, cards grow with their text instead of keeping a fixed height, long words wrap. ===== */
+@media (max-width:900px){
+ html,body{overflow-x:clip;max-width:100%}
+ #app,.screen,.screen.on,.pane{max-width:100vw;min-width:0}
+ :is(.screen,.pane,.lgrid,.lsg,.grid2,.duo,.pmeta,.bpage,.cards,.tiles,.metrics,.pairs,.steps,.lanes,.live,.lc,.bcard,.card,.guide,.armor,.lprep,.tools,.sfil,.live-top,.calc-in)>*{min-width:0;max-width:100%}
+ /* two-up blocks -> one column: TA/GA boss cards, PvP, banners, boss pages, armor teams */
+ .lgrid,.lgrid.pg,.pmeta,.duo,.duo .lgrid,.grid2,.bpage,.mx{grid-template-columns:minmax(0,1fr)!important}
+ /* season list (Lịch TA / GA sắp tới): 2 columns, 1 on very narrow phones */
+ .lsg{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-flow:row!important;grid-auto-columns:auto!important;overflow:visible!important}
+ .cards{grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+ /* cards keep their content: no fixed height, no cut-off rows (the "Phải nhớ" list at the bottom of a boss card) */
+ :is(.lc,.bcard,.card,.guide,.live,.lprep,#live){height:auto!important;max-height:none!important;min-height:0}
+ #live .lc{overflow:hidden}
+ /* rows of badges / tags / chips wrap onto new lines */
+ :is(.live-top,.lc .row,.lc .mode,.lprep .keys,.lsched .la,.lsched .ls b,.bcard .bh,.bs .nr,.guide .gr,.guide .gl,.step-top,.nhead,.tools,.legend,.sfil .fr,.calc-in,.bnav,.bsel,.ttabs){flex-wrap:wrap}
+ .live-top>*{flex:1 1 auto}
+ .live-top .rf{white-space:normal;text-align:center}
+ .pane{overflow-wrap:break-word;word-break:normal}
+ .pane :is(h2,h3,h4,b,p,li,small,span,a){overflow-wrap:anywhere}
+ .tools input{min-width:0;width:100%;flex:1 1 100%}
+ .calc input{width:100%;max-width:100%}
+ .tbl-wrap{overflow-x:auto;max-width:100%}
+ .lane{grid-template-columns:minmax(0,1fr)}
+ .ptier{grid-template-columns:64px minmax(0,1fr)}
+}
+@media (max-width:400px){
+ .lsg{grid-template-columns:minmax(0,1fr)!important}
+ .metrics,.pairs{grid-template-columns:minmax(0,1fr)!important}
+}
+/* ================= UI v2 · design system =================
+   One set of tokens for the whole report: 5 text sizes, 5 spacing steps, 3 corner radii. Components below only use these. */
+:root{--fs-xs:11.5px;--fs-sm:13px;--fs-md:14.5px;--fs-lg:17px;--fs-xl:22px;
+ --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;
+ --r-lg:22px;--r-md:14px;--r-pill:999px;
+ --muted-on-glass:#46586e}
+html[data-theme=dark]{--muted-on-glass:#b4b9dc}
+/* radii: big frames 22 · cards 14 · every chip / tag / badge fully round */
+:is(.card,.lc,.bcard,.guide,.armor,.sc,.metric,.calc-row,.boss,.tasks,.tk,.lprep,.ls,.pair,.lane,.scard,.tier){border-radius:var(--r-md)!important}
+:is(.ue,.tag,.ar,.slot,.dif,.st,.vd,.lim,.pill,.tierb,.chip,.nm,.ttag,.ntag){border-radius:var(--r-pill)!important}
+/* text: the stray 12.5 / 12.6 / 12.8 / 13.5 sizes snap to the scale */
+:is(.why,.lnote,.sub,.desc,.note,.gnote,.ld,.lc .row,.boss .meta,.skd,.tk-t small){font-size:var(--fs-sm)!important;line-height:1.5}
+:is(.mx li,.rl,.lc .rl,.lprep .rl,.guide,.card p,.card li,.sk .se){font-size:var(--fs-md);line-height:1.55}
+:is(.k,.lm,.mode,.boss .k,.armor .k,.lprep .k,.subhead){font-size:var(--fs-xs)!important;letter-spacing:.06em}
+/* secondary text on glass panels gets a darker grey: the old --muted fell under 4.5:1 contrast over bright room pictures */
+:is(.live,:is(#s-raid,#s-task,.screen[data-cast]) .pane>.block) :is(.sec-head p,.lnote,.live-top small,.ld,.lm,.mode,.why,.sub,.note){color:var(--muted-on-glass)!important}
+
+/* section titles: the "number tile + striped rule" of the old printed report goes; game-style title instead =
+   bold italic heading led by a small slanted cyan bar, subtitle underneath */
+.sec-head{gap:var(--s3);margin-bottom:var(--s4);align-items:flex-start}
+.sec-head .sec-num,.sec-head:after{display:none!important}
+.sec-head h2{position:relative;padding-left:18px;font-size:var(--fs-xl);font-weight:800;font-style:italic;letter-spacing:-.015em;color:var(--navy);line-height:1.2}
+.sec-head h2::before{content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:6px;border-radius:3px;background:linear-gradient(180deg,var(--cy,#00aeef),var(--sky));transform:skewX(-12deg)}
+.sec-head p{margin-top:var(--s1);font-size:var(--fs-sm)}
+html[data-theme=dark] .sec-head h2{color:var(--ink)}
+.live .live-top h2{position:relative;padding-left:18px;font-size:var(--fs-xl)}
+.live .live-top h2::before{content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:6px;border-radius:3px;background:linear-gradient(180deg,var(--cy,#00aeef),var(--sky));transform:skewX(-12deg)}
+
+/* TA/GA, PvP, banner cards: one clear hierarchy = status line → name → the countdown (the thing you came for) → details → CTA */
+.lc{gap:var(--s2)!important;padding:var(--s4)!important}
+.lc .mode{font-weight:800;color:var(--muted-on-glass)}
+.lc h3{font-size:var(--fs-xl);font-weight:800;line-height:1.15}
+.lc .when{border-radius:var(--r-md);padding:var(--s3) var(--s4)!important;font-size:var(--fs-sm);line-height:1.5;
+ background:linear-gradient(135deg,rgba(21,151,240,.10),rgba(0,174,239,.04));border:1px solid rgba(21,151,240,.18)}
+.lc .when .cd,.bcard .bcd{display:block;margin-top:2px;font-size:clamp(24px,3vw,30px);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:var(--sky);font-variant-numeric:tabular-nums}
+.lc .go{margin-top:auto;display:flex}
+.lprep{border-radius:var(--r-md)!important;padding:var(--s3)!important;gap:var(--s2)!important;background:rgba(255,255,255,.55)!important;border:1px solid rgba(255,255,255,.7)!important}
+html[data-theme=dark] .lc .when{background:linear-gradient(135deg,rgba(139,124,246,.16),rgba(139,124,246,.05));border-color:rgba(139,124,246,.25)}
+html[data-theme=dark] .lprep{background:rgba(255,255,255,.05)!important;border-color:rgba(255,255,255,.08)!important}
+
+/* lobby on a phone: an even 2-column grid like the iOS app library, TA/GA (the live one) twice as wide on top */
+@media (max-width:900px){
+ #home .tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:var(--s3)!important}
+ #home .tiles .tile{grid-column:auto!important;grid-row:auto!important;min-height:104px;border-radius:var(--r-lg)!important}
+ #home #tRaid{grid-column:1/-1!important;min-height:132px}
+ .sec-head h2,.live .live-top h2{font-size:var(--fs-lg)}
+ .lc .when .cd,.bcard .bcd{font-size:26px}
+}
+/* boss card: team + must-rules folded behind "Xem nhanh" (open by default only on a big desktop window) */
+.lqk{border-radius:var(--r-md);background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.65)}
+.lqk>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:var(--s2);min-height:40px;padding:0 var(--s3);
+ font-size:var(--fs-sm);font-weight:800;color:var(--navy);user-select:none}
+.lqk>summary::-webkit-details-marker{display:none}
+.lqk>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .25s}
+.lqk[open]>summary::after{transform:rotate(-135deg)}
+.lqk>.lprep{margin:0 var(--s2) var(--s2);border:0!important}
+html[data-theme=dark] .lqk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme=dark] .lqk>summary{color:var(--ink)}
+/* student profile on a phone: scrolling the text shrinks the portrait band and the name stays on top, like Apple Music */
+@media (max-width:760px){
+ .gm .gbox{grid-template-rows:calc(210px - 120px*var(--sh,0)) minmax(0,1fr)!important}
+ .gbox .gpor{transform:translateY(calc(-36px*var(--sh,0)))}
+ .gbox .gid{padding-top:calc(30px - 22px*var(--sh,0))}
+ .gbox .gid h4{font-size:calc(19px - 2px*var(--sh,0))}
+ .gbox .gid .gstar{opacity:calc(1 - var(--sh,0));max-height:calc(40px - 40px*var(--sh,0));overflow:hidden}
+}
+/* dark mode check, every surface that keeps a light fill in light mode gets light text on a dark fill:
+   the flat lobby tiles (Thẻ EX, locked slot) had navy text on the dark paper = nearly invisible */
+html[data-theme=dark] .tile.flat{background:linear-gradient(135deg,#2a2d52,#1b1d38)!important;color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 14px rgba(0,0,0,.35)}
+html[data-theme=dark] .tile.flat :is(b,small){color:var(--ink)!important}
+html[data-theme=dark] .tile.flat small{opacity:.8}
+html[data-theme=dark] :is(.lc .mode,.lm,.k){color:#b4b9dc}
+html[data-theme=dark] .lc .when .cd,html[data-theme=dark] .bcard .bcd{color:#b6a8ff}
+html[data-theme=dark] :is(.lsched .ls,.tk,.tk-ck,.pair,.lane,.calc-row){border-color:#2c2f52}
+/* ===== game icons (Icons/<key>.png, Blue Archive wiki "Game Icons") in place of emoji: sized to the text they sit in ===== */
+img.bai{display:inline-block;width:1.3em;height:1.3em;object-fit:contain;vertical-align:-.28em;margin:0 .1em;
+ filter:drop-shadow(0 1px 1px rgba(20,40,70,.25));user-select:none;-webkit-user-drag:none;pointer-events:none}
+/* an icon inside a picture box must not take the picture rules (.scard .ph img = 100% × 100% covered the whole student card) */
+:is(.scard,.tbg,.bhero,.gl,.cast) img.bai{position:static!important;width:1.3em!important;height:1.3em!important;max-width:none;object-fit:contain!important;
+ transform:none!important;margin:0!important;vertical-align:-.25em}
+.scard .gico img.bai{width:14px!important;height:14px!important;vertical-align:-2px}
+html[data-theme=dark] img.bai{filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+/* terrain tickets (128×64) are wide: same height as the other icons, own width */
+img.bai:is([data-k=rp-urban],[data-k=rp-outdoor],[data-k=rp-indoor]){width:auto;height:1.4em;max-width:2.8em}
+.res i img.bai{width:20px;height:20px;margin:0;vertical-align:middle}
+.tb-ic img.bai{width:28px;height:28px;margin:0}
+.dock a i img.bai{width:26px;height:26px;margin:0;vertical-align:middle}
+/* vector icons: theme toggle (moon in light mode = go dark, sun in dark mode = go light); home uses the game icon (Icons/home.png) */
+svg.vi{display:block;width:22px;height:22px;margin:auto;pointer-events:none;transition:transform .45s cubic-bezier(.32,.72,0,1),opacity .25s}
+#thm{position:relative;color:#5b4fc4}
+#thm .i-sun{display:none;color:#ffb02e}
+html[data-theme=dark] #thm .i-moon{display:none}
+html[data-theme=dark] #thm .i-sun{display:block}
+#thm:hover svg.vi{transform:rotate(-18deg) scale(1.08)}
+html[data-theme=dark] #thm:hover svg.vi{transform:rotate(45deg) scale(1.08)}
+#thm:active svg.vi{transform:scale(.86)}
+.tb-logo{height:32px;width:auto;flex:none;margin-right:-2px;filter:drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 2px 3px rgba(30,43,62,.45))}
+html[data-theme=dark] .tb-logo{filter:drop-shadow(0 0 4px rgba(0,174,239,.35))}
+/* the SCHALE logo in the footer is white line art: it sits in a navy disc so it reads on light glass too */
+.flogo img:first-child{background:var(--navy);border-radius:50%;padding:5px;box-sizing:border-box}
+.flogo img+img{filter:drop-shadow(0 0 1px #1e2b3e) drop-shadow(0 0 1px #1e2b3e)}
+html[data-theme=dark] .flogo img+img{filter:none}
+@media (max-width:900px){.tb-logo{display:none}}
+.flogo{display:flex;justify-content:center;align-items:center;gap:16px;margin:4px 0 10px}
+.flogo img{height:36px;width:auto}
+.srv{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--navy);border-radius:999px;padding:1px 8px;vertical-align:2px}
+html[data-theme=dark] .srv{background:var(--sky)}
+/* ===== student profile BOTTOM SHEET (JS adds .sheet to the profile box): docked to the bottom edge on every window size,
+   rounded top corners only, rises with the Apple curve; two resting heights: half (default) and .full; height changes animate */
+.gm:has(.gbox.sheet){align-items:end!important;justify-content:center!important;justify-items:center!important;padding:0!important}
+.gm .gbox.sheet{--sheet:min(68vh,660px);position:relative;height:var(--sheet)!important;max-height:calc(100dvh - 10px)!important;
+ width:min(1000px,100%)!important;margin:0 auto!important;border-radius:24px 24px 0 0!important;
+ box-shadow:0 -12px 40px rgba(15,40,70,.28)!important;transition:height .45s cubic-bezier(.32,.72,0,1);will-change:height,transform}
+.gm .gbox.sheet.full{--sheet:calc(100dvh - 10px)}
+/* desktop: one stop only, the sheet opens at full height (half = full, so the JS snap logic simply has nothing to switch);
+   dragging it down still closes it. Phones keep the two stops (half / full). */
+@media (min-width:761px){.gm .gbox.sheet,.gm .gbox.sheet.full{--sheet:calc(100dvh - 24px)}}
+.gm.on .gbox.sheet{animation:sheetUp .5s cubic-bezier(.32,.72,0,1) backwards}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+.gm .gbox.sheet .gl{border-radius:24px 0 0 0!important}
+@media (max-width:760px){.gm .gbox.sheet{--sheet:74dvh}.gm .gbox.sheet .gl{border-radius:24px 24px 0 0!important}}
+/* grab bar across the top of the sheet: drag / tap / double-click / Enter */
+.gbox.sheet>.grab{display:flex!important;position:absolute!important;left:0;right:0;top:0;height:24px;z-index:6;justify-content:center;align-items:center;
+ cursor:grab;touch-action:none;background:none!important;border:0!important;outline-offset:-4px}
+.gbox.sheet>.grab:active{cursor:grabbing}
+.gbox.sheet>.grab i{display:block;width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.85);box-shadow:0 1px 3px rgba(15,40,70,.35);transition:width .25s,background .25s}
+.gbox.sheet>.grab:hover i{width:56px;background:#fff}
+.gbox.sheet .gl{touch-action:pan-x;cursor:grab}
+/* ===== LOBBY TILES: Skewed Card + Text Scrim =====
+   Shape vs content: the tile box is only translated (never skewed / scaled), so its getBoundingClientRect() is the real card for the
+   FLIP zoom. Three shape layers lean by --sk around the tile's centre: ::before = fill + rim + shadow, .tbg = picture window (picture
+   skewed back = upright), ::after = text scrim (solid white / black under the title, clear 2/3 up). Title, sub line, status bubble
+   are upright content.
+   Alignment: every tile is shifted sideways by --dx = tan(8°) × (grid middle − tile middle), set by JS. Then the slanted edges
+   of tiles in different rows lie on ONE straight line, like a single sheet cut into cards (no staircase between tall and short rows). */
+#home .tiles{--sk:-8deg;--usk:8deg}
+#home .tile{--dx:0px;overflow:visible!important;border-radius:14px!important;color:var(--navy);padding:12px 22px!important;
+ justify-content:flex-end!important;align-items:flex-start!important;background:none!important;border:0!important;box-shadow:none!important;
+ -webkit-backdrop-filter:none;backdrop-filter:none;filter:none;transform:translateX(var(--dx))!important;transition:transform .25s cubic-bezier(.32,.72,0,1)!important}
+#home .tile:hover{transform:translateX(var(--dx)) translateY(-3px)!important}
+#home .tile:active{transform:translateX(var(--dx)) scale(.96)!important}
+#home .tile::before,#home .tile .tbg,#home .tile:after{border-radius:inherit;transform:skewX(var(--sk))}
+/* Apple frosted glass instead of the solid white / black fill: the room shows through, blurred and a little brighter,
+   with a light top rim (the glass edge) and a soft shadow. Dark mode = the same glass, tinted night blue. */
+#home .tile{--glass:rgba(255,255,255,.26);--rim:rgba(255,255,255,.75);--scrim:rgba(255,255,255,.42)}
+html[data-theme=dark] #home .tile{--glass:rgba(28,30,56,.36);--rim:rgba(200,200,255,.28);--scrim:rgba(14,15,30,.42)}
+#home .tile::before{content:""!important;position:absolute;inset:0;z-index:0;display:block;background:var(--glass);
+ -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+/* rim + shadow on the picture window's outside (the picture covers anything drawn inside it) */
+#home .tile .tbg{overflow:hidden;clip-path:none!important;box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(20,45,80,.22);transition:box-shadow .25s}
+#home .tile:hover .tbg{box-shadow:0 0 0 1.5px #fff,0 12px 28px rgba(20,45,80,.3)}
+html[data-theme=dark] #home .tile .tbg{box-shadow:0 0 0 1px var(--rim),0 8px 24px rgba(0,0,0,.5)}
+html[data-theme=dark] #home .tile:hover .tbg{box-shadow:0 0 0 1.5px rgba(220,220,255,.5),0 12px 28px rgba(0,0,0,.6)}
+#home .tile .tbg img{transform:skewX(var(--usk)) scale(1.2)}
+/* boss cards (TA·GA, Cơ chế boss): size and place of the Boss_Portrait picture are set per card by fit() (last script, BFACE
+   table: the marked face box stays visible, the picture covers the card). Here only what holds before the picture has loaded. */
+#home :is(#tRaid,#tBoss) .tbg img[data-strip]{position:absolute!important;max-width:none!important;max-height:none!important;object-fit:fill!important;filter:none}
+#home #tRaid .tbg{background:#1e2b3e url(../Spine/rin_wp/assets/Raid_Bg.png) center/cover no-repeat}
+/* text scrim = Apple's progressive blur: the bottom of the picture is frosted (blur + light / dark tint) under the title and the
+   frost fades out upward through a gradient mask, no solid colour band */
+#home .tile:after{display:block!important;background:var(--scrim)!important;
+ -webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);
+ -webkit-mask-image:linear-gradient(0deg,#000 0%,#000 30%,transparent 62%);mask-image:linear-gradient(0deg,#000 0%,#000 30%,transparent 62%)}
+#home .tile .tlab{display:flex;flex-direction:column;gap:1px;min-width:0;max-width:100%}
+#home .tile .tlab :is(b,small){color:var(--navy)!important;text-shadow:none}
+html[data-theme=dark] #home .tile .tlab :is(b,small){color:#fff!important}
+#home .tile b{font-style:normal;font-weight:800;letter-spacing:-.01em}
+#home .tile .tlab small{opacity:.78}
+/* small cards (Thẻ EX, locked slot, Joint Firing Drill): same layout as every other card = title bottom-left over the bottom-up
+   progressive blur, only a tighter padding. Thẻ EX hides its sub line; Joint Firing Drill keeps it ("mở sau X ngày") */
+#home .tile:is(#tOrd,#tSrv,#tLock){padding:8px 16px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-end!important;text-align:left!important}
+/* older .tile.flat / breakpoint rules laid these cards out as a ROW (icon beside text), so "flex-end" pushed the label to the
+   right on some window sizes: always a column, label pinned to the bottom-left like the big cards */
+#home .tile:is(#tOrd,#tSrv,#tLock) .tlab{align-items:flex-start!important;align-self:flex-start!important;text-align:left!important;margin:0!important}
+#home .tile:is(#tOrd,#tSrv) small{display:none!important}
+#home .tile.lock:after{--scrim:rgba(24,30,46,.5)!important}
+#home .tile:is(#tOrd,#tSrv,#tLock) b{white-space:normal!important;font-size:14px!important;line-height:1.2}
+/* scene picture behind the portrait (or alone), day / night by theme */
+#home .tile .tbg img.bgi{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;
+ object-fit:cover!important;object-position:50% 50%!important;z-index:-1!important;margin:0!important}
+html[data-theme=dark] #home .tile .tbg img.bgi.day,html:not([data-theme=dark]) #home .tile .tbg img.bgi.night{display:none}
+/* status bubble on the top edge (yellow = time left, pink = in progress / to do) */
+#home .tile .ttag{--bb:#ffd84a;top:auto!important;bottom:calc(100% - 12px);left:16px;transform:none!important;z-index:4;
+ background:var(--bb)!important;color:#1e2b3e!important;font-size:12px;font-weight:800;padding:3px 12px;border-radius:999px!important;
+ box-shadow:0 3px 10px rgba(20,40,70,.25);white-space:nowrap}
+#home .tile .ttag::after{content:"";position:absolute;left:14px;top:100%;border:6px solid transparent;border-top-color:var(--bb);border-bottom:0}
+#home .tile :is(.ttag.pink),#home .tile.alert .ttag{--bb:#ff7fa6;color:#fff!important}
+/* Joint Firing Drill card (#tLock, id kept so the grid / scene rules stay as they were). JS switches two states:
+   .lock = between seasons: grey glass, padlock, "mở sau X ngày"; .open = a season runs: normal glass, exercise name, time left
+   (armor + terrain only in the tooltip: icons on the card made it too crowded). Both states open the guide screen (#jfd). */
+#home .tile.lock{--glass:rgba(120,132,150,.45)}
+html[data-theme=dark] #home .tile.lock{--glass:rgba(40,44,62,.55)}
+#home .tile.lock .lk{position:static;width:28px;height:28px;margin:0 0 4px;color:#fff;opacity:.95}
+#home #tLock.open .lk{display:none}
+#home .tile.lock .tlab :is(b,small){color:#fff!important}
+#home #tLock small{font-variant-numeric:tabular-nums;opacity:.85}
+/* ===== Joint Firing Drill guide (#s-jfd): no student on duty, so one full-width glass panel. The room picture follows the
+   season's terrain (data-g, set by JS): indoor = classroom, outdoor = Abydos ruins, urban = downtown; night pictures in dark mode
+   (same BG/ files as the lobby cards) ===== */
+#s-jfd.screen{background:#1e2b3e center/cover no-repeat fixed}
+#s-jfd.screen[data-g=indoor]{background-image:url(../BG/BG_ClassRoom.jpg)}
+#s-jfd.screen[data-g=outdoor]{background-image:url(../BG/BG_AbydosRuinArea.jpg)}
+#s-jfd.screen[data-g=urban]{background-image:url(../BG/BG_CityDowntown.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=indoor]{background-image:url(../BG/BG_ClassRoom_Night.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=outdoor]{background-image:url(../BG/BG_AbydosRuinArea_Night.jpg)}
+html[data-theme=dark] #s-jfd.screen[data-g=urban]{background-image:url(../BG/BG_CityDowntown_Night.jpg)}
+#s-jfd .ttabs{margin:0 0 var(--s4)}
+/* cards: auto-fit columns, one column on a phone */
+#s-jfd .jgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:var(--s3)}
+#s-jfd .jk{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);border-radius:var(--r-md);padding:var(--s3) var(--s4)}
+html[data-theme=dark] #s-jfd .jk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+#s-jfd .jk.now{border:2px solid var(--sky)}
+#s-jfd .jk h4{margin:0 0 var(--s1);font-size:var(--fs-md);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#s-jfd .jk :is(p,li){margin:0;font-size:var(--fs-sm);line-height:1.5}
+#s-jfd .jk ul{margin:0;padding-left:18px}
+#s-jfd .jk+.jk,#s-jfd .jgrid+.jk,#s-jfd .jk+.jgrid,#jfdTeam{margin-top:var(--s3)}
+/* "Mùa này" tab: the team groups sit right under the season card. Each student chip carries its terrain grade badge (S orange,
+   A green) and, when the season has one, the school bonus mark (pink) */
+#s-jfd .jc{display:inline-flex;align-items:center;gap:3px}
+#s-jfd :is(.jgr,.jsb){display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:var(--r-pill);font-size:11px;font-weight:800;font-style:normal;color:#fff;
+ flex:none;white-space:nowrap;overflow-wrap:normal!important;word-break:keep-all}
+#s-jfd .jgr.gS{background:#e8930c}#s-jfd .jgr.gA{background:#21b37f}
+#s-jfd .jsb{background:#ff7fa6}
+#s-jfd .jrw td,#s-jfd .jrw th{text-align:center;padding:6px 8px;font-variant-numeric:tabular-nums}
+@media (min-width:901px){
+ /* 12 equal columns, one gap, rows 1 : 1 : .55 → every card edge sits on a shared column line
+    row 1: TA·GA (6, ≈ 2:1 for the wide boss banners) | Banner (3) | Học sinh (3)
+    row 2: PvP | Kế hoạch UE | Cơ chế boss (4 each)
+    row 3: Nhiệm vụ (5) | Joint Firing Drill (3, room for the exercise name + time left) | Thẻ EX | locked slot (2 each) */
+ #home .tiles{grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-template-rows:1fr 1fr .55fr!important;gap:16px 14px!important;position:relative}
+ #home .tiles .tile:not(#tOrd,#tSrv,#tLock) b{font-size:clamp(15px,1.3vw,22px)!important}
+ #home .tiles .tile:not(#tOrd,#tSrv,#tLock) small{font-size:12px}
+ #home .tiles #tRaid{grid-area:1/1/2/7!important}#home .tiles #tBan{grid-area:1/7/2/10!important}#home .tiles #tStu{grid-area:1/10/2/13!important}
+ #home .tiles #tPvp{grid-area:2/1/3/5!important}#home .tiles #tUe{grid-area:2/5/3/9!important}#home .tiles #tBoss{grid-area:2/9/3/13!important}
+ #home .tiles #tTask{grid-area:3/1/4/6!important}#home .tiles #tLock{grid-area:3/6/4/9!important}
+ #home .tiles #tOrd{grid-area:3/9/4/11!important}#home .tiles #tSrv{grid-area:3/11/4/13!important}
+ /* the controller-button marks the game prints above its menu */
+ #home .tiles::before{content:"△ ✕ ＋ ○";position:absolute;right:6px;top:-24px;font-size:12px;font-weight:700;letter-spacing:.35em;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(20,40,70,.5)}
+}
+/* phone: the Joint Firing Drill card shows only while a season is open, as a small cell (size: LOBBY · PHONE BENTO) */
+@media (max-width:900px){#home #tLock:not(.open){display:none!important}}
+/* ===== AUTO-COMPACT (desktop, JS adds .cmp only when the text doesn't fit; full text stays in the hover tooltip) =====
+   top bar pills -> round icons · lobby card title -> round icon · ammo / armor filter chips -> icon only */
+.tb-res.cmp{gap:6px}
+.tb-res.cmp .res{padding:3px;gap:0}
+.tb-res.cmp .res :is(b,small){display:none}
+#home .tile .tic{display:none}
+#home .tile.cmp .tlab{display:none}
+#home .tile.cmp .tic{display:grid;place-items:center;align-self:flex-start;width:46px;height:46px;border-radius:50%;font-size:22px;line-height:1;
+ background:rgba(255,255,255,.88);box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(20,45,80,.25)}
+#home .tile.cmp#tOrd .tic{width:38px;height:38px}
+#home .tile.cmp .tic img.bai{width:28px!important;height:28px!important;margin:0!important;vertical-align:middle}
+html[data-theme=dark] #home .tile.cmp .tic{background:rgba(30,32,58,.88);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 4px 12px rgba(0,0,0,.45)}
+.sfil .fr.cmp .fb:has(.tag,.ar){padding:4px!important;min-width:40px;justify-content:center}
+.sfil .fr.cmp .fb :is(.tag,.ar){font-size:0!important;gap:0!important}
+.sfil .fr.cmp .fb :is(.tag,.ar)::before{margin:0!important}
+/* ===== STUDENT SHEET · glass (UI unification): the profile sheet takes the panels' glass, the portrait stands in the room of the
+   screen it was opened from (--room, set by openStu), the tabs become an iOS segmented control, the name gets the BA title bar.
+   No stripes, no cut corners. Drag / stops / collapsing header are untouched. The text side is denser glass (≈82%) so it stays readable. */
+.gm .gbox,.gm .gbox.sheet{clip-path:none!important;background:var(--lg-bg)!important;-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+ border:1px solid rgba(255,255,255,.5)!important;box-shadow:var(--lg-rim),0 -12px 40px rgba(15,40,70,.28)!important}
+.gbox .gl{background:var(--room,none) center/cover no-repeat,linear-gradient(165deg,#cfe7fb,#7fb9ea)!important}
+.gbox .gl:before{background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 45%)!important;-webkit-backdrop-filter:blur(5px) saturate(1.25);backdrop-filter:blur(5px) saturate(1.25)}
+.gbox .gr{background:rgba(255,255,255,.82)!important}
+.gid{background:linear-gradient(0deg,rgba(255,255,255,.9) 45%,rgba(255,255,255,0))!important}
+.gid .pin{clip-path:none!important;border-radius:6px!important;padding:1px 10px}
+.gid h4{position:relative;padding-left:16px}
+.gid h4::before{content:"";position:absolute;left:0;top:.15em;bottom:.15em;width:5px;border-radius:3px;background:linear-gradient(180deg,#00aeef,var(--sky));transform:skewX(-12deg)}
+/* tabs: the shared tab track (BUTTONS & TABS block below); close = small round glass button */
+.gtabs{border-bottom:0!important;padding:12px 14px 8px!important;align-items:center!important;gap:8px!important}
+.gtabs .seg{display:inline-flex;min-width:0}
+.gtabs .seg button{clip-path:none!important;transition:background .2s,box-shadow .2s}
+.gtabs #gmx{margin:0 0 0 auto!important;width:32px!important;height:32px!important;border-radius:50%!important;clip-path:none!important;
+ background:rgba(110,125,150,.18)!important;color:var(--ink)!important;font-size:14px}
+.gpane :is(.bs,.gbio,.uepick,.grw){border-radius:var(--r-md)}
+html[data-theme=dark] .gm .gbox{border-color:rgba(255,255,255,.12)!important}
+html[data-theme=dark] .gbox .gr{background:rgba(24,26,46,.84)!important}
+html[data-theme=dark] .gid{background:linear-gradient(0deg,rgba(24,26,46,.92) 45%,rgba(24,26,46,0))!important}
+html[data-theme=dark] .gid h4{color:var(--ink)}
+html[data-theme=dark] .gtabs #gmx{background:rgba(255,255,255,.1)!important}
+/* ===== BUTTONS & TABS · one system (UI unification) =====
+   Every button and tab: 40px tall, 13.5px bold upright text, the -12° slant + 6px corners of the skew rule (BA DESIGN LANGUAGE).
+   Two states only: resting = light glass with navy text (dark: faint white glass, light text); chosen = navy (dark: Plana purple).
+   Lemon yellow stays for the one main action ".go" (open / go there). Tabs that sit in a track (Tier list, student sheet) are
+   34px inside a 3px track = 40px. Icon-only filters (role / position / ammo / armor) keep their bare game icon. */
+:root{--btn-bg:rgba(255,255,255,.72);--btn-bd:rgba(30,52,86,.16);--btn-ink:var(--navy);--btn-on:var(--navy)}
+html[data-theme=dark]{--btn-bg:rgba(255,255,255,.08);--btn-bd:rgba(255,255,255,.14);--btn-ink:var(--ink);--btn-on:#8b7cf6}
+/* size + text */
+:is(.go,.rf,.bnav button,.bw button,.filters button,.bsel button,.uepick button,.sfil .fb:not(:has(.rlic,.psic,.tag,.ar)),.sfil .fclr,.ttabs button,.gtabs .seg button){
+ font:inherit;font-size:13.5px!important;font-weight:800!important;font-style:normal!important;line-height:1.1;min-height:40px;padding:0 16px!important;
+ display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;white-space:nowrap}
+/* the display above would beat the browser's own [hidden] rule: "Xóa lọc" stays hidden until a filter is on */
+.sfil .fclr[hidden]{display:none!important}
+/* resting state */
+:is(.rf,.bnav button,.bw button,.filters button,.bsel button,.uepick button,.sfil .fb:not(:has(.rlic,.psic,.tag,.ar))){
+ background:var(--btn-bg)!important;color:var(--btn-ink)!important;border:1px solid var(--btn-bd)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)!important}
+html[data-theme=dark] :is(.rf,.bnav button,.bw button,.filters button,.bsel button,.uepick button,.sfil .fb:not(:has(.rlic,.psic,.tag,.ar))){box-shadow:none!important}
+/* "Xóa lọc" = a reset: the red of the game's cancel buttons, same in both themes */
+.sfil .fclr{background:#ff5a79!important;color:#fff!important;border:0!important;box-shadow:inset 0 -3px 0 #d93d5c!important}
+/* boss picker keeps its armor colour stripe on the left */
+.bsel button{border-left:4px solid var(--c)!important}
+/* tab track (Tier list tiers, student sheet Info / Growth): the whole track leans -12° like a button; the tabs inside take its
+   slant (no own skew, or they would lean twice) and are bare text until chosen. Side margin = room for the slanted edges. */
+:is(.ttabs,.gtabs .seg){background:rgba(110,125,150,.16)!important;border:0!important;border-radius:10px!important;padding:3px 6px!important;gap:4px!important;
+ transform:skewX(var(--skw))}
+.ttabs{margin-inline:10px}
+html[data-theme=dark] :is(.ttabs,.gtabs .seg){background:rgba(255,255,255,.08)!important}
+:is(.ttabs,.gtabs .seg) button{transform:none!important;min-height:34px!important;background:transparent!important;color:var(--btn-ink)!important;border:0!important;box-shadow:none!important}
+/* chosen state, the same everywhere */
+:is(.bw button,.filters button,.bsel button,.uepick button,.sfil .fb:not(:has(.rlic,.psic,.tag,.ar)),.ttabs button,.gtabs .seg button).on{
+ background:var(--btn-on)!important;color:#fff!important;border-color:var(--btn-on)!important;box-shadow:0 2px 6px rgba(15,40,70,.22)!important}
+.bsel button.on{border-left-color:var(--c)!important}
+/* very narrow phones: the two sheet tabs + close must fit one line */
+@media (max-width:420px){.gm .gtabs .seg button{padding:0 10px!important;font-size:12.5px!important}}
+/* a main button that can't be used yet (Roster "Lưu" before any edit): greyed, no press effect */
+.go:disabled{filter:grayscale(1);opacity:.5;cursor:default}
+/* ===== ROSTER screen: one glass row per student (name · owned · stars · UE · level · 4 skills); phone = 2 lines ===== */
+.rbar{flex-wrap:wrap;justify-content:flex-start!important;gap:8px!important;margin:0 0 var(--s2)!important}
+.rbar #rcnt{margin-right:auto}
+.rlist{display:grid;gap:6px;margin-top:var(--s3)}
+.rr{display:grid;grid-template-columns:minmax(160px,1.3fr) auto auto auto auto minmax(0,2fr);gap:8px 12px;align-items:center;padding:8px 12px;
+ border-radius:var(--r-md);background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.7)}
+.rr.hide{display:none}
+.rr.off{opacity:.55}
+.rr.ed{box-shadow:inset 4px 0 0 var(--sky)}
+.rr .rn{display:flex;align-items:center;gap:8px;min-width:0}
+.rr .rn b{font-size:var(--fs-md);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rr .rn small{flex:none;font-size:var(--fs-xs);font-weight:800;color:var(--muted)}
+.rr label{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:800;color:var(--muted)}
+.rr :is(select,input[type=number]){font:inherit;font-size:var(--fs-sm);min-height:34px;border-radius:8px;border:1px solid var(--btn-bd);background:var(--btn-bg);color:var(--btn-ink);padding:0 6px}
+.rr select:disabled{opacity:.5}
+.rr input[type=number]{width:54px}
+.rr .rown input{width:18px;height:18px;accent-color:var(--btn-on)}
+.rr .rsk{display:flex;flex-wrap:wrap;gap:6px}
+html[data-theme=dark] .rr{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+@media (max-width:900px){.rr{grid-template-columns:repeat(4,auto);justify-content:start}.rr :is(.rn,.rsk){grid-column:1/-1}}
+/* lobby cards Banner / PvP / Kế hoạch UE had only the portrait on glass: each now gets the room of the screen it opens
+   (PvP = Momoka's Week_Bg, UE = Aoi's GSC lobby, Banner = the wiki's convenience store BG_Convenience, Sora's Angel 24,
+   night version in dark mode; fetched by get_bg_shop.ps1). Drawn on a layer
+   inside the picture window, skewed back upright like the window's own pictures, under the portrait. */
+#home :is(#tBan,#tPvp,#tUe) .tbg{isolation:isolate}
+#home :is(#tBan,#tPvp,#tUe) .tbg::before{content:"";position:absolute;inset:0 -12%;z-index:-2;transform:skewX(var(--usk));pointer-events:none;
+ background:var(--room) center/cover no-repeat}
+#home #tPvp{--room:url(../Spine/ws_2959842788/assets/Week_Bg.png)}
+#home #tUe{--room:url(../Spine/aoi_wp/assets/Event_Main_Stage_Bg_60000.png)}
+#home #tBan{--room:url(../BG/BG_Convenience.jpg)}
+html[data-theme=dark] #home #tBan{--room:url(../BG/BG_Convenience_Night.jpg)}
+/* the shop front sits in the upper half of the picture (the lower half is the car park) */
+#home #tBan .tbg::before{background-position:50% 42%}
+/* ===== LOBBY · PHONE BENTO (≤900px only, desktop untouched) =====
+   1) spacing: 24px between rows (the status bubble pokes ~12px above its card, so it never touches the row above) and room under
+      the last row for the floating Dock.
+   2) hierarchy: the 5 main cards (TA/GA, Banner, PvP, Học sinh, Kế hoạch UE) are full-width "Left Text – Right Art" strips;
+      Cơ chế boss, Thẻ EX, Nhiệm vụ, the locked slot and Joint Firing Drill (season open) are small 2-column cells.
+   3) text safe zone on the strips: title + sub line live in the left 58%, over a left-to-right fade (dark navy in dark mode,
+      white in light mode); the student / boss art sits in the right 45% (boss pictures: fit() below centres the face there). */
+@media (max-width:900px){
+ #home .tiles{row-gap:24px!important;column-gap:12px!important;padding-top:12px}
+ #home>.pane{padding-bottom:calc(112px + env(safe-area-inset-bottom))!important}
+ #home .tiles .tile{min-height:84px}
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe){grid-column:1/-1!important;min-height:124px!important;padding:22px 16px 14px!important;
+  justify-content:flex-end!important;align-items:flex-start!important}
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe) .tlab{max-width:58%!important;position:relative;z-index:3}
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe) .tlab small{display:block;white-space:normal;line-height:1.35}
+ /* the fade behind the text replaces the bottom-up frosted scrim on the strips */
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe):after{-webkit-mask-image:none!important;mask-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  background:linear-gradient(90deg,rgba(255,255,255,.8) 28%,rgba(255,255,255,.45) 55%,rgba(255,255,255,0) 80%)!important}
+ html[data-theme=dark] #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe):after{background:linear-gradient(90deg,rgba(13,22,44,.85) 28%,rgba(13,22,44,.5) 55%,rgba(13,22,44,0) 80%)!important}
+ /* a soft halo under the letters keeps them readable where the fade is thin */
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe) .tlab :is(b,small){text-shadow:0 0 6px rgba(255,255,255,.9),0 0 2px rgba(255,255,255,.9)!important}
+ html[data-theme=dark] #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe) .tlab :is(b,small){text-shadow:0 1px 6px rgba(13,22,44,.95),0 0 2px rgba(13,22,44,.9)!important}
+ /* student art (portrait files only, the room pictures behind stay full-card): right 45% of the strip, face clear of the text */
+ #home :is(#tRaid,#tBan,#tPvp,#tStu,#tUe) .tbg img[src*="Portrait_Full/"]{position:absolute!important;left:auto!important;right:0!important;top:0!important;
+  width:45%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:50% 8%!important;margin:0!important}
+ /* small cells: title only, bottom-left, same frosted scrim as before */
+ #home :is(#tBoss,#tOrd,#tTask,#tSrv,#tLock){grid-column:auto!important;min-height:84px!important}
+ #home :is(#tBoss,#tTask) .tlab small{display:none!important}
+ #home #tLock.open{min-height:84px!important}
+}
