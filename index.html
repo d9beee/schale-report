@@ -11,13 +11,17 @@
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'};document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#1E222D':'#6CC4FF'</script>
 <!-- boot screen: opening on the lobby -> html.booting before first paint, so js/boot.js knows to show the loading video -->
 <script>(function(){var h=location.hash.slice(1);if(!h||h==='home')document.documentElement.classList.add('booting')})()</script>
+<!-- Critical boot colors: apply before external scripts/styles can delay first paint. Match the app's saved theme, not iOS appearance. -->
+<style>
+html[data-theme="light"].booting,html[data-theme="light"].booting body,html[data-theme="light"].booting #boot{background:#6CC4FF!important}
+html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-theme="dark"].booting #boot{background:#1E222D!important}
+</style>
+<!-- Start CSS before third-party scripts so the loading surface is styled as early as possible. -->
+<link rel="stylesheet" href="css/base.css?v=202611281405">
+<link rel="stylesheet" href="css/ui.css?v=202611281729">
 <script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
 <!-- fallback CDN when opened outside Dia (e.g. GitHub Pages) -->
 <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"><\/script>')</script>
-<!-- Style: custom -->
-<link rel="stylesheet" href="css/base.css?v=202611281405">
-<!-- game UI layer, loaded right after base so it wins the same way it did inline; in <head> so the page never paints unstyled -->
-<link rel="stylesheet" href="css/ui.css?v=202611281729">
 </head>
 <body>
 <!-- boot screen (js/boot.js): desktop = loading video (Videos/, sources added by boot.js so a phone never downloads it);
