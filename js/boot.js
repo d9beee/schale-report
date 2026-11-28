@@ -6,9 +6,10 @@
  const R=document.documentElement;
  if(!R.classList.contains('booting')){b.remove();return;}
  let done=0;
- // the page colour (html.booting) goes the moment the CRT starts, so the shrinking screen uncovers the lobby, not a flash of
- // the boot colour; the boot layer itself keeps its colour while it shrinks
- const off=()=>{if(done)return;done=1;R.classList.remove('booting');b.classList.add('off');setTimeout(()=>b.remove(),260);};
+ // On phones, remove the boot layer without the CRT squeeze: Safari's collapsing bottom toolbar can otherwise reveal the
+ // still-colored document canvas for a frame after the lobby is already visible.
+ const phone=matchMedia('(max-width:900px)').matches;
+ const off=()=>{if(done)return;done=1;R.classList.remove('booting');if(phone){b.remove();return;}b.classList.add('off');setTimeout(()=>b.remove(),260);};
  b.addEventListener('click',off);
  setTimeout(off,6000);
  // the video shows for 0.5 s counted from its first frame; no file / no autoplay -> 0.6 s so the screen never just flashes
