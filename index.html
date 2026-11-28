@@ -10,20 +10,25 @@
 <link rel="icon" type="image/png" href="Icons/stu.png">
 <!-- theme before paint: saved choice, else system setting -->
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+<!-- boot screen, before first paint (Safari reads theme-color + the html background at the very first frame): opening on the lobby
+     -> html.booting (black page) and both theme-color tags black; the old colours are kept in data-c, js/boot.js puts them back -->
+<script>(function(){var h=location.hash.slice(1);if(h&&h!=='home')return;document.documentElement.classList.add('booting');
+document.querySelectorAll('meta[name=theme-color]').forEach(function(m){m.dataset.c=m.content;m.content='#000000'})})()</script>
 <script src="https://artifactcdn.diabrowser.engineering/ajax/libs/Chart.js/chart.umd.js"></script>
 <!-- fallback CDN when opened outside Dia (e.g. GitHub Pages) -->
 <script>window.Chart||document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"><\/script>')</script>
 <!-- Style: custom -->
 <link rel="stylesheet" href="css/base.css?v=202611281405">
 <!-- game UI layer, loaded right after base so it wins the same way it did inline; in <head> so the page never paints unstyled -->
-<link rel="stylesheet" href="css/ui.css?v=202611281540">
+<link rel="stylesheet" href="css/ui.css?v=202611281610">
 </head>
 <body>
 <!-- boot screen: loading video until the lobby + Spine are ready (js/boot.js); put the file in Videos/ -->
-<div id="boot" aria-hidden="true"><video autoplay muted loop playsinline preload="auto">
+<div id="boot" aria-hidden="true"><video autoplay muted loop playsinline preload="auto"
+  poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
   <source src="Videos/loading.webm" type="video/webm"><source src="Videos/loading.mp4" type="video/mp4"></video>
   <p class="bt">Đang tải · chạm để vào</p></div>
-<script src="js/boot.js?v=202611281530"></script>
+<script src="js/boot.js?v=202611281610"></script>
 
 <header class="topbar" id="topbar">
   <button class="tb-back" id="tbBack" type="button" aria-label="Về sảnh" hidden>‹</button>

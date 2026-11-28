@@ -1088,15 +1088,15 @@ html[data-theme=dark] #home #tBan{--room:url(../BG/BG_Convenience_Night.jpg)}
  #home #tLock.open{min-height:84px!important}
 }
 /* ===== BOOT SCREEN (#boot, js/boot.js): loading video over the lobby while it and the Spine load, then a 0.25s CRT switch-off ===== */
-/* bleeds 120px past the top and bottom edges so it also runs under iPhone Safari's status bar (clock) and the floating address
-   bar, whatever their height; !important beats the general phone anti-cut rules (max-width / height:auto on media) */
-#boot{position:fixed;left:0;right:0;top:-120px;bottom:-120px;z-index:9999;display:grid;place-items:center;background:#000;cursor:pointer;overflow:hidden}
-#boot video{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:50% 50%}
-#boot .bt{position:absolute;left:0;right:0;bottom:calc(120px + 24px + env(safe-area-inset-bottom));margin:0;text-align:center;color:#fff;font:600 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;opacity:.75}
-html.booting,html.booting body{overflow:hidden}
-/* iPhone Safari paints the status bar (clock) and the address bar with the PAGE background, not with fixed layers:
-   black page while booting, so those strips match the video edge */
-html.booting,html.booting body{background:#000!important}
+/* touches the real top edge (top:0) and covers the LARGE viewport (lvh), so iOS 26 runs it under the floating Liquid Glass bars;
+   !important beats the general phone anti-cut rules (max-width / height:auto on media) */
+#boot{position:fixed;left:0;top:0;width:100%;height:100lvh;min-height:100dvh;z-index:9999;display:grid;place-items:center;background:#000;cursor:pointer;overflow:hidden}
+#boot video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;background:#000}
+#boot .bt{position:absolute;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));margin:0;text-align:center;color:#fff;font:600 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;opacity:.75}
+/* black page while booting (Safari paints the status bar / around the address bar from it); scrolling is locked on body ONLY:
+   overflow:hidden on html makes iOS keep the small viewport and shows the strips again */
+html.booting{background:#000!important}
+html.booting body{overflow:hidden;touch-action:none;background:#000!important}
 /* CRT off: squash to a bright line, then to a dot, then gone */
 #boot.off{animation:crt .25s cubic-bezier(.6,0,.4,1) forwards;pointer-events:none}
 @keyframes crt{0%{transform:scale(1,1);filter:brightness(1)}55%{transform:scale(1,.004);filter:brightness(4)}100%{transform:scale(0,.004);filter:brightness(8);opacity:0}}

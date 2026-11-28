@@ -1,18 +1,17 @@
 // ===== BOOT SCREEN: loading video while the lobby + its Spine load, then the 0.25s CRT switch-off (css/ui.css "BOOT SCREEN").
-// Only when the page opens on the lobby (no hash or #home); a deep link like #tier skips it at once.
+// html.booting + the black theme-color are already set by the small script in <head> (before first paint), only when the page
+// opens on the lobby; a deep link like #tier has no .booting, so the screen is removed at once.
 // Ends when the lobby is ready AND the video has been on screen 0.5 s, or on a tap, or at 6 s, whichever comes first.
 (()=>{const b=document.getElementById('boot');if(!b)return;
- const h=location.hash.slice(1);
- if(h&&h!=='home'){b.remove();return;}
- const R=document.documentElement;R.classList.add('booting');
- // browser bars (theme-color) black while booting, old colours back afterwards
- const tc=[...document.querySelectorAll('meta[name=theme-color]')],tc0=tc.map(m=>m.content);tc.forEach(m=>m.content='#000000');
+ const R=document.documentElement;
+ if(!R.classList.contains('booting')){b.remove();return;}
  let done=0;
- const off=()=>{if(done)return;done=1;b.classList.add('off');setTimeout(()=>{b.remove();R.classList.remove('booting');tc.forEach((m,i)=>m.content=tc0[i]);},260);};
+ // after the CRT: normal page again, theme-color tags back to their own colours (kept in data-c)
+ const off=()=>{if(done)return;done=1;b.classList.add('off');setTimeout(()=>{b.remove();R.classList.remove('booting');
+  document.querySelectorAll('meta[name=theme-color][data-c]').forEach(m=>m.content=m.dataset.c);},260);};
  b.addEventListener('click',off);
  setTimeout(off,6000);
- // the video shows for 0.5 s counted from its first frame (before, the clock started before the video had even begun);
- // no file / no autoplay -> 0.6 s so the screen never just flashes
+ // the video shows for 0.5 s counted from its first frame; no file / no autoplay -> 0.6 s so the screen never just flashes
  const v=b.querySelector('video');
  const once=new Promise(r=>{const t=setTimeout(r,600);
   v.addEventListener('playing',()=>{clearTimeout(t);setTimeout(r,500);},{once:true});});
