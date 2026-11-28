@@ -1356,8 +1356,9 @@ function zClean(){const L=ZM.live;ZM.live=null;ZM.run.forEach(a=>{try{a.cancel()
  (ZM.kids||[]).forEach(c=>c.style.transformOrigin='');ZM.kids=[];
  SCR.forEach(s=>{if((L||s.classList.contains('zleave'))&&s!==curScr)s.classList.remove('on');s.classList.remove('zleave','zmove','zfix');
   s.style.top=s.style.height=s.style.transformOrigin='';});
- ZD.classList.remove('z');window.l2dRefit&&l2dRefit();if(L&&L.a===curScr)zJump(L.y);else if(L&&L.fy!=null&&L.b===curScr)zJump(L.fy);}
+ ZD.classList.remove('z');document.documentElement.classList.remove('safari-dock-filter-test-active');window.l2dRefit&&l2dRefit();if(L&&L.a===curScr)zJump(L.y);else if(L&&L.fy!=null&&L.b===curScr)zJump(L.fy);}
 function zoomScr(prev,sc,from,prevTop,prevY){
+ if(document.documentElement.classList.contains('safari-dock-filter-test'))document.documentElement.classList.add('safari-dock-filter-test-active');
  const tb=Math.max(0,document.getElementById('topbar').getBoundingClientRect().bottom),W=innerWidth,Hv=innerHeight-tb,closing=sc.id==='home';
  // the old screen stays where it was (pinned, same scroll) while the new one zooms over it, or zooms away over the lobby
  prev.classList.add('on','zleave');prev.style.top=tb+'px';prev.style.height=Hv+'px';prev.scrollTop=Math.max(0,tb-prevTop);
