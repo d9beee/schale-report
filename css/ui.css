@@ -1095,6 +1095,9 @@ html[data-theme=dark] #home #tBan{--room:url(../BG/BG_Convenience_Night.jpg)}
 #boot .bt{position:absolute;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));margin:0;text-align:center;color:#fff;font:600 13px/1.4 system-ui,sans-serif;letter-spacing:.04em;opacity:.75}
 /* scrolling locked on body ONLY: overflow:hidden on html makes iOS keep the small viewport */
 html.booting body{overflow:hidden;touch-action:none}
+/* Safari may clip fixed overlays to the web viewport while its translucent toolbar still reveals page pixels beneath it.
+   Hide every body-level sibling during boot so that the only page surface behind Safari chrome is the theme-matched canvas. */
+html.booting body>:not(#boot){visibility:hidden!important}
 /* phone: no video, one flat colour (Arona #6CC4FF light / Plana #1E222D dark) on the screen AND the page behind it, so the strip
    Safari paints under the clock (from the html background) is the same colour; the white SCHALE logo flips in the middle */
 #boot .lg{display:none}
