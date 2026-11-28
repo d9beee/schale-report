@@ -1103,8 +1103,9 @@ html.booting body{overflow:hidden;touch-action:none}
  /* Keep a fixed full-viewport loading surface; oversizing the overlay made Safari expose the lobby at the bottom edge. */
  html[data-theme="light"].booting,html[data-theme="light"].booting body{background:#6CC4FF!important}
  html[data-theme="dark"].booting,html[data-theme="dark"].booting body{background:#1E222D!important}
- /* Extend the actual boot layer past Safari's collapsing bottom toolbar; the edge strip only tints Safari chrome and cannot cover page content. */
- html.booting #boot{height:auto;min-height:0;bottom:-200px;background:#6CC4FF!important}
+ /* Give the actual boot layer an explicit extra 200px beyond the dynamic viewport. Using height:auto + a negative bottom
+    relies on absolute-position sizing that Safari can resolve against the short viewport, exposing the lobby below it. */
+ html.booting #boot{height:calc(100dvh + 200px);min-height:0;bottom:auto;background:#6CC4FF!important}
  html[data-theme="dark"].booting #boot{background:#1E222D!important}
  /* Solid edge strips give Safari an actual fixed color surface to sample behind both browser bars. */
  html[data-theme="light"].booting::before,html[data-theme="dark"].booting::before,
