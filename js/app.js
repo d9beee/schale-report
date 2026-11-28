@@ -1417,7 +1417,7 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let 
  if(zReverse(sc)){zUI(sc);return;}
  zClean();
  const prev=curScr,moved=prev&&prev!==sc,skip=ZM.skip;ZM.skip=0;
- const anim=moved&&!skip&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const anim=moved&&!skip&&!matchMedia('(max-width:900px)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  const from=anim&&sc.id!=='home'?zOrigin(sc):null,prevTop=prev?prev.getBoundingClientRect().top:0,prevY=scrollY;
  if(moved&&prev.id==='home')ZM.homeY=scrollY;
  SCR.forEach(s=>{s.classList.toggle('on',s===sc);if(moved)s.classList.toggle('nz',anim&&s===sc);});curScr=sc;
