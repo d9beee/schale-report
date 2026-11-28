@@ -577,6 +577,8 @@ html:has(.gm.on){overflow:hidden}
 @supports (transition-timing-function:linear(0,1)){:root{--spring:linear(0,.06,.22 6%,.6 14%,.86 21%,1.02 30%,1.05 36%,1.04 42%,1.01 54%,.995 66%,1)}}
 @media (prefers-reduced-motion:reduce){:root{--spring:ease}}
 @media (max-width:900px){
+ /* TEMP iPhone Safari diagnosis: ?safari-zdim-test=1 hides only the transition dim layer. */
+ html.safari-zdim-test #zdim{display:none!important}
  .cast.talk{height:min(56vh,520px)}
  .cast.talk .l2d{left:0;right:0;top:0;height:100%}
  .cast.talk .dlg,#home .cast.lobby .dlg{left:10px;right:10px;bottom:10px}
@@ -1103,20 +1105,13 @@ html.booting body>:not(#boot){visibility:hidden!important}
 #boot .lg{display:none}
 @media(max-width:900px){
  #boot video{display:none!important}
- /* Keep a fixed full-viewport loading surface; oversizing the overlay made Safari expose the lobby at the bottom edge. */
- html[data-theme="light"].booting,html[data-theme="light"].booting body{background:#6CC4FF!important}
- html[data-theme="dark"].booting,html[data-theme="dark"].booting body{background:#1E222D!important}
- /* Give the actual boot layer an explicit extra 200px beyond the dynamic viewport. Using height:auto + a negative bottom
-    relies on absolute-position sizing that Safari can resolve against the short viewport, exposing the lobby below it. */
- html.booting #boot{height:calc(100dvh + 200px);min-height:0;bottom:auto;background:#6CC4FF!important}
- html[data-theme="dark"].booting #boot{background:#1E222D!important}
- /* Solid edge strips give Safari an actual fixed color surface to sample behind both browser bars. */
- html[data-theme="light"].booting::before,html[data-theme="dark"].booting::before,
- html[data-theme="light"].booting::after,html[data-theme="dark"].booting::after{content:"";position:fixed;z-index:10000;left:0;right:0;pointer-events:none}
- html[data-theme="light"].booting::before{top:0;height:max(14px,env(safe-area-inset-top));background:#6CC4FF}
- html[data-theme="dark"].booting::before{top:0;height:max(14px,env(safe-area-inset-top));background:#1E222D}
- html[data-theme="light"].booting::after{bottom:0;height:max(14px,env(safe-area-inset-bottom));background:#6CC4FF}
- html[data-theme="dark"].booting::after{bottom:0;height:max(14px,env(safe-area-inset-bottom));background:#1E222D}
+ /* the page / boot colour itself (--bc) comes from the inline <style> in index.html. The boot layer is 200px taller than the
+    dynamic viewport: height:auto + a negative bottom let Safari size it against the short viewport and expose the lobby below */
+ html.booting #boot{height:calc(100dvh + 200px);min-height:0;bottom:auto}
+ /* solid edge strips give Safari an actual fixed colour surface to sample behind both browser bars */
+ html.booting::before,html.booting::after{content:"";position:fixed;z-index:10000;left:0;right:0;pointer-events:none;background:var(--bc)}
+ html.booting::before{top:0;height:max(14px,env(safe-area-inset-top))}
+ html.booting::after{bottom:0;height:max(14px,env(safe-area-inset-bottom))}
  #boot .bt{bottom:calc(200px + 24px + env(safe-area-inset-bottom))}
  #boot .lg{display:block;width:min(40vw,170px);height:auto;margin-bottom:200px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.18));animation:bflip 1.6s ease-in-out infinite}
 }
