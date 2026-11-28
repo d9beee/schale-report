@@ -1102,12 +1102,12 @@ html.booting body{overflow:hidden;touch-action:none}
  #boot video{display:none!important}
  /* Keep a fixed full-viewport loading surface; oversizing the overlay made Safari expose the lobby at the bottom edge. */
  html.booting,html.booting body{background:#6CC4FF!important}
- html.booting[data-theme="dark"],html.booting[data-theme="dark"] body{background:#1E222D!important}
+ html[data-theme="dark"].booting,html[data-theme="dark"].booting body{background:#1E222D!important}
  #boot{height:100vh;height:100dvh;min-height:100dvh;bottom:0;background:#6CC4FF!important}
  html[data-theme="dark"] #boot{background:#1E222D!important}
  /* Safari samples a separate fixed surface at the bottom toolbar edge. */
  html.booting body::after{content:"";position:fixed;z-index:10000;left:0;right:0;bottom:0;height:max(14px,env(safe-area-inset-bottom));background:#6CC4FF;pointer-events:none}
- html.booting[data-theme="dark"] body::after{background:#1E222D}
+ html[data-theme="dark"].booting body::after{background:#1E222D}
  #boot .bt{bottom:calc(24px + env(safe-area-inset-bottom))}
  #boot .lg{display:block;width:min(40vw,170px);height:auto;filter:drop-shadow(0 4px 14px rgba(0,0,0,.18));animation:bflip 1.6s ease-in-out infinite}
 }
