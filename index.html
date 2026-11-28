@@ -6,8 +6,11 @@
 <meta name="theme-color" content="#6CC4FF">
 <title>Schale Report: Tier list và lộ trình UE Blue Archive</title>
 <link rel="icon" type="image/png" href="Icons/stu.png">
-<!-- theme before paint: saved choice, else system setting -->
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('ba_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'};var sch=document.createElement('meta');sch.name='color-scheme';sch.content=document.documentElement.dataset.theme;document.head.append(sch);document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#1E222D':'#6CC4FF'</script>
+<!-- theme before paint = the lobby shift by Vietnam time (06:00-18:00 Arona / light, else Plana / dark), the SAME rule as byTime()
+     in js/app.js, so the Spine loading later never flips it (before: saved / system theme first, then the shift = a dark->light flash) -->
+<script>(function(){var R=document.documentElement,h;try{h=+new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh',hour:'numeric',hour12:false})%24}catch(e){h=new Date().getHours()}
+R.dataset.theme=h>=6&&h<18?'light':'dark';var sch=document.createElement('meta');sch.name='color-scheme';sch.content=R.dataset.theme;document.head.append(sch);
+document.querySelector('meta[name="theme-color"]').content=R.dataset.theme==='dark'?'#1E222D':'#6CC4FF'})()</script>
 <!-- boot screen: opening on the lobby -> html.booting before first paint, so js/boot.js knows to show the loading video -->
 <script>(function(){var h=location.hash.slice(1);if(!h||h==='home')document.documentElement.classList.add('booting')})()</script>
 <!-- Critical boot colors: apply before external scripts/styles can delay first paint. Match the app's saved theme, not iOS appearance. -->
@@ -479,7 +482,7 @@ html[data-theme="dark"].booting,html[data-theme="dark"].booting body,html[data-t
 <div class="hpop" id="hpop" role="dialog" aria-label="Hướng dẫn"><h4 id="hpopT"></h4><ul id="hpopB"></ul></div>
 <button class="hud-tg" id="hudTg" type="button" aria-label="Ẩn các ô chức năng để ngắm học sinh" title="Ẩn / hiện các ô chức năng">›</button>
 
-<script src="js/app.js?v=202611281735"></script>
+<script src="js/app.js?v=202611281800"></script>
 <script src="js/icons.js?v=202611281405"></script>
 <script src="js/compact.js?v=202611281405"></script>
 <script src="js/a11y.js?v=202611281405"></script>
