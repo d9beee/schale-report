@@ -1351,57 +1351,44 @@ function zTarget(sc){const o=ZM.orig[sc.id];let r=zVis(o);
  if(r)return r;for(const a of zCand(sc))if((r=zVis(a)))return r;return null;}
 const ZD=document.createElement('div');ZD.id='zdim';SCR[0].parentNode.appendChild(ZD);
 const ZE='cubic-bezier(.32,.72,0,1)';
-// TEMP iPhone Safari diagnosis (?dbg=nozoom | ?dbg=cover): measures viewport/layer rects and toggles transition modes.
-const DBG=(()=>{const q=new URLSearchParams(location.search).get('dbg');if(!q)return{on:false};
- const s=new Set(q.split(',').map(x=>x.trim().toLowerCase()));
- const el=document.createElement('div');el.id='dbgBox';
- el.style.cssText='position:fixed;top:4px;right:4px;z-index:9999;pointer-events:none;background:rgba(0,0,0,.78);color:#0f0;font:10px/1.3 monospace;padding:4px 6px;border-radius:6px;white-space:pre';
- document.body.appendChild(el);
- const log=(a,b)=>{const vv=window.visualViewport;el.textContent=`dbg:${q} ih:${innerHeight} vv:${vv?Math.round(vv.height)+'+'+Math.round(vv.offsetTop):'-'}\nzf:${a?Math.round(a.getBoundingClientRect().bottom):'-'} zl:${b?Math.round(b.getBoundingClientRect().bottom):'-'}`;};
- return{on:true,nozoom:s.has('nozoom'),cover:s.has('cover'),log};})();
 // ends (or aborts) the running zoom: drop every animation, unpin, and give a pinned screen that ended up current its scroll back
 function zClean(){const L=ZM.live;ZM.live=null;ZM.run.forEach(a=>{try{a.cancel()}catch(_){}});ZM.run=[];
  (ZM.kids||[]).forEach(c=>c.style.transformOrigin='');ZM.kids=[];
  SCR.forEach(s=>{if((L||s.classList.contains('zleave'))&&s!==curScr)s.classList.remove('on');s.classList.remove('zleave','zmove','zfix');
-  s.style.top=s.style.height=s.style.bottom=s.style.transformOrigin='';});
+  s.style.top=s.style.height=s.style.transformOrigin='';});
  ZD.classList.remove('z');window.l2dRefit&&l2dRefit();if(L&&L.a===curScr)zJump(L.y);else if(L&&L.fy!=null&&L.b===curScr)zJump(L.fy);}
 function zoomScr(prev,sc,from,prevTop,prevY){
  const tb=Math.max(0,document.getElementById('topbar').getBoundingClientRect().bottom),W=innerWidth,Hv=innerHeight-tb,closing=sc.id==='home';
- const cov=DBG.cover&&matchMedia('(max-width:900px)').matches;
+ const phone=matchMedia('(max-width:900px)').matches;
  // the old screen stays where it was (pinned, same scroll) while the new one zooms over it, or zooms away over the lobby
- prev.classList.add('on','zleave');prev.style.top=tb+'px';if(cov)prev.style.bottom='0px';else prev.style.height=Hv+'px';prev.scrollTop=Math.max(0,tb-prevTop);
+ prev.classList.add('on','zleave');prev.style.top=tb+'px';prev.style.height=Hv+'px';prev.scrollTop=Math.max(0,tb-prevTop);
  const mover=closing?prev:sc,back=closing?sc:prev;
  // the opening screen also becomes its own fixed, window-sized layer (like the closing one), on every device: it opens at
  // the top of the window whatever the page scroll was, and the page under it can't scroll while both are pinned
  let fixY=null;
  if(!closing){const t0=mover.getBoundingClientRect().top;fixY=scrollY;
-  mover.classList.add('zfix');mover.style.top=tb+'px';if(cov)mover.style.bottom='0px';else mover.style.height=Hv+'px';mover.scrollTop=Math.max(0,tb-t0);}
- mover.classList.add('zmove');if(DBG.on)DBG.log(closing?null:mover,prev);
+  mover.classList.add('zfix');mover.style.top=tb+'px';mover.style.height=Hv+'px';mover.scrollTop=Math.max(0,tb-t0);}
+ mover.classList.add('zmove');
  const r=(closing?zTarget(prev):from)||{left:W*.3,top:tb+Hv*.35,right:W*.7,bottom:tb+Hv*.65,width:W*.4,height:Hv*.3};
- // NO scale any more: the screen keeps its real size the whole time and only its visible window (clip-path) grows from the
- // tapped tile to the full screen. Nothing is stretched or resized, so the room pictures (fixed backgrounds) stay exactly
- // as they are from the first frame to the last and there is no jump when the animation ends. Corners: clip-path round.
- const mr0=mover.getBoundingClientRect(),bw=mr0.width||W,mb=mr0.bottom||tb+Hv;
- const px=v=>Math.max(0,v).toFixed(1)+'px',rad=Math.min(18,r.height/3,r.width/3);
- let small={clipPath:`inset(${px(r.top-tb)} ${px(bw-r.right)} ${px(mb-r.bottom)} ${px(r.left)} round ${rad}px)`};
- let big={clipPath:'inset(0px 0px 0px 0px round 0px)'};
- // SHAPE MORPH for lobby tiles: the tile's shape layer leans (skewX --sk) with round corners, so the window grows out of that
- // exact rounded parallelogram into the full rectangle. Both ends are polygons with the same 16 points (4 per corner, a curve
- // through each corner; at the open end the 4 points of a corner sit on the corner = radius 0), so the browser morphs point by point.
- const ot=ZM.orig[(closing?prev:sc).id];
- if(ot&&ot.matches&&ot.matches('#home .tile')){
-  const mr=mover.getBoundingClientRect(),ox=mr.left,oy=mr.top,skd=parseFloat(getComputedStyle(ot).getPropertyValue('--sk'))||0,
-   T=Math.tan(-skd*Math.PI/180)*r.height/2,cr=Math.min(14,r.height/4,r.width/4);
-  const poly=(C,R)=>'polygon('+C.map((c,i)=>{const p=C[(i+3)%4],n=C[(i+1)%4],u=(a,b)=>{const d=Math.hypot(b[0]-a[0],b[1]-a[1])||1;return [(b[0]-a[0])/d,(b[1]-a[1])/d];};
-    const a=u(c,p),b=u(c,n),P=[c[0]+a[0]*R,c[1]+a[1]*R],Q=[c[0]+b[0]*R,c[1]+b[1]*R];
-    return [0,1/3,2/3,1].map(t=>{const s=1-t;return `${(s*s*P[0]+2*s*t*c[0]+t*t*Q[0]-ox).toFixed(1)}px ${(s*s*P[1]+2*s*t*c[1]+t*t*Q[1]-oy).toFixed(1)}px`;}).join(',');}).join(',')+')';
-  small={clipPath:poly([[r.left+T,r.top],[r.right+T,r.top],[r.right-T,r.bottom],[r.left-T,r.bottom]],cr)};
-  big={clipPath:poly([[ox,oy],[ox+mr.width,oy],[ox+mr.width,oy+mr.height],[ox,oy+mr.height]],0)};}
  // closing runs ~20% faster than opening; opacity steps are linear so the cross-fade lands in the first / last ~120 ms
  const o={duration:closing?330:420,easing:ZE,fill:'both'},ol={...o,easing:'linear'};
  const k=(a,z)=>closing?[z,a]:[a,z],fadeIn=closing?[{opacity:1},{opacity:1,offset:.7},{opacity:0}]:[{opacity:0},{opacity:1,offset:.3},{opacity:1}];
- // the page behind only dims (opacity layer); it is not scaled, so its own fixed room picture can't glitch either
- const A=[mover.animate(k(small,big),o),mover.animate(fadeIn,ol)];
+ // on phone (<=900px), skip clip-path on .zfix so Safari's bottom toolbar never loses the fixed room backdrop during transition
+ const A=[mover.animate(fadeIn,ol)];
+ if(!phone){
+  const px=v=>Math.max(0,v).toFixed(1)+'px',rad=Math.min(18,r.height/3,r.width/3),bw=mover.getBoundingClientRect().width||W;
+  let small={clipPath:`inset(${px(r.top-tb)} ${px(bw-r.right)} ${px(tb+Hv-r.bottom)} ${px(r.left)} round ${rad}px)`};
+  let big={clipPath:'inset(0px 0px 0px 0px round 0px)'};
+  const ot=ZM.orig[(closing?prev:sc).id];
+  if(ot&&ot.matches&&ot.matches('#home .tile')){
+   const mr=mover.getBoundingClientRect(),ox=mr.left,oy=mr.top,skd=parseFloat(getComputedStyle(ot).getPropertyValue('--sk'))||0,
+    T=Math.tan(-skd*Math.PI/180)*r.height/2,cr=Math.min(14,r.height/4,r.width/4);
+   const poly=(C,R)=>'polygon('+C.map((c,i)=>{const p=C[(i+3)%4],n=C[(i+1)%4],u=(a,b)=>{const d=Math.hypot(b[0]-a[0],b[1]-a[1])||1;return [(b[0]-a[0])/d,(b[1]-a[1])/d];};
+     const a=u(c,p),b=u(c,n),P=[c[0]+a[0]*R,c[1]+a[1]*R],Q=[c[0]+b[0]*R,c[1]+b[1]*R];
+     return [0,1/3,2/3,1].map(t=>{const s=1-t;return `${(s*s*P[0]+2*s*t*c[0]+t*t*Q[0]-ox).toFixed(1)}px ${(s*s*P[1]+2*s*t*c[1]+t*t*Q[1]-oy).toFixed(1)}px`;}).join(',');}).join(',')+')';
+   small={clipPath:poly([[r.left+T,r.top],[r.right+T,r.top],[r.right-T,r.bottom],[r.left-T,r.bottom]],cr)};
+   big={clipPath:poly([[ox,oy],[ox+mr.width,oy],[ox+mr.width,oy+mr.height],[ox,oy+mr.height]],0)};}
+  A.unshift(mover.animate(k(small,big),o));}
  // "zoom" feel without touching the room picture: the screen box itself never scales (its fixed background stays put), only
  // what stands inside it (student, panels) grows from ZS to full size around the tapped tile; the page behind eases back to ZB
  const ZS=.9,ZB=.96,cxr=(r.left+r.right)/2,cyr=(r.top+r.bottom)/2,kids=[];
@@ -1430,7 +1417,7 @@ function route(){const h=decodeURIComponent(location.hash.slice(1))||'home';let 
  if(zReverse(sc)){zUI(sc);return;}
  zClean();
  const prev=curScr,moved=prev&&prev!==sc,skip=ZM.skip;ZM.skip=0;
- const anim=moved&&!skip&&!DBG.nozoom&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const anim=moved&&!skip&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  const from=anim&&sc.id!=='home'?zOrigin(sc):null,prevTop=prev?prev.getBoundingClientRect().top:0,prevY=scrollY;
  if(moved&&prev.id==='home')ZM.homeY=scrollY;
  SCR.forEach(s=>{s.classList.toggle('on',s===sc);if(moved)s.classList.toggle('nz',anim&&s===sc);});curScr=sc;
