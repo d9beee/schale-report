@@ -913,13 +913,16 @@ html[data-theme=dark] #s-jfd.screen[data-g=outdoor]{background-image:url(../BG/B
 html[data-theme=dark] #s-jfd.screen[data-g=urban]{background-image:url(../BG/BG_CityDowntown_Night.jpg)}
 #s-jfd .ttabs{margin:0 0 var(--s4)}
 /* cards: auto-fit columns, one column on a phone */
-#s-jfd .jgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:var(--s3)}
+#s-jfd .jgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:var(--s3);align-items:stretch!important}
+/* every card in a row as tall as the tallest one (an older "cards grow with their text" rule set them to their own height) */
+#s-jfd .jgrid>.jk{align-self:stretch!important;height:auto!important;margin:0!important}
 #s-jfd .jk{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);border-radius:var(--r-md);padding:var(--s3) var(--s4)}
 html[data-theme=dark] #s-jfd .jk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
 #s-jfd .jk.now{border:2px solid var(--sky)}
 #s-jfd .jk h4{margin:0 0 var(--s1);font-size:var(--fs-md);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 #s-jfd .jk :is(p,li){margin:0;font-size:var(--fs-sm);line-height:1.5}
 #s-jfd .jk ul{margin:0;padding-left:18px}
+/* stacked blocks (outside a grid) get a top gap; inside a grid the grid gap does it */
 #s-jfd .jk+.jk,#s-jfd .jgrid+.jk,#s-jfd .jk+.jgrid,#jfdTeam{margin-top:var(--s3)}
 /* "Mùa này" tab: the team groups sit right under the season card. Each student chip carries its terrain grade badge (S orange,
    A green) and, when the season has one, the school bonus mark (pink) */
