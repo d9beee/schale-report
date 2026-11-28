@@ -1,5 +1,5 @@
 // ===== BOOT SCREEN: loading video while the lobby + its Spine load, then the 0.25s CRT switch-off (css/ui.css "BOOT SCREEN").
-// html.booting + the black theme-color are already set by the small script in <head> (before first paint), only when the page
+// html.booting (+ on a phone the video-coloured theme-color) is already set by the small script in <head> (before first paint),
 // opens on the lobby; a deep link like #tier has no .booting, so the screen is removed at once.
 // Ends when the lobby is ready AND the video has been on screen 0.5 s, or on a tap, or at 6 s, whichever comes first.
 (()=>{const b=document.getElementById('boot');if(!b)return;
