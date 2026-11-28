@@ -5,8 +5,10 @@
  const h=location.hash.slice(1);
  if(h&&h!=='home'){b.remove();return;}
  const R=document.documentElement;R.classList.add('booting');
+ // browser bars (theme-color) black while booting, old colours back afterwards
+ const tc=[...document.querySelectorAll('meta[name=theme-color]')],tc0=tc.map(m=>m.content);tc.forEach(m=>m.content='#000000');
  let done=0;
- const off=()=>{if(done)return;done=1;b.classList.add('off');setTimeout(()=>{b.remove();R.classList.remove('booting');},260);};
+ const off=()=>{if(done)return;done=1;b.classList.add('off');setTimeout(()=>{b.remove();R.classList.remove('booting');tc.forEach((m,i)=>m.content=tc0[i]);},260);};
  b.addEventListener('click',off);
  setTimeout(off,6000);
  // the video shows for 0.5 s counted from its first frame (before, the clock started before the video had even begun);
